@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap');
+
+:root {
+    --bg: #f0f3f8;
+    --navy: #0d1b3e;
+    --blue: #0e9ab5;
+    --blue-soft: #EBF4F6;
+    --btnsrv: #0b7d94;
+    --border: rgba(255, 255, 255, 0.5);
+    --text: #0d1b3e;
+    --text-m: #5b6a8a;
+    --font-h: "Urbanist", sans-serif;
+    --font-b: "Urbanist", sans-serif;
+    --nav-height: 70px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-b);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+
+body.loaded {
+    opacity: 1;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
