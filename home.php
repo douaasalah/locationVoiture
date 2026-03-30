@@ -201,9 +201,7 @@ if ($conn->connect_error) {
                                 <span class="per-day">per day</span>
                             </div>
 
-                            <button class="btn-book-now" onclick="window.location.href='car.php?id=<?php echo $row['id']; ?>'">
-                                Book Now
-                            </button>
+
                         </div>
 
                     </div>

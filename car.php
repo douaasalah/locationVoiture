@@ -1,5 +1,5 @@
 <?php
-// Connexion à la base de données
+session_start();
 $conn = new mysqli("localhost", "root", "", "locationvoitures");
 if ($conn->connect_error) {
     die("Erreur connexion: " . $conn->connect_error);
@@ -79,7 +79,7 @@ if ($conn->connect_error) {
                             </div>
                             <div class="car-buttons">
                                 <a href="details.php?id=<?php echo $row['id']; ?>" class="btn-outline">View Details</a>
-                                <a href="book.php?id=<?php echo $row['id']; ?>" class="btn-primary">Book Now</a>
+                                <a href="<?php echo isset($_SESSION['user_id']) ? 'book.php?id=' . $row['id'] : 'login.php?redirect=book.php?id=' . $row['id']; ?>" class="btn-primary">Book Now</a>
                             </div>
                         </div>
                     </div>
