@@ -6,10 +6,10 @@ if ($conn->connect_error) {
 } ?>
 <?php include("navbar.php"); ?>
 <script>
-    history.pushState(null, null, 'home.php');
     window.addEventListener('popstate', () => {
         window.location.href = 'home.php';
     });
+    history.pushState(null, null, window.location.href);
 </script>
 <div class="container">
     <div class="right">
