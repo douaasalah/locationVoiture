@@ -5,27 +5,113 @@ if ($conn->connect_error) {
     die("Erreur connexion: " . $conn->connect_error);
 } ?>
 <?php include("navbar.php"); ?>
+<script>
+    history.pushState(null, null, 'home.php');
+    window.addEventListener('popstate', () => {
+        window.location.href = 'home.php';
+    });
+</script>
 <div class="container">
     <div class="right">
         <div class="filtre">
+        <form method="GET" action="car.php" id="filter-form">
             <div class="filtre-type">
                 <p>Vehicle Type</p><br>
-                <select name="" id="">
-                    <option value="">Tous</option>
-                    <?php
-                    // Nouveau résultat pour le filtre (séparé)
-                    $sqlType = "SELECT DISTINCT type FROM voitures";
-                    $resultType = $conn->query($sqlType);
-                    while ($rowType = $resultType->fetch_assoc()) {
-                        echo '<option value="' . htmlspecialchars($rowType['type']) . '">' . htmlspecialchars($rowType['type']) . '</option>';
-                    }
-                    ?>
-                </select>
+                <select name="type" id="type" onchange="this.form.submit()">
+    <option value="">Tous</option>
+    <?php
+    $sqlType = "SELECT DISTINCT type FROM voitures";
+    $resultType = $conn->query($sqlType);
+    while ($rowType = $resultType->fetch_assoc()) {
+        $selected = (isset($_GET['type']) && $_GET['type'] == $rowType['type']) ? 'selected' : '';
+        echo '<option value="' . htmlspecialchars($rowType['type']) . '" ' . $selected . '>' 
+             . htmlspecialchars($rowType['type']) . '</option>';
+    }
+    ?>
+</select>
             </div>
+            <?php
+$sqlMax = "SELECT MAX(prix) as maxPrix FROM voitures";
+$resultMax = $conn->query($sqlMax);
+$rowMax = $resultMax->fetch_assoc();
+$maxPrix = $rowMax['maxPrix'];
+?>
+            <div class="filtre-prix">
+                <p>Price</p>
+                <input type="range" id="priceRange" name="prix" value="<?php echo isset($_GET['prix']) ? $_GET['prix'] : $maxPrix; ?>">
+                <div class="price-values">
+                    <span>Min:0 DT</span>
+                    <span id="priceValue">Max: <?php echo isset($_GET['prix']) ? $_GET['prix'] : $maxPrix; ?> DT</span>
+                    <script>
+const priceRange = document.getElementById('priceRange');
+const priceValue = document.getElementById('priceValue');
+const maxPrix = <?php echo $maxPrix; ?>;
+
+priceRange.max = maxPrix;
+priceRange.value = <?php echo isset($_GET['prix']) ? $_GET['prix'] : $maxPrix; ?>;
+
+priceRange.addEventListener('input', () => {
+    priceValue.textContent = "Max: " + priceRange.value + " DT";
+});
+
+priceRange.addEventListener('change', () => {
+    document.getElementById('filter-form').submit();
+});
+</script>
+                </div>
+            </div>
+            <div class="filtre-boite">
+                <p>Vehicle Transmission</p><br>
+                <select name="boite" id="boite" onchange="this.form.submit()">
+    <option value="">Tous</option>
+    <?php
+    $sqlBoite = "SELECT DISTINCT boite FROM voitures";
+    $resultBoite = $conn->query($sqlBoite);
+    while ($rowBoite = $resultBoite->fetch_assoc()) {
+        $selected = (isset($_GET['boite']) && $_GET['boite'] == $rowBoite['boite']) ? 'selected' : '';
+        echo '<option value="' . htmlspecialchars($rowBoite['boite']) . '" ' . $selected . '>'
+             . htmlspecialchars($rowBoite['boite']) . '</option>';
+    }
+    ?>
+</select>
+            </div>
+            </form>
         </div>
         <div class="all-cards">
             <?php
-            $sqlCars = "SELECT * FROM voitures";
+
+            // récupérer dates depuis home
+            $pickup = isset($_GET['pickup-date']) ? $_GET['pickup-date'] : "";
+            $dropoff = isset($_GET['dropoff-date']) ? $_GET['dropoff-date'] : "";
+        
+            // filtres
+            $type = isset($_GET['type']) ? $_GET['type'] : "";
+            $boite = isset($_GET['boite']) ? $_GET['boite'] : "";
+            $prix = isset($_GET['prix']) ? $_GET['prix'] : "";
+            
+            // requête : voitures disponibles
+            $sqlCars = "
+            SELECT * FROM voitures v
+            WHERE v.id NOT IN (
+                SELECT r.id_voiture
+                FROM reservation r
+                WHERE 
+                    ('$pickup' <= r.date_fin)
+                    AND
+                    ('$dropoff' >= r.date_debut)
+            )
+            ";
+            if ($type != "") {
+                $sqlCars .= " AND v.type = '$type'";
+            }
+            
+            if ($boite != "") {
+                $sqlCars .= " AND v.boite = '$boite'";
+            }
+            
+            if ($prix != "") {
+                $sqlCars .= " AND v.prix <= $prix";
+            }
             $resultCars = $conn->query($sqlCars);
             if ($resultCars->num_rows > 0) {
                 while ($row = $resultCars->fetch_assoc()) {
@@ -86,7 +172,7 @@ if ($conn->connect_error) {
                     <?php
                 }
             } else {
-                echo "<p>Aucune voiture disponible pour le moment.</p>";
+                echo "<p style='text-align:center; width:100%;'>Aucune voiture disponible pour le moment.</p>";
             }
             ?>
         </div>

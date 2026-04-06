@@ -14,7 +14,7 @@ if ($conn->connect_error) {
         </div>
     </div>
     <div class="hero-right">
-        <div class="form-card">
+        <form class="form-card" action="car.php" method="GET">
             <h2>Quick Booking</h2>
             <div class="form-group">
                 <label><i class="fas fa-map-marker-alt"></i> Pickup Location</label>
@@ -83,11 +83,11 @@ if ($conn->connect_error) {
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-calendar-alt"></i> Pickup Date</label>
-                    <input type="date">
+                    <input type="date" name="pickup-date" value="<?php echo date('Y-m-d'); ?>">
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-clock"></i> Pickup Time</label>
-                    <select>
+                    <select name="pickup-time">
                         <?php
                         for ($h = 0; $h < 24; $h++) {
                             foreach (['00', '30'] as $m) {
@@ -102,11 +102,11 @@ if ($conn->connect_error) {
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-calendar-alt"></i> Drop-off Date</label>
-                    <input type="date">
+                    <input type="date" name="dropoff-date"  value="<?php echo date('Y-m-d', strtotime('+2 days')); ?>">
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-clock"></i> Drop-off Time</label>
-                    <select>
+                    <select name="dropoff-time">
                         <?php
                         for ($h = 0; $h < 24; $h++) {
                             foreach (['00', '30'] as $m) {
@@ -118,8 +118,8 @@ if ($conn->connect_error) {
                     </select>
                 </div>
             </div>
-            <button class="btn-book" onclick="window.location.href='car.php'">Book Now</button>
-        </div>
+            <button class="btn-book" type="submit">Book Now</button>
+        </form>
     </div>
 </section>
 
