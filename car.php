@@ -222,7 +222,9 @@ foreach ($searchKeys as $k) {
                             <?php
                 }
             } else {
-                echo "<p style='text-align:center; width:100%;'>Aucune voiture disponible pour le moment.</p>";
+                echo "<div style='display:flex; align-items:center; justify-content:center; min-height:60vh; width:100%;'>
+        <p>Aucune voiture disponible pour le moment.</p>
+      </div>";
             }
             ?>
         </div>
