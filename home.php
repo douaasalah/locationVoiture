@@ -14,80 +14,80 @@ if ($conn->connect_error) {
         </div>
     </div>
     <div class="hero-right">
-        <div class="form-card">
+        <form class="form-card" action="car.php" method="GET">
             <h2>Quick Booking</h2>
             <div class="form-group">
                 <label><i class="fas fa-map-marker-alt"></i> Pickup Location</label>
-                <select>
+                <!-- Pickup Location -->
+                <select name="pickup-location">
                     <option value="">Select Location</option>
                     <optgroup label="Airports">
-                        <option>Tunis Carthage Airport</option>
-                        <option>Monastir Habib Bourguiba Airport</option>
-                        <option>Djerba Zarzis Airport</option>
-                        <option>Sfax Thyna Airport</option>
-                        <option>Tabarka Aïn Draham Airport</option>
-                        <option>Tozeur Nefta Airport</option>
-                        <option>Gafsa Ksar Airport</option>
+                        <option value="Tunis Carthage Airport">Tunis Carthage Airport</option>
+                        <option value="Monastir Habib Bourguiba Airport">Monastir Habib Bourguiba Airport</option>
+                        <option value="Djerba Zarzis Airport">Djerba Zarzis Airport</option>
+                        <option value="Sfax Thyna Airport">Sfax Thyna Airport</option>
+                        <option value="Tabarka Aïn Draham Airport">Tabarka Aïn Draham Airport</option>
+                        <option value="Tozeur Nefta Airport">Tozeur Nefta Airport</option>
+                        <option value="Gafsa Ksar Airport">Gafsa Ksar Airport</option>
                     </optgroup>
                     <optgroup label="Cities">
-                        <option>Tunis</option>
-                        <option>Sfax</option>
-                        <option>Sousse</option>
-                        <option>Monastir</option>
-                        <option>Bizerte</option>
-                        <option>Gabès</option>
-                        <option>Ariana</option>
-                        <option>Gafsa</option>
-                        <option>Kairouan</option>
-                        <option>Nabeul</option>
-                        <option>Hammamet</option>
-                        <option>Djerba</option>
-                        <option>Tozeur</option>
-                        <option>Mahdia</option>
-                        <option>Zaghouan</option>
+                        <option value="Tunis">Tunis</option>
+                        <option value="Sfax">Sfax</option>
+                        <option value="Sousse">Sousse</option>
+                        <option value="Monastir">Monastir</option>
+                        <option value="Bizerte">Bizerte</option>
+                        <option value="Gabès">Gabès</option>
+                        <option value="Ariana">Ariana</option>
+                        <option value="Gafsa">Gafsa</option>
+                        <option value="Kairouan">Kairouan</option>
+                        <option value="Nabeul">Nabeul</option>
+                        <option value="Hammamet">Hammamet</option>
+                        <option value="Djerba">Djerba</option>
+                        <option value="Tozeur">Tozeur</option>
+                        <option value="Mahdia">Mahdia</option>
+                        <option value="Zaghouan">Zaghouan</option>
                     </optgroup>
                 </select>
-            </div>
-            <div class="form-group">
-                <label><i class="fas fa-map-marker-alt"></i> Drop-off Location</label>
-                <select>
+
+                <!-- Drop-off Location -->
+                <select name="return-location">
                     <option value="">Select Location</option>
                     <optgroup label="Airports">
-                        <option>Tunis Carthage Airport</option>
-                        <option>Monastir Habib Bourguiba Airport</option>
-                        <option>Djerba Zarzis Airport</option>
-                        <option>Sfax Thyna Airport</option>
-                        <option>Tabarka Aïn Draham Airport</option>
-                        <option>Tozeur Nefta Airport</option>
-                        <option>Gafsa Ksar Airport</option>
+                        <option value="Tunis Carthage Airport">Tunis Carthage Airport</option>
+                        <option value="Monastir Habib Bourguiba Airport">Monastir Habib Bourguiba Airport</option>
+                        <option value="Djerba Zarzis Airport">Djerba Zarzis Airport</option>
+                        <option value="Sfax Thyna Airport">Sfax Thyna Airport</option>
+                        <option value="Tabarka Aïn Draham Airport">Tabarka Aïn Draham Airport</option>
+                        <option value="Tozeur Nefta Airport">Tozeur Nefta Airport</option>
+                        <option value="Gafsa Ksar Airport">Gafsa Ksar Airport</option>
                     </optgroup>
                     <optgroup label="Cities">
-                        <option>Tunis</option>
-                        <option>Sfax</option>
-                        <option>Sousse</option>
-                        <option>Monastir</option>
-                        <option>Bizerte</option>
-                        <option>Gabès</option>
-                        <option>Ariana</option>
-                        <option>Gafsa</option>
-                        <option>Kairouan</option>
-                        <option>Nabeul</option>
-                        <option>Hammamet</option>
-                        <option>Djerba</option>
-                        <option>Tozeur</option>
-                        <option>Mahdia</option>
-                        <option>Zaghouan</option>
+                        <option value="Tunis">Tunis</option>
+                        <option value="Sfax">Sfax</option>
+                        <option value="Sousse">Sousse</option>
+                        <option value="Monastir">Monastir</option>
+                        <option value="Bizerte">Bizerte</option>
+                        <option value="Gabès">Gabès</option>
+                        <option value="Ariana">Ariana</option>
+                        <option value="Gafsa">Gafsa</option>
+                        <option value="Kairouan">Kairouan</option>
+                        <option value="Nabeul">Nabeul</option>
+                        <option value="Hammamet">Hammamet</option>
+                        <option value="Djerba">Djerba</option>
+                        <option value="Tozeur">Tozeur</option>
+                        <option value="Mahdia">Mahdia</option>
+                        <option value="Zaghouan">Zaghouan</option>
                     </optgroup>
                 </select>
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-calendar-alt"></i> Pickup Date</label>
-                    <input type="date">
+                    <input type="date" name="pickup-date" value="<?php echo date('Y-m-d'); ?>">
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-clock"></i> Pickup Time</label>
-                    <select>
+                    <select name="pickup-time">
                         <?php
                         for ($h = 0; $h < 24; $h++) {
                             foreach (['00', '30'] as $m) {
@@ -102,11 +102,11 @@ if ($conn->connect_error) {
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-calendar-alt"></i> Drop-off Date</label>
-                    <input type="date">
+                    <input type="date" name="dropoff-date" value="<?php echo date('Y-m-d', strtotime('+2 days')); ?>">
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-clock"></i> Drop-off Time</label>
-                    <select>
+                    <select name="dropoff-time">
                         <?php
                         for ($h = 0; $h < 24; $h++) {
                             foreach (['00', '30'] as $m) {
@@ -118,8 +118,8 @@ if ($conn->connect_error) {
                     </select>
                 </div>
             </div>
-            <button class="btn-book" onclick="window.location.href='car.php'">Book Now</button>
-        </div>
+            <button class="btn-book" type="submit">Book Now</button>
+        </form>
     </div>
 </section>
 
@@ -201,9 +201,7 @@ if ($conn->connect_error) {
                                 <span class="per-day">per day</span>
                             </div>
 
-                            <button class="btn-book-now" onclick="window.location.href='car.php?id=<?php echo $row['id']; ?>'">
-                                Book Now
-                            </button>
+
                         </div>
 
                     </div>

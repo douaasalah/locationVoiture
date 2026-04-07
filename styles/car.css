@@ -159,17 +159,21 @@
     margin-bottom: 1.6rem;
 }
 
-.form-group {
+.form-groupe {
     display: flex;
     flex-direction: column;
     margin-bottom: 1.3rem;
 }
 
-.form-group label {
+.form-groupe label {
     font-weight: 700;
     margin-bottom: 6px;
     font-size: 0.83rem;
     opacity: 0.9;
+    color: #fff;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+
 }
 
 .row {
@@ -195,7 +199,8 @@
     color: rgba(255, 255, 255, 0.55);
 }
 
-.sidebar-search option {
+.sidebar-search option,
+optgroup {
     color: #000;
     background: #fff;
 }
@@ -449,7 +454,10 @@
     border-radius: 24px;
     padding: 15px;
     background-color: white;
-
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 .filtre-type {
@@ -465,7 +473,23 @@
     gap: 0px;
 }
 
-.filtre-type p {
+.filtre-boite {
+    text-align: right;
+    width: 220px;
+    background-color: var(--blue-soft);
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.filtre-type p,
+.filtre-boite p,
+.filtre-prix p {
+    text-align: center;
     font-weight: bold;
     color: var(--blue);
     margin-bottom: 10px;
@@ -473,7 +497,8 @@
     margin: 0;
 }
 
-.filtre-type select {
+.filtre-type select,
+.filtre-boite select {
     width: 100%;
     padding: 4px 8px;
     border-radius: 6px;
@@ -484,9 +509,50 @@
     margin-top: -10px;
 }
 
-.filtre-type select:focus {
+.filtre-type select:focus,
+.filtre-boite select:focus {
     border-color: var(--blue);
     outline: none;
+}
+
+.filtre-prix {
+    position: relative;
+    width: 45%;
+    padding: 12px;
+    background-color: var(--blue-soft);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-family: 'Arial', sans-serif;
+}
+
+.filtre-prix input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #ccc;
+    border-radius: 3px;
+    outline: none;
+}
+
+.filtre-prix input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--blue);
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.price-values {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgb(107, 106, 106);
 }
 
 .all-cards {
@@ -501,4 +567,8 @@
     font-size: 14px;
     font-family: Arial, sans-serif;
     padding: 4px 6px;
+}
+
+#filter-form {
+    display: contents;
 }
