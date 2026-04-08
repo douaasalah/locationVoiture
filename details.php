@@ -131,7 +131,7 @@ function changePhoto(dir) {
         <li>Minimum age requirement: 21 years old</li>
         <li>Valid driver's license required (held for at least 1 year)</li>
         <li>Security deposit will be refunded after vehicle return inspection</li>
-        <li>Fuel policy: Full to full (return with same fuel level)</li>
+        <li>Fuel policy: Return with same fuel level unless Full Tank option selected</li>
         <li>Cross-border travel is not authorized</li>
         <li>24/7 breakdown assistance included</li>
     </ul>
