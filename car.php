@@ -4,40 +4,28 @@ $conn = new mysqli("localhost", "root", "", "locationvoitures");
 if ($conn->connect_error) {
     die("Erreur connexion: " . $conn->connect_error);
 }
-
 $searchKeys = ['pickup-location', 'return-location', 'pickup-date', 'pickup-time', 'dropoff-date', 'dropoff-time'];
 $filterKeys = ['type', 'boite', 'prix'];
-
-// Si refresh (aucun param GET), rediriger avec SEULEMENT les searchKeys (pas les filtres)
 if (empty($_GET) && isset($_SESSION['search'])) {
-    $params = http_build_query($_SESSION['search']); // session['search'] ne contient que les searchKeys
+    $params = http_build_query($_SESSION['search']);
     header("Location: car.php?" . $params);
     exit;
 }
-
-// Mettre à jour la session avec SEULEMENT les searchKeys
 foreach ($searchKeys as $k) {
     if (isset($_GET[$k]) && $_GET[$k] != '') {
         $_SESSION['search'][$k] = $_GET[$k];
     }
 }
-
-// Compléter $_GET avec les données session si manquantes (cas du filtre)
 foreach ($searchKeys as $k) {
     if ((!isset($_GET[$k]) || $_GET[$k] == '') && isset($_SESSION['search'][$k])) {
         $_GET[$k] = $_SESSION['search'][$k];
     }
 }
-
-// ✅ NE PAS sauvegarder les filtres dans la session
-// Les filtres (type, boite, prix) restent uniquement dans $_GET
 ?>
 <?php include("navbar.php"); ?>
 <script>
-    // Au chargement de la page, nettoyer les filtres de l'URL si c'est un refresh
     const navEntries = performance.getEntriesByType("navigation");
     if (navEntries.length > 0 && navEntries[0].type === "reload") {
-        // C'est un refresh : on garde seulement les searchKeys, on enlève les filtres
         const url = new URL(window.location.href);
         url.searchParams.delete('type');
         url.searchParams.delete('boite');
@@ -54,7 +42,6 @@ foreach ($searchKeys as $k) {
     <div class="right">
         <div class="filtre">
             <form method="GET" action="car.php" id="filter-form">
-                <!-- Ajouter ces hidden inputs pour conserver les données du modify search -->
                 <?php foreach ($searchKeys as $k): ?>
                         <?php if (isset($_GET[$k]) && $_GET[$k] != ''): ?>
                                 <input type="hidden" name="<?php echo $k; ?>" value="<?php echo htmlspecialchars($_GET[$k]); ?>">
@@ -107,9 +94,6 @@ foreach ($searchKeys as $k) {
                         </script>
                     </div>
                 </div>
-
-                <!-- Conserver les données du modify search -->
-
                 <div class="filtre-boite">
                     <p>Vehicle Transmission</p><br>
                     <select name="boite" id="boite" onchange="this.form.submit()">
@@ -129,17 +113,11 @@ foreach ($searchKeys as $k) {
         </div>
         <div class="all-cards">
             <?php
-
-            // récupérer dates depuis home
             $pickup = isset($_GET['pickup-date']) ? $_GET['pickup-date'] : "";
             $dropoff = isset($_GET['dropoff-date']) ? $_GET['dropoff-date'] : "";
-
-            // filtres
             $type = isset($_GET['type']) ? $_GET['type'] : "";
             $boite = isset($_GET['boite']) ? $_GET['boite'] : "";
             $prix = isset($_GET['prix']) ? $_GET['prix'] : "";
-
-            // requête : voitures disponibles
             $sqlCars = "
             SELECT * FROM voitures v
             WHERE v.id NOT IN (
@@ -213,7 +191,7 @@ foreach ($searchKeys as $k) {
                                         </div>
                                     </div>
                                     <div class="car-buttons">
-                                        <a href="details.php?id=<?php echo $row['id']; ?>" class="btn-outline">View Details</a>
+                                    <a href="details.php?id=<?php echo $row['id']; ?>&<?php echo http_build_query($_GET); ?>" class="btn-outline">View Details</a>
                                         <a href="<?php echo isset($_SESSION['user_id']) ? 'book.php?id=' . $row['id'] : 'login.php?redirect=book.php?id=' . $row['id']; ?>"
                                             class="btn-primary">Book Now</a>
                                     </div>

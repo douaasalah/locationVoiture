@@ -1,0 +1,363 @@
+.details-top {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 32px;
+    max-width: 700px;
+    margin: 40px auto;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.details-title h1 {
+    font-size: 2.0rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 8px 0;
+}
+
+.badge-type {
+    display: inline-block;
+    background: var(--blue-soft);
+    color: var(--blue);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.details-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background: var(--blue-soft);
+    border-radius: 12px;
+    padding: 10px 18px;
+}
+
+.details-price .price-day {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--blue);
+    line-height: 1;
+}
+
+.details-price .per-day {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 4px;
+    font-weight: 400;
+}
+
+.details-gallery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 24px 0;
+}
+
+.details-gallery .main-photo {
+    width: 100%;
+    height: 320px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.gallery-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.gallery-btn:hover {
+    background: var(--blue);
+    color: #fff;
+}
+
+.gallery-btn.prev {
+    left: 12px;
+}
+
+.gallery-btn.next {
+    right: 12px;
+}
+.details-specs {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 32px;
+    max-width: 700px;
+    margin: 20px auto;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+
+.details-specs h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 20px;
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.spec-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--blue-soft);
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+
+.spec-icon {
+    width: 42px;
+    height: 42px;
+    background: #fff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: var(--blue);
+    flex-shrink: 0;
+}
+
+.spec-label {
+    font-size: 0.75rem;
+    color: #888;
+    display: block;
+}
+
+.spec-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111;
+    display: block;
+}
+.details-equipment {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 32px;
+    max-width: 700px;
+    margin: 20px auto;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+
+.details-equipment h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 20px;
+}
+
+.equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.equipment-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.equipment-item i {
+    color: var(--blue);
+    
+    font-size: 1.2rem;
+}
+.booking-summary {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+
+.booking-summary h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--blue-soft);
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 0;
+}
+
+.summary-label {
+    font-size: 0.75rem;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+}
+
+.summary-item strong {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111;
+}
+
+.summary-sub {
+    font-size: 0.82rem;
+    color: var(--blue);
+    margin-top: 3px;
+}
+
+.booking-summary hr {
+    border: none;
+    border-top: 1px solid #f0f0f0;
+    margin: 0;
+}
+
+.summary-calc {
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.calc-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.calc-row span:last-child {
+    font-weight: 700;
+    color: var(--blue);
+    font-size: 1rem;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    background: var(--blue-soft);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 4px;
+}
+
+.summary-total strong {
+    font-size: 1rem;
+    color: #111;
+}
+
+.total-price {
+    font-size: 1.4rem;
+    color: var(--blue) !important;
+    font-weight: 800;
+}
+
+.btn-book-now {
+    display: block;
+    background: var(--blue);
+    color: #fff;
+    text-align: center;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: background 0.2s;
+}
+
+.btn-book-now:hover {
+    background: #0b7a8f;
+}
+.details-container {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 0 20px;
+    align-items: flex-start;
+}
+
+.container-left {
+    flex: 2;
+    margin-top: 40px;
+}
+
+.container-right {
+    flex: 1;
+    position: sticky;
+    top: 90px;
+    margin-top: 80px;
+    align-self: flex-start;
+    margin-bottom: 20px;
+}
+.important-info {
+    background: var(--blue-soft);
+    border-radius: 16px;
+    padding: 24px 28px;
+    max-width: 700px;
+    margin: 20px auto;
+    border: 1px solid #1e3a5f;
+    box-sizing: border-box;
+}
+
+.important-info h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin-bottom: 16px;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-list li {
+    font-size: 0.9rem;
+    color: #1e3a5f;
+    padding-left: 12px;
+    position: relative;
+}
+
+.info-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #1e3a5f;
+}

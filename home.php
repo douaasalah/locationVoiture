@@ -20,7 +20,6 @@ if ($conn->connect_error) {
                 <label><i class="fas fa-map-marker-alt"></i> Pickup Location</label>
                 <!-- Pickup Location -->
                 <select name="pickup-location">
-                    <option value="">Select Location</option>
                     <optgroup label="Airports">
                         <option value="Tunis Carthage Airport">Tunis Carthage Airport</option>
                         <option value="Monastir Habib Bourguiba Airport">Monastir Habib Bourguiba Airport</option>
@@ -51,7 +50,6 @@ if ($conn->connect_error) {
 
                 <!-- Drop-off Location -->
                 <select name="return-location">
-                    <option value="">Select Location</option>
                     <optgroup label="Airports">
                         <option value="Tunis Carthage Airport">Tunis Carthage Airport</option>
                         <option value="Monastir Habib Bourguiba Airport">Monastir Habib Bourguiba Airport</option>
