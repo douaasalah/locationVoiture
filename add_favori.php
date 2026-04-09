@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', 'root', 'locationvoitures');
+$conn = new mysqli('localhost', 'root', '', 'locationvoitures');
 
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);

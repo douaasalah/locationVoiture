@@ -161,7 +161,7 @@
         <div class="section-label">Ready to Go?</div>
         <h2 class="section-title">Start Your Journey Today</h2>
         <p>Browse our fleet, pick your dates, and hit the road. Tunisia is waiting for you.</p>
-        <a href="car.php" class="btn-cta">
+        <a href="home.php#fleet-section" class="btn-cta">
             <i class="fa-solid fa-car"></i> Browse Available Cars
         </a>
     </div>

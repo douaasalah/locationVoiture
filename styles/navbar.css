@@ -22,6 +22,27 @@
     cursor: pointer;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* espace seulement entre image et texte */
+}
+
+.logo img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    transform: scale(0.85);
+    transition: transform 0.3s ease;
+}
+
+.logo-text {
+    display: flex;
+    gap: 0;
+}
+
 .logo .drive {
     color: var(--navy);
 }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "root", "locationvoitures");
+$conn = new mysqli("localhost", "root", "", "locationvoitures");
 $erreur = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['email']) && !empty($_POST['mot_de_passe'])) {

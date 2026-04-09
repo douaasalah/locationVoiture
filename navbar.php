@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="styles\profil.css">
     <link rel="stylesheet" href="styles\reset_password.css">
     <link rel="stylesheet" href="styles\register.css">
-
     <link rel="stylesheet" href="styles\car.css">
     <link rel="stylesheet" href="styles\details.css">
     <link rel="stylesheet" href="styles\terms.css">
@@ -31,9 +30,16 @@
     <input type="checkbox" id="nav-check">
 
     <header id="nav">
-        <a href="home.php" class="logo">
-            <span class="drive">Go</span><span class="rent">Rent</span>
-        </a>
+        <div class="logo">
+            <a href="home.php">
+                <img src="imgVoitures/logo2.png" alt="logo">
+            </a>
+            <div class="logo-text">
+                <a href="home.php">
+                    <span class="drive">Go</span><span class="rent">Rent</span> </a>
+
+            </div>
+        </div>
         <div class="menu">
             <ul class="nav-links">
                 <li><a href="home.php">Home</a></li>

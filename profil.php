@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', 'root', 'locationvoitures');
+$conn = new mysqli('localhost', 'root', '', 'locationvoitures');
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -83,6 +83,7 @@ while ($row = $fav_result->fetch_assoc()) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>GoRent – My Profile</title>
@@ -91,133 +92,141 @@ while ($row = $fav_result->fetch_assoc()) {
     <link rel="stylesheet" href="styles/profil.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
 
-<?php include 'navbar.php'; ?>
+    <?php include 'navbar.php'; ?>
 
-<div class="profil-page">
+    <div class="profil-page">
 
-    <div class="profil-header">
-        <div class="profil-avatar">
-            <?= strtoupper(substr($nom, 0, 1)) ?>
-        </div>
-        <h2><?= htmlspecialchars($nom) ?></h2>
-        <p><?= htmlspecialchars($email) ?></p>
-    </div>
-
-    <div class="profil-grid">
-
-        <!-- MY INFORMATION -->
-        <div class="profil-card">
-            <h3><i class="fa fa-user"></i> My Information</h3>
-
-            <?php if ($erreur): ?>
-                <div class="alert alert-error"><i class="fa fa-circle-exclamation"></i> <?= $erreur ?></div>
-            <?php endif; ?>
-            <?php if ($succes): ?>
-                <div class="alert alert-success"><i class="fa fa-circle-check"></i> <?= $succes ?></div>
-            <?php endif; ?>
-
-            <form method="POST">
-                <div class="form-group">
-                    <label><i class="fa fa-user"></i> Full Name</label>
-                    <input type="text" name="nom" value="<?= htmlspecialchars($nom) ?>" required>
-                </div>
-                <div class="form-group">
-                    <label><i class="fa fa-envelope"></i> Email</label>
-                    <input type="email" name="email" value="<?= htmlspecialchars($email) ?>" required>
-                </div>
-                <button type="submit" name="modifier_profil" class="btn-submit">
-                    <i class="fa fa-floppy-disk"></i> Save
-                </button>
-            </form>
-
-            <br>
-            <a href="forgot_password.php"
-                style="display:block; text-align:center; color:var(--blue); font-size:0.88rem; font-weight:700; text-decoration:none;">
-                <i class="fa fa-lock"></i> Change my password
-            </a>
+        <div class="profil-header">
+            <div class="profil-avatar">
+                <?= strtoupper(substr($nom, 0, 1)) ?>
+            </div>
+            <h2><?= htmlspecialchars($nom) ?></h2>
+            <p><?= htmlspecialchars($email) ?></p>
         </div>
 
-        <!-- COLONNE DROITE : Reservations + Favourites empilés -->
-        <div class="profil-right-col">
+        <div class="profil-grid">
 
-            <!-- MY RESERVATIONS -->
-            <div class="reservations-card">
-                <h3><i class="fa fa-calendar"></i> My Reservations</h3>
+            <!-- MY INFORMATION -->
+            <div class="profil-card">
+                <h3><i class="fa fa-user"></i> My Information</h3>
 
-                <?php if (empty($reservations)): ?>
-                    <div class="empty-reservations">
-                        <i class="fa fa-car"></i>
-                        <p>No reservations yet.</p>
-                        <br>
-                        <a href="home.php" style="color:var(--blue); font-weight:700; text-decoration:none;">
-                            Browse our cars →
-                        </a>
-                    </div>
-                <?php else: ?>
-                    <?php foreach ($reservations as $r): ?>
-                        <div class="reservation-item">
-                            <div class="reservation-info">
-                                <h4><i class="fa fa-car"></i> <?= $r['marque'] . ' ' . $r['modele'] . ' ' . $r['annee'] ?></h4>
-                                <p><i class="fa fa-calendar-days"></i> From <?= date('d/m/Y', strtotime($r['date_debut'])) ?> to
-                                    <?= date('d/m/Y', strtotime($r['date_fin'])) ?>
-                                </p>
-                            </div>
-                            <div class="reservation-right">
-                                <div class="prix"><?= $r['total'] ?? '—' ?> DT</div>
-                                <?php
-                                $statut = strtolower($r['statut']);
-                                $classe = match ($statut) {
-                                    'confirmée', 'confirmee' => 'statut-confirmee',
-                                    'annulée', 'annulee' => 'statut-annulee',
-                                    default => 'statut-attente'
-                                };
-                                ?>
-                                <span class="statut <?= $classe ?>"><?= $r['statut'] ?></span>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
+                <?php if ($erreur): ?>
+                    <div class="alert alert-error"><i class="fa fa-circle-exclamation"></i> <?= $erreur ?></div>
                 <?php endif; ?>
+                <?php if ($succes): ?>
+                    <div class="alert alert-success"><i class="fa fa-circle-check"></i> <?= $succes ?></div>
+                <?php endif; ?>
+
+                <form method="POST">
+                    <div class="form-group">
+                        <label><i class="fa fa-user"></i> Full Name</label>
+                        <input type="text" name="nom" value="<?= htmlspecialchars($nom) ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa fa-envelope"></i> Email</label>
+                        <input type="email" name="email" value="<?= htmlspecialchars($email) ?>" required>
+                    </div>
+                    <button type="submit" name="modifier_profil" class="btn-submit">
+                        <i class="fa fa-floppy-disk"></i> Save
+                    </button>
+                </form>
+
+                <br>
+                <a href="forgot_password.php"
+                    style="display:block; text-align:center; color:var(--blue); font-size:0.88rem; font-weight:700; text-decoration:none;">
+                    <i class="fa fa-lock"></i> Change my password
+                </a>
             </div>
 
-            <!-- MY FAVOURITES -->
-            <div class="reservations-card">
-                <h3><i class="fa fa-heart"></i> My Favourites</h3>
+            <!-- COLONNE DROITE : Reservations + Favourites empilés -->
+            <div class="profil-right-col">
 
-                <?php if (empty($favoris)): ?>
-                    <div class="empty-reservations">
-                        <i class="fa fa-heart"></i>
-                        <p>No favourites yet.</p>
-                        <br>
-                        <a href="home.php" style="color:var(--blue); font-weight:700; text-decoration:none;">
-                            Browse our cars →
-                        </a>
-                    </div>
-                <?php else: ?>
-                    <?php foreach ($favoris as $f): ?>
-                        <div class="reservation-item">
-                            <div class="reservation-info">
-                                <h4><i class="fa fa-car"></i> <?= $f['marque'] . ' ' . $f['modele'] . ' ' . $f['annee'] ?></h4>
-                                <p><i class="fa fa-tag"></i> <?= $f['prix'] ?> DT / day</p>
-                            </div>
-                            <div class="reservation-right">
-                                <a href="details.php?id=<?= $f['id'] ?>" style="color:var(--blue); font-weight:700; text-decoration:none;">
-                                    View →
-                                </a>
-                                <a href="remove_favori.php?id=<?= $f['id'] ?>" style="color:#e53e3e; font-size:0.85rem;">
-                                    <i class="fa fa-trash"></i> Remove
-                                </a>
-                            </div>
+                <!-- MY RESERVATIONS -->
+                <div class="reservations-card">
+                    <h3><i class="fa fa-calendar"></i> My Reservations</h3>
+
+                    <?php if (empty($reservations)): ?>
+                        <div class="empty-reservations">
+                            <i class="fa fa-car"></i>
+                            <p>No reservations yet.</p>
+                            <br>
+                            <a href="home.php#fleet-section"
+                                style="color:var(--blue); font-weight:700; text-decoration:none;">
+                                Browse our cars →
+                            </a>
                         </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
+                    <?php else: ?>
+                        <?php foreach ($reservations as $r): ?>
+                            <div class="reservation-item">
+                                <div class="reservation-info">
+                                    <h4><i class="fa fa-car"></i> <?= $r['marque'] . ' ' . $r['modele'] . ' ' . $r['annee'] ?>
+                                    </h4>
+                                    <p><i class="fa fa-calendar-days"></i> From
+                                        <?= date('d/m/Y', strtotime($r['date_debut'])) ?> to
+                                        <?= date('d/m/Y', strtotime($r['date_fin'])) ?>
+                                    </p>
+                                </div>
+                                <div class="reservation-right">
+                                    <div class="prix"><?= $r['total'] ?? '—' ?> DT</div>
+                                    <?php
+                                    $statut = strtolower($r['statut']);
+                                    $classe = match ($statut) {
+                                        'confirmée', 'confirmee' => 'statut-confirmee',
+                                        'annulée', 'annulee' => 'statut-annulee',
+                                        default => 'statut-attente'
+                                    };
+                                    ?>
+                                    <span class="statut <?= $classe ?>"><?= $r['statut'] ?></span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
 
-        </div><!-- fin profil-right-col -->
+                <!-- MY FAVOURITES -->
+                <div class="reservations-card">
+                    <h3><i class="fa fa-heart"></i> My Favourites</h3>
 
+                    <?php if (empty($favoris)): ?>
+                        <div class="empty-reservations">
+                            <i class="fa fa-heart"></i>
+                            <p>No favourites yet.</p>
+                            <br>
+                            <a href="home.php#fleet-section"
+                                style="color:var(--blue); font-weight:700; text-decoration:none;">
+                                Browse our cars →
+                            </a>
+                        </div>
+                    <?php else: ?>
+                        <?php foreach ($favoris as $f): ?>
+                            <div class="reservation-item">
+                                <div class="reservation-info">
+                                    <h4><i class="fa fa-car"></i> <?= $f['marque'] . ' ' . $f['modele'] . ' ' . $f['annee'] ?>
+                                    </h4>
+                                    <p><i class="fa fa-tag"></i> <?= $f['prix'] ?> DT / day</p>
+                                </div>
+                                <div class="reservation-right">
+                                    <a href="details.php?id=<?= $f['id'] ?>"
+                                        style="color:var(--blue); font-weight:700; text-decoration:none;">
+                                        View →
+                                    </a>
+                                    <a href="remove_favori.php?id=<?= $f['id'] ?>" style="color:#e53e3e; font-size:0.85rem;">
+                                        <i class="fa fa-trash"></i> Remove
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+
+            </div><!-- fin profil-right-col -->
+
+        </div>
     </div>
-</div>
 
 </body>
+
 </html>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "root", "locationvoitures");
+$conn = new mysqli("localhost", "root", "", "locationvoitures");
 if ($conn->connect_error) {
     die("Erreur connexion: " . $conn->connect_error);
 }
@@ -53,9 +53,9 @@ if (isset($_SESSION['user_id'])) {
         <div class="filtre">
             <form method="GET" action="car.php" id="filter-form">
                 <?php foreach ($searchKeys as $k): ?>
-                        <?php if (isset($_GET[$k]) && $_GET[$k] != ''): ?>
-                                <input type="hidden" name="<?php echo $k; ?>" value="<?php echo htmlspecialchars($_GET[$k]); ?>">
-                        <?php endif; ?>
+                    <?php if (isset($_GET[$k]) && $_GET[$k] != ''): ?>
+                        <input type="hidden" name="<?php echo $k; ?>" value="<?php echo htmlspecialchars($_GET[$k]); ?>">
+                    <?php endif; ?>
                 <?php endforeach; ?>
                 <div class="filtre-type">
                     <p>Vehicle Type</p><br>
@@ -174,12 +174,13 @@ if (isset($_SESSION['user_id'])) {
                                 <!-- Bouton Favori -->
                                 <?php if (isset($_SESSION['user_id'])): ?>
                                     <a href="#" onclick="toggleFav(this, <?= $row['id'] ?>); return false;"
-                                       style="display:inline-block; margin-top:10px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
-                                        <i class="<?= $isFav ? 'fa-solid' : 'fa-regular' ?> fa-heart" id="heart-<?= $row['id'] ?>"></i>
+                                        style="display:inline-block; margin-top:10px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
+                                        <i class="<?= $isFav ? 'fa-solid' : 'fa-regular' ?> fa-heart"
+                                            id="heart-<?= $row['id'] ?>"></i>
                                     </a>
                                 <?php else: ?>
                                     <a href="login.php"
-                                       style="display:inline-block; margin-top:10px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
+                                        style="display:inline-block; margin-top:10px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
                                         <i class="fa-regular fa-heart"></i>
                                     </a>
                                 <?php endif; ?>
@@ -203,7 +204,8 @@ if (isset($_SESSION['user_id'])) {
                                 </div>
                             </div>
                             <div class="car-buttons">
-                                <a href="details.php?id=<?php echo $row['id']; ?>&<?php echo http_build_query($_GET); ?>" class="btn-outline">View Details</a>
+                                <a href="details.php?id=<?php echo $row['id']; ?>&<?php echo http_build_query($_GET); ?>"
+                                    class="btn-outline">View Details</a>
                                 <a href="<?php echo isset($_SESSION['user_id']) ? 'book.php?id=' . $row['id'] : 'login.php?redirect=book.php?id=' . $row['id']; ?>"
                                     class="btn-primary">Book Now</a>
                             </div>
@@ -226,15 +228,16 @@ if (isset($_SESSION['user_id'])) {
 <?php include 'footer.php'; ?>
 
 <script>
-function toggleFav(el, id) {
-    const icon = document.getElementById('heart-' + id);
-    const isFav = icon.classList.contains('fa-solid');
-    fetch('add_favori.php?id=' + id + '&action=' + (isFav ? 'remove' : 'add'))
-        .then(() => {
-            icon.classList.toggle('fa-solid', !isFav);
-            icon.classList.toggle('fa-regular', isFav);
-        });
-}
+    function toggleFav(el, id) {
+        const icon = document.getElementById('heart-' + id);
+        const isFav = icon.classList.contains('fa-solid');
+        fetch('add_favori.php?id=' + id + '&action=' + (isFav ? 'remove' : 'add'))
+            .then(() => {
+                icon.classList.toggle('fa-solid', !isFav);
+                icon.classList.toggle('fa-regular', isFav);
+            });
+    }
 </script>
 </body>
+
 </html>

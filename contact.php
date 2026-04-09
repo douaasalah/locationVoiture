@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "root", "locationvoitures");
+$conn = new mysqli("localhost", "root", "", "locationvoitures");
 if ($conn->connect_error) {
     die("Erreur connexion: " . $conn->connect_error);
 }
@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="book-card">
             <h4>Prefer to Book Online?</h4>
             <p>Browse our fleet and make a reservation in just 2 minutes.</p>
-            <a href="car.php" class="bttn-book">
+            <a href="home.php#fleet-section" class="bttn-book">
                 <i class="fa-solid fa-car"></i> View Fleet &amp; Book Now
             </a>
         </div>
