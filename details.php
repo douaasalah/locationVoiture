@@ -1,9 +1,18 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "locationvoitures");
+session_start();
+$conn = new mysqli('localhost', 'root', 'root', 'locationvoitures');
 $id = $_GET['id'];
 $sql = "SELECT * FROM voitures WHERE id = $id";
 $result = $conn->query($sql);
 $car = $result->fetch_assoc();
+
+// Vérifier si la voiture est en favori
+$isFav = false;
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $resFav = $conn->query("SELECT id_voiture FROM favoris WHERE id_client = $user_id AND id_voiture = " . $car['id']);
+    if ($resFav && $resFav->num_rows > 0) $isFav = true;
+}
 ?>
 <?php include("navbar.php"); ?>
 <div class="details-container">
@@ -131,7 +140,7 @@ function changePhoto(dir) {
         <li>Minimum age requirement: 21 years old</li>
         <li>Valid driver's license required (held for at least 1 year)</li>
         <li>Security deposit will be refunded after vehicle return inspection</li>
-        <li>Fuel policy: Return with same fuel level unless Full Tank option selected</li>
+        <li>Fuel policy: Full to full (return with same fuel level)</li>
         <li>Cross-border travel is not authorized</li>
         <li>24/7 breakdown assistance included</li>
     </ul>
@@ -204,7 +213,33 @@ function changePhoto(dir) {
     <a href="<?php echo isset($_SESSION['user_id']) ? 'book.php?id=' . $car['id'] : 'login.php?redirect=book.php?id=' . $car['id']; ?>" class="btn-book-now">
         Continue to Booking
     </a>
+
+    <!-- Bouton Favori avec toggle AJAX -->
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="#" onclick="toggleFav(this, <?= $car['id'] ?>); return false;"
+           style="display:block; text-align:center; margin-top:12px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
+            <i class="<?= $isFav ? 'fa-solid' : 'fa-regular' ?> fa-heart" id="heart-<?= $car['id'] ?>"></i>
+        </a>
+    <?php else: ?>
+        <a href="login.php"
+           style="display:block; text-align:center; margin-top:12px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
+            <i class="fa-regular fa-heart"></i>
+        </a>
+    <?php endif; ?>
+
 </div>
 </div>
 </div>
 <?php include("footer.php"); ?>
+
+<script>
+function toggleFav(el, id) {
+    const icon = document.getElementById('heart-' + id);
+    const isFav = icon.classList.contains('fa-solid');
+    fetch('add_favori.php?id=' + id + '&action=' + (isFav ? 'remove' : 'add'))
+        .then(() => {
+            icon.classList.toggle('fa-solid', !isFav);
+            icon.classList.toggle('fa-regular', isFav);
+        });
+}
+</script>

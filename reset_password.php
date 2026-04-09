@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "locationvoitures");
+$conn = new mysqli("localhost", "root", "root", "locationvoitures");
 session_start();
 
 $erreur = '';

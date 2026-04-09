@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "", "locationvoitures");
+$conn = new mysqli("localhost", "root", "root", "locationvoitures");
 if ($conn->connect_error) {
     die("Erreur connexion: " . $conn->connect_error);
 }

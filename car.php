@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "", "locationvoitures");
+$conn = new mysqli("localhost", "root", "root", "locationvoitures");
 if ($conn->connect_error) {
     die("Erreur connexion: " . $conn->connect_error);
 }
@@ -19,6 +19,16 @@ foreach ($searchKeys as $k) {
 foreach ($searchKeys as $k) {
     if ((!isset($_GET[$k]) || $_GET[$k] == '') && isset($_SESSION['search'][$k])) {
         $_GET[$k] = $_SESSION['search'][$k];
+    }
+}
+
+// Récupérer les favoris de l'utilisateur connecté
+$favoris = [];
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $resFav = $conn->query("SELECT id_voiture FROM favoris WHERE id_client = $user_id");
+    while ($fav = $resFav->fetch_assoc()) {
+        $favoris[] = $fav['id_voiture'];
     }
 }
 ?>
@@ -132,72 +142,74 @@ foreach ($searchKeys as $k) {
             if ($type != "") {
                 $sqlCars .= " AND v.type = '$type'";
             }
-
             if ($boite != "") {
                 $sqlCars .= " AND v.boite = '$boite'";
             }
-
             if ($prix != "") {
                 $sqlCars .= " AND v.prix <= $prix";
             }
             $resultCars = $conn->query($sqlCars);
             if ($resultCars->num_rows > 0) {
                 while ($row = $resultCars->fetch_assoc()) {
+                    $isFav = in_array($row['id'], $favoris);
                     ?>
                     <div class="car-card">
-                                <div class="car-desc">
-                                    <div class="car-image">
-                                        <img src="<?php echo $row['imgfront']; ?>" alt="voiture">
-                                    </div>
-                                    <div class="car-info">
-                                        <ul class="car-features">
+                        <div class="car-desc">
+                            <div class="car-image">
+                                <img src="<?php echo $row['imgfront']; ?>" alt="voiture">
+                            </div>
+                            <div class="car-info">
+                                <ul class="car-features">
                                     <li><i class="fa-solid fa-snowflake"></i> A/C</li>
-                                    <li><i class="fa-solid fa-suitcase"></i>
-                                        <?php echo $row['bagages']; ?> Luggage
-                                    </li>
-                                    <li><i class="fa-solid fa-user"></i>
-                                        <?php echo $row['places']; ?> Places
-                                    </li>
-                                    <li><i class="fa-solid fa-gas-pump"></i>
-                                        <?php echo $row['carburant']; ?>
-                                    </li>
-                                    <li><i class="fa-solid fa-gear"></i>
-                                        <?php echo $row['boite']; ?> transmission
-                                    </li>
+                                    <li><i class="fa-solid fa-suitcase"></i> <?php echo $row['bagages']; ?> Luggage</li>
+                                    <li><i class="fa-solid fa-user"></i> <?php echo $row['places']; ?> Places</li>
+                                    <li><i class="fa-solid fa-gas-pump"></i> <?php echo $row['carburant']; ?></li>
+                                    <li><i class="fa-solid fa-gear"></i> <?php echo $row['boite']; ?> transmission</li>
                                 </ul>
-                                    </div>
-                                    <div class="car-price">
-                                        <span class="price-day">
-                                            <?php echo $row['prix']; ?>DT
-                                        </span>
-                                        <span class="per-day">per day</span>
-                                    </div>
+                            </div>
+                            <div class="car-price">
+                                <span class="price-day"><?php echo $row['prix']; ?>DT</span>
+                                <span class="per-day">per day</span>
+
+                                <!-- Bouton Favori -->
+                                <?php if (isset($_SESSION['user_id'])): ?>
+                                    <a href="#" onclick="toggleFav(this, <?= $row['id'] ?>); return false;"
+                                       style="display:inline-block; margin-top:10px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
+                                        <i class="<?= $isFav ? 'fa-solid' : 'fa-regular' ?> fa-heart" id="heart-<?= $row['id'] ?>"></i>
+                                    </a>
+                                <?php else: ?>
+                                    <a href="login.php"
+                                       style="display:inline-block; margin-top:10px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="car-footer">
+                            <div>
+                                <div class="name">
+                                    <strong>
+                                        <?php
+                                        if ($row['marque'] == 'Land Rover') {
+                                            echo $row['modele'] . " " . $row['annee'];
+                                        } else {
+                                            echo $row['marque'] . " " . $row['modele'] . " " . $row['annee'];
+                                        }
+                                        ?>
+                                    </strong>
                                 </div>
-                                <div class="car-footer">
-                                    <div>
-                                        <div class="name">
-                                            <strong>
-                                                <?php
-                                                if ($row['marque'] == 'Land Rover') {
-                                                    echo $row['modele'] . " " . $row['annee'];
-                                                } else {
-                                                    echo $row['marque'] . " " . $row['modele'] . " " . $row['annee'];
-                                                }
-                                                ?>
-                                            </strong>
-                                        </div>
-                                        <div class="type">
-                                            <?php echo $row['type']; ?>
-                                        </div>
-                                    </div>
-                                    <div class="car-buttons">
-                                    <a href="details.php?id=<?php echo $row['id']; ?>&<?php echo http_build_query($_GET); ?>" class="btn-outline">View Details</a>
-                                        <a href="<?php echo isset($_SESSION['user_id']) ? 'book.php?id=' . $row['id'] : 'login.php?redirect=book.php?id=' . $row['id']; ?>"
-                                            class="btn-primary">Book Now</a>
-                                    </div>
+                                <div class="type">
+                                    <?php echo $row['type']; ?>
                                 </div>
                             </div>
-                            <?php
+                            <div class="car-buttons">
+                                <a href="details.php?id=<?php echo $row['id']; ?>&<?php echo http_build_query($_GET); ?>" class="btn-outline">View Details</a>
+                                <a href="<?php echo isset($_SESSION['user_id']) ? 'book.php?id=' . $row['id'] : 'login.php?redirect=book.php?id=' . $row['id']; ?>"
+                                    class="btn-primary">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
                 }
             } else {
                 echo "<div style='display:flex; align-items:center; justify-content:center; min-height:60vh; width:100%;'>
@@ -210,10 +222,19 @@ foreach ($searchKeys as $k) {
     <div class="left">
         <?php include("modify_search.php"); ?>
     </div>
-
-
 </div>
 <?php include 'footer.php'; ?>
-</body>
 
+<script>
+function toggleFav(el, id) {
+    const icon = document.getElementById('heart-' + id);
+    const isFav = icon.classList.contains('fa-solid');
+    fetch('add_favori.php?id=' + id + '&action=' + (isFav ? 'remove' : 'add'))
+        .then(() => {
+            icon.classList.toggle('fa-solid', !isFav);
+            icon.classList.toggle('fa-regular', isFav);
+        });
+}
+</script>
+</body>
 </html>

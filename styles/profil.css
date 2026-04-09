@@ -228,3 +228,8 @@
      color: #e2e8f0;
      margin-bottom: 12px;
  }
+ .profil-right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}

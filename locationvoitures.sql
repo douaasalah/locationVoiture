@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : lun. 06 avr. 2026 à 22:42
--- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.2.12
+-- Hôte : localhost:8889
+-- Généré le : jeu. 09 avr. 2026 à 13:40
+-- Version du serveur : 8.0.44
+-- Version de PHP : 8.3.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,8 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `locationvoitures`
+-- Base de données : `locationvoiture`
 --
+CREATE DATABASE IF NOT EXISTS `locationvoiture` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `locationvoiture`;
 
 -- --------------------------------------------------------
 
@@ -28,11 +30,57 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `idadmin` int(11) NOT NULL,
-  `nom` varchar(50) NOT NULL,
-  `email` varchar(70) NOT NULL,
-  `motdepasse` varchar(255) NOT NULL
+  `idadmin` int NOT NULL,
+  `nom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(70) COLLATE utf8mb4_general_ci NOT NULL,
+  `motdepasse` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `avis`
+--
+
+CREATE TABLE `avis` (
+  `id` int NOT NULL,
+  `nom` varchar(100) DEFAULT NULL,
+  `ville` varchar(100) DEFAULT NULL,
+  `commentaire` text,
+  `note` int DEFAULT NULL,
+  `date_creation` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `avis`
+--
+
+INSERT INTO `avis` (`id`, `nom`, `ville`, `commentaire`, `note`, `date_creation`) VALUES
+(5, 'sakly imen', 'Monastir', 'Je conseille fortement ! Rien à dire ! 🔥🔥', 5, '2026-04-09 10:42:55'),
+(6, 'miral trabelsi', 'Sousse', 'Service excellent, la voiture était prête à l\'heure, la communication et les informations fournies étaient excellentes, et la voiture était propre et bien entretenue.\r\n\r\nJe recommande vivement cette agence', 5, '2026-04-09 10:44:51'),
+(7, 'Mohamed hlel', 'Nabeul', 'Très bonne expérience avec eux. Nous avons obtenu un bon prix pour une voiture en excellent état, sans aucun problème. La voiture était propre et tout a été pris en charge sur place ; ils l\'ont même livrée à l\'hôtel.\r\n\r\nDe plus, ils ont été très réactifs par e-mail pendant notre voyage, ce qui nous a vraiment rassurés et nous a permis de voyager comme prévu. Cinq étoiles sans hésiter !', 5, '2026-04-09 10:47:39'),
+(8, 'Ahmed boussaid', 'Tunis', 'Service excellent, qui mérite toute notre reconnaissance et notre respect. Bonne continuation.\r\n', 4, '2026-04-09 12:42:27');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `favoris`
+--
+
+CREATE TABLE `favoris` (
+  `id` int NOT NULL,
+  `id_client` int NOT NULL,
+  `id_voiture` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `favoris`
+--
+
+INSERT INTO `favoris` (`id`, `id_client`, `id_voiture`, `created_at`) VALUES
+(41, 1, 2, '2026-04-09 11:14:21'),
+(46, 1, 1, '2026-04-09 11:45:13');
 
 -- --------------------------------------------------------
 
@@ -41,9 +89,9 @@ CREATE TABLE `admin` (
 --
 
 CREATE TABLE `options` (
-  `id` int(11) NOT NULL,
-  `nom` varchar(30) NOT NULL,
-  `description` varchar(300) NOT NULL,
+  `id` int NOT NULL,
+  `nom` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(300) COLLATE utf8mb4_general_ci NOT NULL,
   `prix` decimal(5,2) NOT NULL,
   `est_inclus` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -73,19 +121,18 @@ INSERT INTO `options` (`id`, `nom`, `description`, `prix`, `est_inclus`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `email` varchar(100) NOT NULL,
   `token` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `password_resets`
 --
 
 INSERT INTO `password_resets` (`id`, `email`, `token`, `created_at`) VALUES
-(13, 'saklyimen24@gmail.com', '11db473201afe3ad5e66a464ee272e25396de1794265348db45f4449f4e8ad9c', '2026-03-30 09:26:15'),
-(14, 'yosratiss1@gmail.com', '0658bcc4ded3d13455e08946c15d3bf4d6998d08667af6ab6333f64dea9ae670', '2026-04-06 14:24:25');
+(13, 'saklyimen24@gmail.com', '11db473201afe3ad5e66a464ee272e25396de1794265348db45f4449f4e8ad9c', '2026-03-30 09:26:15');
 
 -- --------------------------------------------------------
 
@@ -94,22 +141,15 @@ INSERT INTO `password_resets` (`id`, `email`, `token`, `created_at`) VALUES
 --
 
 CREATE TABLE `reservation` (
-  `id_reservation` int(11) NOT NULL,
-  `id_client` int(11) NOT NULL,
-  `id_voiture` int(11) NOT NULL,
-  `date_reservation` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id_reservation` int NOT NULL,
+  `id_client` int NOT NULL,
+  `id_voiture` int NOT NULL,
+  `date_reservation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_debut` date NOT NULL,
   `date_fin` date NOT NULL,
-  `statut` varchar(20) DEFAULT 'En attente',
+  `statut` varchar(20) COLLATE utf8mb4_general_ci DEFAULT 'En attente',
   `total` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `reservation`
---
-
-INSERT INTO `reservation` (`id_reservation`, `id_client`, `id_voiture`, `date_reservation`, `date_debut`, `date_fin`, `statut`, `total`) VALUES
-(1, 1, 1, '2026-04-06 16:46:04', '2026-04-06', '2026-04-08', 'En attente', NULL);
 
 -- --------------------------------------------------------
 
@@ -118,8 +158,8 @@ INSERT INTO `reservation` (`id_reservation`, `id_client`, `id_voiture`, `date_re
 --
 
 CREATE TABLE `reservation_options` (
-  `idreservation` int(11) NOT NULL,
-  `idoption` int(11) NOT NULL
+  `idreservation` int NOT NULL,
+  `idoption` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -129,12 +169,12 @@ CREATE TABLE `reservation_options` (
 --
 
 CREATE TABLE `users` (
-  `idclient` int(11) NOT NULL,
-  `email` varchar(70) NOT NULL,
-  `nom` varchar(100) NOT NULL,
-  `motdepasse` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `telephone` varchar(20) NOT NULL,
+  `idclient` int NOT NULL,
+  `email` varchar(70) COLLATE utf8mb4_general_ci NOT NULL,
+  `nom` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `motdepasse` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `telephone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `datenaiss` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -143,7 +183,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`idclient`, `email`, `nom`, `motdepasse`, `created_at`, `telephone`, `datenaiss`) VALUES
-(1, 'yosratiss1@gmail.com', 'Yosra Tiss', '$2y$10$dd37fXZnHJW4xJ6HDBR9U.mDTG7cRCwNKyLTD29q13Q2lzwK8IvFe', '2026-03-31 10:18:39', '', '0000-00-00');
+(1, 'saklyimen24@gmail.com', 'sakly imen', '$2y$10$qtdEOAmidx5rwW0h5und7eQKt5Iqohu7.ZIdqjM.Ay55pQ4zODic6', '2026-04-08 14:47:11', '', '1900-01-01');
 
 -- --------------------------------------------------------
 
@@ -152,18 +192,19 @@ INSERT INTO `users` (`idclient`, `email`, `nom`, `motdepasse`, `created_at`, `te
 --
 
 CREATE TABLE `voitures` (
-  `id` int(11) NOT NULL,
-  `marque` varchar(20) NOT NULL,
-  `modele` varchar(20) NOT NULL,
-  `annee` int(11) NOT NULL,
-  `imgfront` varchar(255) NOT NULL,
-  `imginter` varchar(255) NOT NULL,
-  `imgcote` varchar(255) NOT NULL,
-  `type` varchar(20) NOT NULL,
-  `boite` varchar(20) NOT NULL,
-  `carburant` varchar(20) NOT NULL,
-  `places` int(11) NOT NULL,
-  `bagages` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `marque` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `modele` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `annee` int NOT NULL,
+  `imgfront` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `imginter` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `imgcote` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `boite` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `carburant` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `places` int NOT NULL,
+  `bagages` int NOT NULL,
+  `disponible` varchar(1) COLLATE utf8mb4_general_ci NOT NULL,
   `prix` decimal(6,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -171,21 +212,21 @@ CREATE TABLE `voitures` (
 -- Déchargement des données de la table `voitures`
 --
 
-INSERT INTO `voitures` (`id`, `marque`, `modele`, `annee`, `imgfront`, `imginter`, `imgcote`, `type`, `boite`, `carburant`, `places`, `bagages`, `prix`) VALUES
-(1, 'Kia', 'Picanto', 2023, 'imgVoitures\\Kia_Picanto_2023\\front.png', 'imgVoitures/Kia_Picanto_2023/interieur.png', 'imgVoitures/Kia_Picanto_2023/cote.png', 'Citadine', 'Automatic', 'Essence', 5, 4, 80),
-(2, 'Kia', 'Rio', 2020, 'imgVoitures\\Kia_Rio_2020\\front.png', 'imgVoitures/Kia_Rio_2020/interieur.png', 'imgVoitures/Kia_Rio_2020/cote.png', 'Berline', 'Automatic', 'Essence', 5, 4, 70),
-(3, 'Peugeot', '208', 2024, 'imgVoitures\\Peugeot_208_2024\\front.avif', 'imgVoitures/Peugeot_208_2024/interieur.jpg', 'imgVoitures/Peugeot_208_2024/coté.png', 'Citadine', 'Automatic', 'Essence', 5, 2, 120),
-(4, 'Peugeot', '2008', 2020, 'imgVoitures\\Peugeot_2008_2020\\front.webp', 'imgVoitures/Peugeot_2008_2020/interieur.webp', 'imgVoitures/Peugeot_2008_2020/cote.webp', 'Citadine', 'Automatic', 'Essence', 5, 2, 160),
-(5, 'Seat', 'Ateca', 2020, 'imgVoitures\\Seat_Ateca_2020\\front.png', 'imgVoitures/Seat_Ateca_2020/interieur.jpg', 'imgVoitures/Seat_Ateca_2020/cote.png', 'SUV', 'Automatic', 'Diesel', 5, 4, 160),
-(6, 'Seat', 'Ibiza', 2024, 'imgVoitures\\Seat_Ibiza_2024\\front.png', 'imgVoitures/Seat_Ibiza_2024/interieur.png', 'imgVoitures/Seat_Ibiza_2024/cote.png', 'Citadine', 'Manual', 'Essence', 5, 2, 80),
-(7, 'Renault', 'Clio 5', 2022, 'imgVoitures\\Renault_Clio_5\\Renault_Clio_5_front.png', 'imgVoitures/Renault_Clio_5/Renault_Clio_5_inter.png', 'imgVoitures/Renault_Clio_5/Renault_Clio_5_cote.png', 'Citadine', 'Automatic', 'Essence', 5, 3, 90),
-(8, 'Hyundai', 'i20', 2024, 'imgVoitures\\Hyundai_I20_BVA_2024\\img_front.png', 'imgVoitures/Hyundai_I20_BVA_2024/img_inter.png', 'imgVoitures/Hyundai_I20_BVA_2024/img_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 120),
-(9, 'Hyundai', 'Grand i10', 2024, 'imgVoitures\\Hyundai_Grand_i10\\img_front.png', 'imgVoitures/Hyundai_Grand_i10/img_inter.png', 'imgVoitures/Hyundai_Grand_i10/img_cote.png', 'Citadine', 'Automatic', 'Essence', 5, 2, 110),
-(10, 'Dacia', 'Sandero Stepway', 2024, 'imgVoitures\\Dacia_Sandero_Stepway\\dacia_sandero-front.jpg', 'imgVoitures/Dacia_Sandero_Stepway/dacia_sandero-inter.png', 'imgVoitures/Dacia_Sandero_Stepway/dacia_cote.webp', 'SUV', 'Manual', 'Diesel', 5, 3, 150),
-(11, 'Dacia', 'Logan', 2023, 'imgVoitures\\Dacia_Logan_2023\\dacia_logan_front.webp', 'imgVoitures/Dacia_Logan_2023/dacia_logan_int.png', 'imgVoitures/Dacia_Logan_2023/dacia_logan_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 110),
-(12, 'Renault', 'Clio 3', 2015, 'imgVoitures\\clio_3\\clio3_front.png', 'imgVoitures/clio_3/clio3_int.png', 'imgVoitures/clio_3/clio3_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 75),
-(13, 'Peugeot', 'Traveller', 2024, 'imgVoitures\\Peugeot_TRAVELLER_2024\\Peugeot_TRAVELLER_2024_front.jpg', 'imgVoitures/Peugeot_TRAVELLER_2024/Peugeot-Traveller-inter.png', 'imgVoitures/Peugeot_TRAVELLER_2024/Peugeot-Traveller-cote.jpg', 'Minivan', 'Manual', 'Diesel', 9, 6, 290),
-(14, 'Land Rover', 'Range Rover', 2025, 'imgVoitures\\Range_Rover_vogue_2025\\front.png', 'imgVoitures/Range_Rover_vogue_2025/inter.png', 'imgVoitures/Range_Rover_vogue_2025/cote.png', 'Luxury', 'Automatic', 'Diesel', 5, 4, 850);
+INSERT INTO `voitures` (`id`, `marque`, `modele`, `annee`, `imgfront`, `imginter`, `imgcote`, `type`, `boite`, `carburant`, `places`, `bagages`, `disponible`, `prix`) VALUES
+(1, 'Kia', 'Picanto', 2023, 'imgVoitures\\Kia_Picanto_2023\\front.png', 'imgVoitures/Kia_Picanto_2023/interieur.png', 'imgVoitures/Kia_Picanto_2023/cote.png', 'Citadine', 'Automatic', 'Essence', 5, 4, 'D', 80),
+(2, 'Kia', 'Rio', 2020, 'imgVoitures\\Kia_Rio_2020\\front.png', 'imgVoitures/Kia_Rio_2020/interieur.png', 'imgVoitures/Kia_Rio_2020/cote.png', 'Berline', 'Automatic', 'Essence', 5, 4, 'D', 70),
+(3, 'Peugeot', '208', 2024, 'imgVoitures\\Peugeot_208_2024\\front.avif', 'imgVoitures/Peugeot_208_2024/interieur.jpg', 'imgVoitures/Peugeot_208_2024/coté.png', 'Citadine', 'Automatic', 'Essence', 5, 2, 'D', 120),
+(4, 'Peugeot', '2008', 2020, 'imgVoitures\\Peugeot_2008_2020\\front.webp', 'imgVoitures/Peugeot_2008_2020/interieur.webp', 'imgVoitures/Peugeot_2008_2020/cote.webp', 'Citadine', 'Automatic', 'Essence', 5, 2, 'D', 160),
+(5, 'Seat', 'Ateca', 2020, 'imgVoitures\\Seat_Ateca_2020\\front.png', 'imgVoitures/Seat_Ateca_2020/interieur.jpg', 'imgVoitures/Seat_Ateca_2020/cote.png', 'SUV', 'Automatic', 'Diesel', 5, 4, 'D', 160),
+(6, 'Seat', 'Ibiza', 2024, 'imgVoitures\\Seat_Ibiza_2024\\front.png', 'imgVoitures/Seat_Ibiza_2024/interieur.png', 'imgVoitures/Seat_Ibiza_2024/cote.png', 'Citadine', 'Manual', 'Essence', 5, 2, 'D', 80),
+(7, 'Renault', 'Clio 5', 2022, 'imgVoitures\\Renault_Clio_5\\Renault_Clio_5_front.png', 'imgVoitures/Renault_Clio_5/Renault_Clio_5_inter.png', 'imgVoitures/Renault_Clio_5/Renault_Clio_5_cote.png', 'Citadine', 'Automatic', 'Essence', 5, 3, 'D', 90),
+(8, 'Hyundai', 'i20', 2024, 'imgVoitures\\Hyundai_I20_BVA_2024\\img_front.png', 'imgVoitures/Hyundai_I20_BVA_2024/img_inter.png', 'imgVoitures/Hyundai_I20_BVA_2024/img_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 'D', 120),
+(9, 'Hyundai', 'Grand i10', 2024, 'imgVoitures\\Hyundai_Grand_i10\\img_front.png', 'imgVoitures/Hyundai_Grand_i10/img_inter.png', 'imgVoitures/Hyundai_Grand_i10/img_cote.png', 'Citadine', 'Automatic', 'Essence', 5, 2, 'D', 110),
+(10, 'Dacia', 'Sandero Stepway', 2024, 'imgVoitures\\Dacia_Sandero_Stepway\\dacia_sandero-front.jpg', 'imgVoitures/Dacia_Sandero_Stepway/dacia_sandero-inter.png', 'imgVoitures/Dacia_Sandero_Stepway/dacia_cote.webp', 'SUV', 'Manual', 'Diesel', 5, 3, 'D', 150),
+(11, 'Dacia', 'Logan', 2023, 'imgVoitures\\Dacia_Logan_2023\\dacia_logan_front.webp', 'imgVoitures/Dacia_Logan_2023/dacia_logan_int.png', 'imgVoitures/Dacia_Logan_2023/dacia_logan_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 'D', 110),
+(12, 'Renault', 'Clio 3', 2015, 'imgVoitures\\clio_3\\clio3_front.png', 'imgVoitures/clio_3/clio3_int.png', 'imgVoitures/clio_3/clio3_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 'D', 75),
+(13, 'Peugeot', 'Traveller', 2024, 'imgVoitures\\Peugeot_TRAVELLER_2024\\Peugeot_TRAVELLER_2024_front.jpg', 'imgVoitures/Peugeot_TRAVELLER_2024/Peugeot-Traveller-inter.png', 'imgVoitures/Peugeot_TRAVELLER_2024/Peugeot-Traveller-cote.jpg', 'Minivan', 'Manual', 'Diesel', 9, 6, 'D', 290),
+(14, 'Land Rover', 'Range Rover', 2025, 'imgVoitures\\Range_Rover_vogue_2025\\front.png', 'imgVoitures/Range_Rover_vogue_2025/inter.png', 'imgVoitures/Range_Rover_vogue_2025/cote.png', 'Luxury', 'Automatic', 'Diesel', 5, 4, 'D', 850);
 
 -- --------------------------------------------------------
 
@@ -194,9 +235,9 @@ INSERT INTO `voitures` (`id`, `marque`, `modele`, `annee`, `imgfront`, `imginter
 --
 
 CREATE TABLE `voitures_options` (
-  `id` int(11) NOT NULL,
-  `idv` int(11) NOT NULL,
-  `ido` int(11) NOT NULL
+  `id` int NOT NULL,
+  `idv` int NOT NULL,
+  `ido` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -306,6 +347,19 @@ ALTER TABLE `admin`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Index pour la table `avis`
+--
+ALTER TABLE `avis`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `favoris`
+--
+ALTER TABLE `favoris`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_favori` (`id_client`,`id_voiture`);
+
+--
 -- Index pour la table `options`
 --
 ALTER TABLE `options`
@@ -361,43 +415,55 @@ ALTER TABLE `voitures_options`
 -- AUTO_INCREMENT pour la table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `idadmin` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idadmin` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `avis`
+--
+ALTER TABLE `avis`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT pour la table `favoris`
+--
+ALTER TABLE `favoris`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT pour la table `options`
 --
 ALTER TABLE `options`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pour la table `password_resets`
 --
 ALTER TABLE `password_resets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_reservation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idclient` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `voitures`
 --
 ALTER TABLE `voitures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `voitures_options`
 --
 ALTER TABLE `voitures_options`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- Contraintes pour les tables déchargées
@@ -423,6 +489,73 @@ ALTER TABLE `reservation_options`
 ALTER TABLE `voitures_options`
   ADD CONSTRAINT `voitures_options_ibfk_1` FOREIGN KEY (`idv`) REFERENCES `voitures` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `voitures_options_ibfk_2` FOREIGN KEY (`ido`) REFERENCES `options` (`id`) ON DELETE CASCADE;
+--
+-- Base de données : `locationvoitures`
+--
+CREATE DATABASE IF NOT EXISTS `locationvoitures` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `locationvoitures`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `voitures`
+--
+
+CREATE TABLE `voitures` (
+  `id` int NOT NULL,
+  `marque` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `modele` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `annee` int NOT NULL,
+  `imgfront` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `imginter` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `imgcote` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `boite` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `carburant` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `places` int NOT NULL,
+  `bagages` int NOT NULL,
+  `disponible` varchar(1) COLLATE utf8mb4_general_ci NOT NULL,
+  `prix` decimal(6,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `voitures`
+--
+
+INSERT INTO `voitures` (`id`, `marque`, `modele`, `annee`, `imgfront`, `imginter`, `imgcote`, `type`, `boite`, `carburant`, `places`, `bagages`, `disponible`, `prix`) VALUES
+(1, 'Kia', 'Picanto', 2023, 'images\\Kia_Picanto_2023\\front.png', 'images\\Kia_Picanto_2023\\interieur.png', 'images\\Kia_Picanto_2023\\cote.png', 'Citadine', 'Automatic', 'Essence', 5, 4, 'D', 80),
+(2, 'Kia', 'Rio', 2020, 'images\\Kia_Rio_2020\\front.png', 'images\\Kia_Rio_2020\\interieur.png', 'images\\Kia_Rio_2020\\cote.png', 'Berline', 'Automatic', 'Essence', 5, 4, 'D', 70),
+(3, 'Peugeot', '208', 2024, 'images\\Peugeot_208_2024\\front.avif', 'images\\Peugeot_208_2024\\interieur.jpg', 'images\\Peugeot_208_2024\\coté.png', 'Citadine', 'Automatic', 'Essence', 5, 2, 'D', 120),
+(4, 'Peugeot', '2008', 2020, 'images\\Peugeot_2008_2020\\front.webp', 'images\\Peugeot_2008_2020\\interieur.webp', 'images\\Peugeot_2008_2020\\cote.webp', 'Citadine', 'Automatic', 'Essence', 5, 2, 'D', 160),
+(5, 'Seat', 'Ateca', 2020, 'images\\Seat_Ateca_2020\\front.png', 'images\\Seat_Ateca_2020\\interieur.jpg', 'images\\Seat_Ateca_2020\\cote.png', 'SUV', 'Automatic', 'Diesel', 5, 4, 'D', 160),
+(6, 'Seat', 'Ibiza', 2024, 'images\\Seat_Ibiza_2024\\front.png', 'images\\Seat_Ibiza_2024\\interieur.png', 'images\\Seat_Ibiza_2024\\cote.png', 'Citadine', 'Manual', 'Essence', 5, 2, 'D', 80),
+(7, 'Renault', 'Clio 5', 2022, 'images\\Renault_Clio_5\\Renault_Clio_5_front.png', 'images\\Renault_Clio_5\\renault_inter.jpg', 'images\\Renault_Clio_5\\Renault_Clio_5_cote.png', 'Citadine', 'Automatic', 'Essence', 5, 3, 'D', 90),
+(8, 'Hyundai', 'i20', 2024, 'images\\Hyundai_I20_BVA_2024\\img_front.png', 'images\\Hyundai_I20_BVA_2024\\img_inter.png', 'images\\Hyundai_I20_BVA_2024\\img_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 'D', 120),
+(9, 'Hyundai', 'Grand i10', 2024, 'images\\Hyundai_Grand_i10\\img_front.png', 'images\\Hyundai_Grand_i10\\img_inter.png', 'images\\Hyundai_Grand_i10\\img_cote.png', 'Citadine', 'Automatic', 'Essence', 5, 2, 'D', 110),
+(10, 'Dacia', 'Sandero Stepway', 2024, 'images\\Dacia_Sandero_Stepway\\dacia_sandero-front.jpg', 'images\\Dacia_Sandero_Stepway\\dacia_sandero-inter.png', 'images\\Dacia_Sandero_Stepway\\dacia_cote.webp', 'SUV', 'Manual', 'Diesel', 5, 3, 'D', 150),
+(11, 'Dacia', 'Logan', 2023, 'images\\Dacia_Logan_2023\\dacia_logan_front.webp', 'images\\Dacia_Logan_2023\\dacia_logan_int.png', 'images\\Dacia_Logan_2023\\dacia_logan_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 'D', 110),
+(12, 'Renault', 'Clio 3', 2015, 'images\\clio_3\\clio3_front.png', 'images\\clio_3\\clio3_int.png', 'images\\clio_3\\clio3_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 'D', 75),
+(13, 'Peugeot', 'Traveller', 2024, 'images\\Peugeot_TRAVELLER_2024\\Peugeot_TRAVELLER_2024_front.jpg', 'images\\Peugeot_TRAVELLER_2024\\Peugeot-Traveller-inter.png', 'images\\Peugeot_TRAVELLER_2024\\Peugeot-Traveller-cote.jpg', 'Minivan', 'Manual', 'Diesel', 9, 6, 'D', 290);
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `voitures`
+--
+ALTER TABLE `voitures`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `voitures`
+--
+ALTER TABLE `voitures`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

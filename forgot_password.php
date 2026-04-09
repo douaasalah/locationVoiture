@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "locationvoitures");
+$conn = new mysqli("localhost", "root", "root", "locationvoitures");
 require_once 'mailer.php';
 session_start();
 $erreur = '';
