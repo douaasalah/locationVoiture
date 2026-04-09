@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="form-groupee">
                 <label>Message <span class="req">*</span></label>
-                <textarea name="message" placeholder="Tell us about your travel plans or any question you have..."
+                <textarea name="message" placeholder="Tell us about any question you have..."
                     required><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
             </div>
 
