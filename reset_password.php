@@ -40,72 +40,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $token_valide) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<?php include 'navbar.php'; ?>
 
-<head>
-    <meta charset="UTF-8">
-    <title>GoRent – Reset Password</title>
-    <link rel="stylesheet" href="styles\home.css">
-    <link rel="stylesheet" href="styles\navbar.css">
-    <link rel="stylesheet" href="styles\reset_password.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+<div class="auth-page">
+    <div class="auth-card">
 
-<body>
-
-    <?php include 'navbar.php'; ?>
-
-    <div class="auth-page">
-        <div class="auth-card">
-
-            <?php if (!$token_valide): ?>
-                <div class="token-invalide">
-                    <i class="fa fa-circle-xmark"></i>
-                    <h3>Invalid or expired link</h3>
-                    <p>This reset link is no longer valid.<br>Please make a new request.</p>
-                    <br>
-                    <a href="forgot_password.php" class="btn-submit"
-                        style="display:inline-block; text-decoration:none; padding: 12px 24px;">
-                        New request
-                    </a>
-                </div>
-
-            <?php elseif ($succes): ?>
-                <div class="alert alert-success"><i class="fa fa-circle-check"></i> <?= $succes ?></div>
-                <div class="auth-footer">
-                    <a href="login.php"><i class="fa fa-arrow-right"></i> Sign in now</a>
-                </div>
-
-            <?php else: ?>
-                <h2>New Password</h2>
-                <p class="subtitle">Choose a new password for your account.</p>
-
-                <?php if ($erreur): ?>
-                    <div class="alert alert-error"><i class="fa fa-circle-exclamation"></i> <?= $erreur ?></div>
-                <?php endif; ?>
-
-                <form method="POST">
-                    <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
-                    <div class="form-group">
-                        <label><i class="fa fa-lock"></i> New password</label>
-                        <input type="password" name="mot_de_passe" placeholder="Minimum 6 characters" required>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fa fa-lock"></i> Confirm password</label>
-                        <input type="password" name="confirmer" placeholder="Repeat your password" required>
-                    </div>
-                    <button type="submit" class="btn-submit">Reset password</button>
-                </form>
-
-            <?php endif; ?>
-
-            <div class="auth-footer">
-                <a href="login.php"><i class="fa fa-arrow-left"></i> Back to login</a>
+        <?php if (!$token_valide): ?>
+            <div class="token-invalide">
+                <i class="fa fa-circle-xmark"></i>
+                <h3>Invalid or expired link</h3>
+                <p>This reset link is no longer valid.<br>Please make a new request.</p>
+                <br>
+                <a href="forgot_password.php" class="btn-submit"
+                    style="display:inline-block; text-decoration:none; padding: 12px 24px;">
+                    New request
+                </a>
             </div>
 
+        <?php elseif ($succes): ?>
+            <div class="alert alert-success"><i class="fa fa-circle-check"></i> <?= $succes ?></div>
+            <div class="auth-footer">
+                <a href="login.php"><i class="fa fa-arrow-right"></i> Sign in now</a>
+            </div>
+
+        <?php else: ?>
+            <h2>New Password</h2>
+            <p class="subtitle">Choose a new password for your account.</p>
+
+            <?php if ($erreur): ?>
+                <div class="alert alert-error"><i class="fa fa-circle-exclamation"></i> <?= $erreur ?></div>
+            <?php endif; ?>
+
+            <form method="POST">
+                <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
+                <div class="form-group">
+                    <label><i class="fa fa-lock"></i> New password</label>
+                    <input type="password" name="mot_de_passe" placeholder="Minimum 6 characters" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa fa-lock"></i> Confirm password</label>
+                    <input type="password" name="confirmer" placeholder="Repeat your password" required>
+                </div>
+                <button type="submit" class="btn-submit">Reset password</button>
+            </form>
+
+        <?php endif; ?>
+
+        <div class="auth-footer">
+            <a href="login.php"><i class="fa fa-arrow-left"></i> Back to login</a>
         </div>
+
     </div>
+</div>
 
 </body>
 

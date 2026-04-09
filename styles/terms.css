@@ -1,8 +1,9 @@
 .terms-hero {
     background: linear-gradient(135deg, var(--blue), #0b7a8f);
-    padding: 80px 20px;
+    padding: 55px 15px;
     text-align: center;
     color: #fff;
+    margin-top: 68px;
 }
 
 .terms-hero h1 {
@@ -33,7 +34,7 @@
     background: #fff;
     border-radius: 16px;
     padding: 28px 32px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
     display: flex;
     gap: 24px;
     align-items: flex-start;
