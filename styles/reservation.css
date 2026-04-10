@@ -1,0 +1,663 @@
+
+:root {
+    --bg: #f0f3f8;
+    --navy: #0d1b3e;
+    --blue: #0e9ab5;
+    --blue-soft: #EBF4F6;
+    --btnsrv: #0b7d94;
+    --text: #0d1b3e;
+    --text-m: #5b6a8a;
+    --border: #e5e7eb;
+    --white: #ffffff;
+    --shadow: 0 4px 15px rgba(13, 27, 62, 0.08);
+    --shadow-hover: 0 8px 25px rgba(13, 27, 62, 0.12);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding-top: 80px;
+}
+
+/* Container principal */
+.reservation-container {
+    max-width: 1400px;
+    margin: 0 auto 3rem auto;
+    padding: 0 2rem;
+}
+
+/* Wrapper - Disposition côte à côte */
+.reservation-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.reservation-form {
+    flex: 2;
+    min-width: 300px;
+}
+
+/* Récapitulatif à droite */
+.recap-sidebar {
+    flex: 1;
+    min-width: 380px;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+}
+
+/* Section Cards */
+.section-card {
+    background: var(--white);
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.section-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.section-title {
+    background: var(--blue);
+    color: white;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Options supplémentaires */
+.options-list {
+    padding: 0.5rem 1.5rem 1rem 1.5rem;
+}
+
+.option-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+}
+
+.option-item:last-child {
+    border-bottom: none;
+}
+
+.option-item:hover {
+    background: var(--blue-soft);
+    margin: 0 -0.5rem;
+    padding: 1rem 0.5rem;
+    border-radius: 12px;
+}
+
+.option-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.option-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.option-price {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--blue);
+}
+
+.option-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--blue);
+    cursor: pointer;
+}
+
+/* Assurances */
+.insurance-list {
+    padding: 1rem 1.5rem;
+}
+
+.insurance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.insurance-item:last-child {
+    margin-bottom: 0;
+}
+
+.insurance-item:hover {
+    border-color: var(--blue);
+    background: var(--blue-soft);
+}
+
+.insurance-item.selected {
+    border-color: var(--blue);
+    background: var(--blue-soft);
+    box-shadow: 0 2px 8px rgba(14, 154, 181, 0.15);
+}
+
+.insurance-info {
+    flex: 1;
+}
+
+.insurance-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.insurance-price {
+    font-size: 0.8rem;
+    color: var(--blue);
+    font-weight: 600;
+}
+
+.insurance-item input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--blue);
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+/* Formulaire conducteur */
+.form-container {
+    padding: 1.5rem;
+}
+
+.form-civility {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.civility-label {
+    font-weight: 600;
+    color: var(--text);
+    min-width: 80px;
+    color:#0e9ab5;
+}
+
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--text);
+}
+
+.radio-label input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--blue);
+    cursor: pointer;
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label i {
+    color: var(--blue);
+    margin-right: 0.4rem;
+    width: 16px;
+    text-align: center;
+}
+
+.section-title i {
+    margin-right: 0.5rem;
+    opacity: 0.9;
+}
+
+.civility-label i {
+    color: var(--blue);
+    margin-right: 0.4rem;
+}
+
+.btn-reserve i {
+    margin-right: 0.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text);
+    color:#0e9ab5;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.85rem;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-family: 'Urbanist', sans-serif;
+    transition: all 0.2s ease;
+    background: var(--white);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(14, 154, 181, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #cbd5e1;
+}
+
+/* Bouton réserver */
+.btn-reserve {
+    width: 100%;
+    padding: 1rem;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    font-family: 'Urbanist', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-reserve:hover {
+    background: var(--btnsrv);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(14, 154, 181, 0.3);
+}
+
+/* ========== RÉCAPITULATIF À DROITE ========== */
+
+/* Carte du récapitulatif */
+.recap-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(13, 27, 62, 0.08);
+}
+
+.recap-title {
+    background: var(--blue);
+    color: white;
+    padding: 1.2rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+    text-align: center;
+}
+
+/* Infos véhicule */
+.vehicle-info {
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.vehicle-info h4 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+}
+
+.vehicle-sub {
+    font-size: 0.85rem;
+    color: var(--text-m);
+}
+
+/* Dates et lieux */
+.dates-info {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: #fafafa;
+}
+
+.date-item {
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.date-item:last-child {
+    margin-bottom: 0;
+}
+
+.date-item strong {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+.location {
+    font-size: 0.8rem;
+    color: var(--text-m);
+    display: block;
+    margin-top: 0.25rem;
+}
+
+/* Caution */
+.caution-info {
+    padding: 1rem 1.5rem;
+    background: #fff8e7;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: #b45309;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.caution-info strong {
+    font-weight: 700;
+}
+
+/* Détails prix */
+.price-details {
+    padding: 1rem 1.5rem;
+}
+
+.price-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+.option-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+    color: var(--blue);
+    border-bottom: 1px dashed var(--border);
+}
+
+/* Total */
+.total-price {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+    background: var(--blue-soft);
+    font-weight: 800;
+    font-size: 1.2rem;
+    border-top: 2px solid var(--blue);
+}
+
+.total-price span:first-child {
+    color: var(--text);
+}
+
+.total-price span:last-child {
+    color: var(--blue);
+    font-size: 1.3rem;
+}
+
+.vehicle-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+}
+
+.vehicle-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.vehicle-image img:hover {
+    transform: scale(1.03);
+}
+
+.vehicle-specs {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.vehicle-specs span {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--text-m);
+    background: var(--bg);
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+}
+
+.vehicle-specs i {
+    color: var(--blue);
+    font-size: 0.75rem;
+}
+
+/* Messages */
+.success-message {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+    max-width: 500px;
+    margin: 3rem auto;
+    box-shadow: var(--shadow);
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--blue);
+    color: white;
+    font-size: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.error-message {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    border-left: 4px solid #dc2626;
+}
+
+.no-options {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-m);
+    font-size: 0.9rem;
+}
+
+.btn-back {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--blue);
+    color: white;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background: var(--btnsrv);
+    transform: translateY(-2px);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+    body {
+        padding-top: 70px;
+    }
+    
+    .reservation-container {
+        padding: 0 0.5rem;
+        margin: 0 auto 2rem auto;
+    }
+
+    /* Garde le layout en ROW même sur mobile */
+    .reservation-wrapper {
+        gap: 1rem !important;
+    }
+
+    .recap-sidebar {
+        flex: 0 0 280px !important;
+        width: 280px !important;
+        min-width: 280px !important;
+    }
+
+    .form-row-2 {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .form-civility {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .section-title {
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+    }
+    
+    .form-container {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .reservation-container {
+        padding: 0 0.25rem;
+    }
+
+    .recap-sidebar {
+        flex: 0 0 220px !important;
+        width: 220px !important;
+        min-width: 220px !important;
+    }
+
+    .recap-title {
+        font-size: 0.85rem;
+        padding: 0.9rem 1rem;
+    }
+
+    .vehicle-info h4 {
+        font-size: 1rem;
+    }
+
+    .total-price {
+        font-size: 0.95rem;
+        padding: 1rem;
+    }
+
+    .insurance-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .insurance-item input[type="radio"] {
+        margin-left: 0;
+    }
+    
+    .radio-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .success-message {
+        padding: 2rem 1rem;
+        margin: 2rem 1rem;
+    }
+}
+
+/* ========== FORCER LA DISPOSITION (JAMAIS COLONNE) ========== */
+.reservation-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 2rem !important;
+    align-items: flex-start !important;
+    flex-wrap: nowrap !important;
+}
+
+.reservation-form {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+}
+
+.recap-sidebar {
+    flex: 0 0 380px !important;
+    width: 380px !important;
+    min-width: 0 !important;
+    position: sticky !important;
+    top: 100px !important;
+    align-self: flex-start !important;
+}
+
+.recap-card {
+    background: white !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 15px rgba(13, 27, 62, 0.08) !important;
+}

@@ -208,7 +208,7 @@ if (isset($_SESSION['user_id'])) {
                             <div class="car-buttons">
                                 <a href="details.php?id=<?php echo $row['id']; ?>&<?php echo http_build_query($_GET); ?>"
                                     class="btn-outline">View Details</a>
-                                <a href="<?php echo isset($_SESSION['user_id']) ? 'book.php?id=' . $row['id'] : 'login.php?redirect=book.php?id=' . $row['id']; ?>"
+                                <a href="<?php echo isset($_SESSION['user_id']) ? 'reservation.php?id=' . $row['id'] : 'login.php?redirect=reservation.php?id=' . $row['id']; ?>"
                                     class="btn-primary">Book Now</a>
                             </div>
                         </div>

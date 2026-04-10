@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="styles\terms.css">
     <link rel="stylesheet" href="styles\about.css">
     <link rel="stylesheet" href="styles\contact.css">
+    <link rel="stylesheet" href="styles\reservation.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script>
         window.onload = function () {
