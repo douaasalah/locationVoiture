@@ -19,10 +19,12 @@ if (isset($_SESSION['user_id'])) {
 <div class="details-container">
     <div class="container-left">
         <div class="details-top">
-
+            
             <!-- Header : nom + type à gauche, prix à droite -->
             <div class="details-header">
+                
                 <div class="details-title">
+                    
                     <h1>
                         <?php
                         if ($car['marque'] == 'Land Rover') {
@@ -39,6 +41,7 @@ if (isset($_SESSION['user_id'])) {
                     <span class="per-day">per day</span>
                 </div>
             </div>
+            
 
             <!-- Galerie avec flèches -->
             <div class="details-gallery">
@@ -147,11 +150,8 @@ if (isset($_SESSION['user_id'])) {
             </ul>
         </div>
     </div>
-    <div class="container-right">
-        <div class="booking-summary">
-            <h2>Booking Summary</h2>
-
-            <?php
+    
+    <?php
             $pickup_date = isset($_GET['pickup-date']) ? $_GET['pickup-date'] : '';
             $dropoff_date = isset($_GET['dropoff-date']) ? $_GET['dropoff-date'] : '';
             $pickup_location = isset($_GET['pickup-location']) ? $_GET['pickup-location'] : '';
@@ -169,6 +169,11 @@ if (isset($_SESSION['user_id'])) {
 
             $total = $days * $car['prix'];
             ?>
+
+    <?php if (!empty($pickup_date) && !empty($dropoff_date)): ?>
+    <div class="container-right">
+        <div class="booking-summary">
+            <h2>Booking Summary</h2>
 
             <div class="summary-item">
                 <span class="summary-label">Pickup</span>
@@ -209,7 +214,7 @@ if (isset($_SESSION['user_id'])) {
             <hr>
 
             <div class="summary-total">
-                <strong>Total Price</strong>
+            <strong>Total Price</strong>
                 <strong class="total-price"><?php echo $days > 0 ? $total . ' DT' : '—'; ?></strong>
             </div>
 
@@ -233,6 +238,7 @@ if (isset($_SESSION['user_id'])) {
 
         </div>
     </div>
+    <?php endif; ?>
 </div>
 <?php include("footer.php"); ?>
 

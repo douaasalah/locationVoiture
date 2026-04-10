@@ -154,6 +154,7 @@ if (isset($_SESSION['user_id'])) {
                     $isFav = in_array($row['id'], $favoris);
                     ?>
                     <div class="car-card">
+                    
                         <div class="car-desc">
                             <div class="car-image">
                                 <img src="<?php echo $row['imgfront']; ?>" alt="voiture">
@@ -171,24 +172,24 @@ if (isset($_SESSION['user_id'])) {
                                 <span class="price-day"><?php echo $row['prix']; ?>DT</span>
                                 <span class="per-day">per day</span>
 
-                                <!-- Bouton Favori -->
-                                <?php if (isset($_SESSION['user_id'])): ?>
-                                    <a href="#" onclick="toggleFav(this, <?= $row['id'] ?>); return false;"
-                                        style="display:inline-block; margin-top:10px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
-                                        <i class="<?= $isFav ? 'fa-solid' : 'fa-regular' ?> fa-heart"
-                                            id="heart-<?= $row['id'] ?>"></i>
-                                    </a>
-                                <?php else: ?>
-                                    <a href="login.php"
-                                        style="display:inline-block; margin-top:10px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
-                                        <i class="fa-regular fa-heart"></i>
-                                    </a>
-                                <?php endif; ?>
+                                
                             </div>
                         </div>
                         <div class="car-footer">
                             <div>
+                            
                                 <div class="name">
+                                <div class="fav-container" style="display:inline">
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="#" onclick="toggleFav(this, <?= $row['id'] ?>); return false;" style="display:inline-block; margin-top:10px; color:#e53e3e; text-decoration:none; font-size:1.2rem;" class="fav-link">
+                <i class="<?= $isFav ? 'fa-solid' : 'fa-regular' ?> fa-heart" id="heart-<?= $row['id'] ?>"></i>
+            </a>
+        <?php else: ?>
+            <a href="login.php" class="fav-link">
+                <i class="fa-regular fa-heart"></i>
+            </a>
+        <?php endif; ?>
+    </div>
                                     <strong>
                                         <?php
                                         if ($row['marque'] == 'Land Rover') {
@@ -198,6 +199,7 @@ if (isset($_SESSION['user_id'])) {
                                         }
                                         ?>
                                     </strong>
+                                    
                                 </div>
                                 <div class="type">
                                     <?php echo $row['type']; ?>
