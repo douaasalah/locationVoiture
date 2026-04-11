@@ -1,0 +1,263 @@
+<?php
+session_start();
+$conn = new mysqli("localhost", "root", "", "locationvoitures");
+
+// Protection admin
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$admin_id = $_SESSION['admin_id'];
+$success = '';
+$erreur = '';
+
+// Récupérer les infos admin
+$stmt = $conn->prepare("SELECT idadmin, nom, email, motdepasse FROM admin WHERE idadmin = ?");
+$stmt->bind_param("i", $admin_id);
+$stmt->execute();
+$stmt->bind_result($id, $nom, $email, $motdepasse);
+$stmt->fetch();
+$stmt->close();
+
+// Mise à jour du profil
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Changer nom / email
+    if (isset($_POST['update_info'])) {
+        $new_nom = trim($_POST['nom']);
+        $new_email = trim($_POST['email']);
+
+        $stmt = $conn->prepare("UPDATE admin SET nom = ?, email = ? WHERE idadmin = ?");
+        $stmt->bind_param("ssi", $new_nom, $new_email, $admin_id);
+        if ($stmt->execute()) {
+            $_SESSION['admin_nom'] = $new_nom;
+            $_SESSION['admin_email'] = $new_email;
+            $nom = $new_nom;
+            $email = $new_email;
+            $success = "Profile updated successfully!";
+        } else {
+            $erreur = "Error updating profile.";
+        }
+        $stmt->close();
+    }
+
+    // Changer mot de passe
+    if (isset($_POST['update_password'])) {
+        $current = $_POST['current_password'];
+        $new_pwd = $_POST['new_password'];
+        $confirm = $_POST['confirm_password'];
+
+        if ($current !== $motdepasse) {
+            $erreur = "Current password is incorrect.";
+        } elseif ($new_pwd !== $confirm) {
+            $erreur = "New passwords do not match.";
+        } elseif (strlen($new_pwd) < 4) {
+            $erreur = "Password must be at least 4 characters.";
+        } else {
+            $stmt = $conn->prepare("UPDATE admin SET motdepasse = ? WHERE idadmin = ?");
+            $stmt->bind_param("si", $new_pwd, $admin_id);
+            if ($stmt->execute()) {
+                $success = "Password changed successfully!";
+                $motdepasse = $new_pwd;
+            } else {
+                $erreur = "Error changing password.";
+            }
+            $stmt->close();
+        }
+    }
+}
+
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Profile — GoRent</title>
+    <link rel="stylesheet" href="styles/dashboard.css" />
+    <link rel="stylesheet" href="styles/profil.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR (identique au dashboard) -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <h2>Go<span>Rent</span></h2>
+                <p>Admin Panel</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.php" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                <a href="reservations.php" class="nav-item">
+                    <i class="fa-solid fa-calendar-check"></i> Reservations
+                </a>
+                <a href="voitures.php" class="nav-item">
+                    <i class="fa-solid fa-car"></i> Vehicles
+                </a>
+                <a href="clients.php" class="nav-item">
+                    <i class="fa-solid fa-users"></i> Clients
+                </a>
+                <a href="reviews.php" class="nav-item">
+                    <i class="fa-solid fa-money-bill-wave"></i> Reviews
+                </a>
+            </nav>
+            <a href="logout.php" class="sidebar-logout">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="admin-main">
+
+            <!-- Header -->
+            <div class="admin-header">
+                <h1>My Profile</h1>
+                <div class="admin-profile">
+                    <div class="profile-avatar">
+                        <?php echo strtoupper(substr($_SESSION['admin_nom'], 0, 1)); ?>
+                    </div>
+                    <div class="profile-info">
+                        <strong>
+                            <?php echo htmlspecialchars($_SESSION['admin_nom']); ?>
+                        </strong>
+                        <span>Administrator</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-page">
+
+                <!-- Alertes -->
+                <?php if ($erreur): ?>
+                    <div class="alert alert-error">
+                        <i class="fa fa-circle-exclamation"></i>
+                        <?= htmlspecialchars($erreur) ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($success): ?>
+                    <div class="alert alert-success">
+                        <i class="fa fa-circle-check"></i>
+                        <?= htmlspecialchars($success) ?>
+                    </div>
+                <?php endif; ?>
+
+                <!-- Bannière profil -->
+                <div class="profile-banner">
+                    <div class="avatar">
+                        <?= strtoupper(substr($nom, 0, 1)) ?>
+                    </div>
+                    <div>
+                        <h2>
+                            <?= htmlspecialchars($nom) ?>
+                        </h2>
+                        <p>
+                            <?= htmlspecialchars($email) ?>
+                        </p>
+                        <span class="info-badge" style="margin-top:8px; display:inline-flex;">
+                            <i class="fa fa-shield-halved"></i> Administrator
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Formulaire infos -->
+                <div class="profile-card">
+                    <h3><i class="fa fa-user"></i> Personal Information</h3>
+                    <form method="POST" action="profile.php">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fa fa-user"></i> Full name</label>
+                                <div class="input-wrap">
+                                    <i class="fa fa-user input-icon"></i>
+                                    <input type="text" name="nom" value="<?= htmlspecialchars($nom) ?>" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fa fa-envelope"></i> Email</label>
+                                <div class="input-wrap">
+                                    <i class="fa fa-envelope input-icon"></i>
+                                    <input type="email" name="email" value="<?= htmlspecialchars($email) ?>" required />
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" name="update_info" class="btn-save">
+                            <i class="fa fa-floppy-disk"></i> Save changes
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Formulaire mot de passe -->
+                <div class="profile-card">
+                    <h3><i class="fa fa-lock"></i> Change Password</h3>
+                    <form method="POST" action="profile.php">
+                        <div class="form-group">
+                            <label><i class="fa fa-lock"></i> Current password</label>
+                            <div class="input-wrap">
+                                <i class="fa fa-lock input-icon"></i>
+                                <input type="password" name="current_password" id="pwd1" placeholder="••••••••"
+                                    required />
+                                <button type="button" class="toggle-pwd" onclick="toggle('pwd1','eye1')">
+                                    <i class="fa fa-eye" id="eye1"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fa fa-key"></i> New password</label>
+                                <div class="input-wrap">
+                                    <i class="fa fa-key input-icon"></i>
+                                    <input type="password" name="new_password" id="pwd2" placeholder="••••••••"
+                                        required />
+                                    <button type="button" class="toggle-pwd" onclick="toggle('pwd2','eye2')">
+                                        <i class="fa fa-eye" id="eye2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fa fa-key"></i> Confirm password</label>
+                                <div class="input-wrap">
+                                    <i class="fa fa-key input-icon"></i>
+                                    <input type="password" name="confirm_password" id="pwd3" placeholder="••••••••"
+                                        required />
+                                    <button type="button" class="toggle-pwd" onclick="toggle('pwd3','eye3')">
+                                        <i class="fa fa-eye" id="eye3"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" name="update_password" class="btn-save">
+                            <i class="fa fa-lock"></i> Change password
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggle(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -78,12 +78,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_reservation'])
     $check_result = $check_stmt->get_result();
 
     if ($check_result->num_rows > 0) {
-        // ✅ Client existe → récupérer l'ID uniquement, aucune modification
+        //  Client existe → récupérer l'ID uniquement, aucune modification
         $client = $check_result->fetch_assoc();
         $client_id = (int) $client['idclient'];
 
     } else {
-        // ✅ Nouveau client → créer le compte (nom + email uniquement)
+        // Nouveau client → créer le compte (nom + email uniquement)
         $motdepasse = password_hash($email, PASSWORD_DEFAULT);
         $insert_stmt = $conn->prepare("INSERT INTO users (nom, email, motdepasse) VALUES (?, ?, ?)");
         $insert_stmt->bind_param("sss", $nom, $email, $motdepasse);

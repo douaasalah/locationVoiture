@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 11 avr. 2026 à 03:50
+-- Généré le : sam. 11 avr. 2026 à 15:44
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -33,6 +33,13 @@ CREATE TABLE `admin` (
   `email` varchar(70) NOT NULL,
   `motdepasse` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `admin`
+--
+
+INSERT INTO `admin` (`idadmin`, `nom`, `email`, `motdepasse`) VALUES
+(1, 'admin', 'douaasalah262@gmail.com', 'admin');
 
 -- --------------------------------------------------------
 
@@ -195,7 +202,8 @@ INSERT INTO `reservation` (`id_reservation`, `id_client`, `id_voiture`, `date_re
 (24, 17, 1, '2026-04-11 00:10:05', '2026-04-12', '2026-04-15', 'En attente', 240.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
 (25, 18, 4, '2026-04-11 00:21:01', '2026-04-12', '2026-04-15', 'En attente', 570.00, '+21693062728', 'sayada', '2009-10-16', 'monsieur'),
 (26, 18, 2, '2026-04-11 00:57:54', '2026-04-12', '2026-04-15', 'En attente', 315.00, '+21693062728', 'sayada', '2009-10-16', 'madame'),
-(27, 18, 2, '2026-04-11 01:03:19', '2026-04-12', '2026-04-15', 'En attente', 315.00, '+21693062728', 'sayada', '2009-10-16', 'madame');
+(27, 18, 2, '2026-04-11 01:03:19', '2026-04-12', '2026-04-15', 'En attente', 315.00, '+21693062728', 'sayada', '2009-10-16', 'madame'),
+(28, 18, 5, '2026-04-11 09:02:55', '2026-04-12', '2026-04-15', 'En attente', 525.00, '+21693062728', 'sayada', '2000-10-16', 'monsieur');
 
 -- --------------------------------------------------------
 
@@ -221,14 +229,11 @@ INSERT INTO `reservation_options` (`idreservation`, `idoption`) VALUES
 (24, 12),
 (25, 4),
 (25, 11),
-(26, 2),
-(26, 4),
-(26, 5),
-(26, 10),
-(27, 2),
-(27, 4),
-(27, 5),
-(27, 10);
+(28, 1),
+(28, 2),
+(28, 4),
+(28, 5),
+(28, 10);
 
 -- --------------------------------------------------------
 
@@ -489,7 +494,7 @@ ALTER TABLE `voitures_options`
 -- AUTO_INCREMENT pour la table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `idadmin` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idadmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `avis`
@@ -525,7 +530,7 @@ ALTER TABLE `password_resets`
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT pour la table `users`
