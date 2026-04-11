@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
             <div class="info-text">
                 <h4>Address</h4>
-                <p>Tunis,Tunisia</p>
+                <p>Monastir,Tunisia</p>
                 <a href="https://maps.google.com" target="_blank">Get Directions <i
                         class="fa-solid fa-arrow-right"></i></a>
             </div>
