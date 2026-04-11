@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 09 avr. 2026 à 23:09
+-- Généré le : ven. 10 avr. 2026 à 22:30
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -105,7 +105,8 @@ CREATE TABLE `favoris` (
 
 INSERT INTO `favoris` (`id`, `id_client`, `id_voiture`, `created_at`) VALUES
 (41, 1, 2, '2026-04-09 11:14:21'),
-(46, 1, 1, '2026-04-09 11:45:13');
+(46, 1, 1, '2026-04-09 11:45:13'),
+(50, 2, 3, '2026-04-10 12:22:11');
 
 -- --------------------------------------------------------
 
@@ -133,11 +134,13 @@ INSERT INTO `options` (`id`, `nom`, `description`, `prix`, `est_inclus`) VALUES
 (5, 'Clé USB', '', 0.00, 0),
 (6, 'Caméra de recul', '', 0.00, 0),
 (7, 'GPS', '', 0.00, 0),
-(8, 'Siège bébé', '', 9.00, 1),
+(8, 'Siège bébé', '', 3.00, 1),
 (9, 'Réservoir plein', '', 140.00, 1),
-(10, 'Assurance protection plus', 'Protection contre le vol\nBris de glace, phares et pneumatiques\nProtection personnelle accident (conducteur et passagers)', 15.00, 1),
-(11, 'Assurance tous risques', 'Assurance corporelle (conducteur et passagers)\nAssurance responsabilité civile\nProtection contre l’incendie et catastrophes naturelles\nProtection contre les dommages résultant d’une collision (conducteur non fautif)\nLimitation responsabilité locataire en cas de dommages au véhicule : 1500 TND\nProtec', 30.00, 1),
-(12, 'Pas d’assurance', 'Le client ne souhaite pas d’assurance et assume tous les risques', 0.00, 1);
+(10, 'Protection insurance', 'Protection contre le vol\nBris de glace, phares et pneumatiques\nProtection personnelle accident (conducteur et passagers)', 15.00, 1),
+(11, 'Full insurance', 'Assurance corporelle (conducteur et passagers)\nAssurance responsabilité civile\nProtection contre l’incendie et catastrophes naturelles\nProtection contre les dommages résultant d’une collision (conducteur non fautif)\nLimitation responsabilité locataire en cas de dommages au véhicule : 1500 TND\nProtec', 30.00, 1),
+(12, 'No insurance', 'Le client ne souhaite pas d’assurance et assume tous les risques', 0.00, 1),
+(13, 'Private Driver', '', 50.00, 1),
+(14, 'Unlimited Wi-Fi 4G', '', 10.00, 1);
 
 -- --------------------------------------------------------
 
@@ -181,7 +184,11 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`id_reservation`, `id_client`, `id_voiture`, `date_reservation`, `date_debut`, `date_fin`, `statut`, `total`) VALUES
-(1, 1, 1, '2026-04-09 20:41:45', '2026-04-09', '2026-04-10', 'En attente', NULL);
+(1, 1, 1, '2026-04-09 20:41:45', '2026-04-09', '2026-04-10', 'En attente', NULL),
+(3, 2, 3, '2026-04-10 12:26:01', '2026-04-11', '2026-04-14', 'En attente', 360.00),
+(5, 2, 2, '2026-04-10 18:14:20', '2026-04-11', '2026-04-14', 'En attente', 270.00),
+(6, 2, 4, '2026-04-10 19:31:35', '2026-04-11', '2026-04-14', 'En attente', 480.00),
+(12, 9, 5, '2026-04-10 20:29:25', '2026-04-11', '2026-04-14', 'En attente', 480.00);
 
 -- --------------------------------------------------------
 
@@ -194,6 +201,18 @@ CREATE TABLE `reservation_options` (
   `idoption` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `reservation_options`
+--
+
+INSERT INTO `reservation_options` (`idreservation`, `idoption`) VALUES
+(3, 12),
+(5, 12),
+(6, 4),
+(6, 12),
+(12, 5),
+(12, 12);
+
 -- --------------------------------------------------------
 
 --
@@ -203,6 +222,7 @@ CREATE TABLE `reservation_options` (
 CREATE TABLE `users` (
   `idclient` int(11) NOT NULL,
   `email` varchar(70) NOT NULL,
+  `civility` varchar(20) NOT NULL,
   `nom` varchar(100) NOT NULL,
   `motdepasse` varchar(100) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -214,9 +234,10 @@ CREATE TABLE `users` (
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`idclient`, `email`, `nom`, `motdepasse`, `created_at`, `telephone`, `datenaiss`) VALUES
-(1, 'saklyimen24@gmail.com', 'sakly imen', '$2y$10$qtdEOAmidx5rwW0h5und7eQKt5Iqohu7.ZIdqjM.Ay55pQ4zODic6', '2026-04-08 14:47:11', '', '1900-01-01'),
-(2, 'douaasalah262@gmail.com', 'Salah', '$2y$10$sMJWzwCiC96M56C2ZAfsvuK58vlyJma5Tcj7gbTUnV.AEJ6SELFqG', '2026-04-09 15:17:18', '', '0000-00-00');
+INSERT INTO `users` (`idclient`, `email`, `civility`, `nom`, `motdepasse`, `created_at`, `telephone`, `datenaiss`) VALUES
+(1, 'saklyimen24@gmail.com', '', 'sakly imen', '$2y$10$qtdEOAmidx5rwW0h5und7eQKt5Iqohu7.ZIdqjM.Ay55pQ4zODic6', '2026-04-08 14:47:11', '', '1900-01-01'),
+
+
 
 -- --------------------------------------------------------
 
@@ -246,14 +267,14 @@ CREATE TABLE `voitures` (
 
 INSERT INTO `voitures` (`id`, `marque`, `modele`, `annee`, `imgfront`, `imginter`, `imgcote`, `type`, `boite`, `carburant`, `places`, `bagages`, `prix`) VALUES
 (1, 'Kia', 'Picanto', 2023, 'imgVoitures\\Kia_Picanto_2023\\front.png', 'imgVoitures/Kia_Picanto_2023/interieur.png', 'imgVoitures/Kia_Picanto_2023/cote.png', 'Citadine', 'Automatic', 'Essence', 5, 4, 80),
-(2, 'Kia', 'Rio', 2020, 'imgVoitures\\Kia_Rio_2020\\front.png', 'imgVoitures/Kia_Rio_2020/interieur.png', 'imgVoitures/Kia_Rio_2020/cote.png', 'Berline', 'Automatic', 'Essence', 5, 4, 70),
+(2, 'Kia', 'Rio', 2020, 'imgVoitures\\Kia_Rio_2020\\front.png', 'imgVoitures/Kia_Rio_2020/interieur.png', 'imgVoitures/Kia_Rio_2020/cote.png', 'Berline', 'Automatic', 'Essence', 5, 4, 90),
 (3, 'Peugeot', '208', 2024, 'imgVoitures\\Peugeot_208_2024\\front.avif', 'imgVoitures/Peugeot_208_2024/interieur.jpg', 'imgVoitures/Peugeot_208_2024/coté.png', 'Citadine', 'Automatic', 'Essence', 5, 2, 120),
 (4, 'Peugeot', '2008', 2020, 'imgVoitures\\Peugeot_2008_2020\\front.webp', 'imgVoitures/Peugeot_2008_2020/interieur.webp', 'imgVoitures/Peugeot_2008_2020/cote.webp', 'Citadine', 'Automatic', 'Essence', 5, 2, 160),
 (5, 'Seat', 'Ateca', 2020, 'imgVoitures\\Seat_Ateca_2020\\front.png', 'imgVoitures/Seat_Ateca_2020/interieur.jpg', 'imgVoitures/Seat_Ateca_2020/cote.png', 'SUV', 'Automatic', 'Diesel', 5, 4, 160),
 (6, 'Seat', 'Ibiza', 2024, 'imgVoitures\\Seat_Ibiza_2024\\front.png', 'imgVoitures/Seat_Ibiza_2024/interieur.png', 'imgVoitures/Seat_Ibiza_2024/cote.png', 'Citadine', 'Manual', 'Essence', 5, 2, 80),
 (7, 'Renault', 'Clio 5', 2022, 'imgVoitures\\Renault_Clio_5\\Renault_Clio_5_front.png', 'imgVoitures/Renault_Clio_5/Renault_Clio_5_inter.png', 'imgVoitures/Renault_Clio_5/Renault_Clio_5_cote.png', 'Citadine', 'Automatic', 'Essence', 5, 3, 90),
 (8, 'Hyundai', 'i20', 2024, 'imgVoitures\\Hyundai_I20_BVA_2024\\img_front.png', 'imgVoitures/Hyundai_I20_BVA_2024/img_inter.png', 'imgVoitures/Hyundai_I20_BVA_2024/img_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 120),
-(9, 'Hyundai', 'Grand i10', 2024, 'imgVoitures\\Hyundai_Grand_i10\\img_front.png', 'imgVoitures/Hyundai_Grand_i10/img_inter.png', 'imgVoitures/Hyundai_Grand_i10/img_cote.png', 'Citadine', 'Automatic', 'Essence', 5, 2, 110),
+(9, 'Hyundai', 'Grand i10', 2024, 'imgVoitures\\Hyundai_Grand_i10\\img_front.png', 'imgVoitures/Hyundai_Grand_i10/img_inter.png', 'imgVoitures/Hyundai_Grand_i10/img_cote.png', 'Citadine', 'Automatic', 'Essence', 5, 2, 90),
 (10, 'Dacia', 'Sandero Stepway', 2024, 'imgVoitures\\Dacia_Sandero_Stepway\\dacia_sandero-front.jpg', 'imgVoitures/Dacia_Sandero_Stepway/dacia_sandero-inter.png', 'imgVoitures/Dacia_Sandero_Stepway/dacia_cote.webp', 'SUV', 'Manual', 'Diesel', 5, 3, 150),
 (11, 'Dacia', 'Logan', 2023, 'imgVoitures\\Dacia_Logan_2023\\dacia_logan_front.webp', 'imgVoitures/Dacia_Logan_2023/dacia_logan_int.png', 'imgVoitures/Dacia_Logan_2023/dacia_logan_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 110),
 (12, 'Renault', 'Clio 3', 2015, 'imgVoitures\\clio_3\\clio3_front.png', 'imgVoitures/clio_3/clio3_int.png', 'imgVoitures/clio_3/clio3_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 75),
@@ -471,13 +492,13 @@ ALTER TABLE `contact_messages`
 -- AUTO_INCREMENT pour la table `favoris`
 --
 ALTER TABLE `favoris`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT pour la table `options`
 --
 ALTER TABLE `options`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `password_resets`
@@ -489,13 +510,13 @@ ALTER TABLE `password_resets`
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `voitures`

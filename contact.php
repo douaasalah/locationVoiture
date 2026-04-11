@@ -4,44 +4,46 @@ $conn = new mysqli("localhost", "root", "", "locationvoitures");
 if ($conn->connect_error) {
     die("Erreur connexion: " . $conn->connect_error);
 }
-include 'navbar.php'; ?>
-<div class="terms-hero">
-    <h1>Contact <span>Us</span></h1>
-    <p>We're here to help — reach out anytime and we'll respond within 24 hours</p>
-</div>
-<?php
-include 'navbar.php';
 
-// ─── DB connection (adapt to your config file) ───
 $success = '';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $phone = trim($_POST['phone'] ?? '');
-    $message = trim($_POST['message'] ?? '');
-
-    if ($name === '' || $email === '' || $message === '') {
-        $error = 'Please fill in all required fields.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = 'Please enter a valid email address.';
+    if (!isset($_SESSION['user_id'])) {
+        $error = 'You must be logged in to send a message. <a href="login.php">Sign in here</a>.';
     } else {
-        $stmt = $conn->prepare(
-            "INSERT INTO contact_messages (name, email, phone, message, created_at)
-             VALUES (?, ?, ?, ?, NOW())"
-        );
-        $stmt->bind_param('ssss', $name, $email, $phone, $message);
-        if ($stmt->execute()) {
-            $success = 'Your message has been sent! We\'ll get back to you within 24 hours.';
+        $name = trim($_POST['name'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $phone = trim($_POST['phone'] ?? '');
+        $message = trim($_POST['message'] ?? '');
+
+        if ($name === '' || $email === '' || $message === '') {
+            $error = 'Please fill in all required fields.';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error = 'Please enter a valid email address.';
         } else {
-            $error = 'Something went wrong. Please try again.';
+            $stmt = $conn->prepare(
+                "INSERT INTO contact_messages (name, email, phone, message, created_at)
+                 VALUES (?, ?, ?, ?, NOW())"
+            );
+            $stmt->bind_param('ssss', $name, $email, $phone, $message);
+            if ($stmt->execute()) {
+                $success = 'Your message has been sent! We\'ll get back to you within 24 hours.';
+            } else {
+                $error = 'Something went wrong. Please try again.';
+            }
+            $stmt->close();
         }
-        $stmt->close();
     }
 }
 ?>
 
+<?php include 'navbar.php'; ?>
+
+<div class="terms-hero">
+    <h1>Contact <span>Us</span></h1>
+    <p>We're here to help — reach out anytime and we'll respond within 24 hours</p>
+</div>
 
 <!-- ─── MAIN CONTENT ─── -->
 <div class="contact-wrap">
@@ -61,7 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if ($error): ?>
             <div class="alert alert-error">
                 <i class="fa-solid fa-circle-exclamation"></i>
-                <?= htmlspecialchars($error) ?>
+                <?= $error ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (!isset($_SESSION['user_id'])): ?>
+            <div class="alert alert-warning">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                You must be <a href="login.php">logged in</a> to send a message.
             </div>
         <?php endif; ?>
 
@@ -70,12 +79,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-groupee">
                     <label>Your Name <span class="req">*</span></label>
                     <input type="text" name="name" placeholder="John Doe"
-                        value="<?= htmlspecialchars($_POST['name'] ?? '') ?>" required>
+                        value="<?= htmlspecialchars($_POST['name'] ?? '') ?>" <?= !isset($_SESSION['user_id']) ? 'disabled' : '' ?> required>
                 </div>
                 <div class="form-groupee">
                     <label>Email Address <span class="req">*</span></label>
                     <input type="email" name="email" placeholder="john@example.com"
-                        value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
+                        value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" <?= !isset($_SESSION['user_id']) ? 'disabled' : '' ?> required>
                 </div>
             </div>
 
@@ -83,16 +92,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label>Phone Number <span
                         style="font-weight:400;color:var(--text-muted);text-transform:none;font-size:0.78rem;">(Optional)</span></label>
                 <input type="tel" name="phone" placeholder="+216 XX XXX XXX"
-                    value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>">
+                    value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>" <?= !isset($_SESSION['user_id']) ? 'disabled' : '' ?>>
             </div>
 
             <div class="form-groupee">
                 <label>Message <span class="req">*</span></label>
                 <textarea name="message" placeholder="Tell us about any question you have..."
+                    <?= !isset($_SESSION['user_id']) ? 'disabled' : '' ?>
                     required><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
             </div>
 
-            <button type="submit" class="bttn-submit">
+            <button type="submit" class="bttn-submit" <?= !isset($_SESSION['user_id']) ? 'onclick="return checkLogin()"' : '' ?>>
                 <i class="fa-solid fa-paper-plane"></i> Send Message
             </button>
         </form>
@@ -142,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="book-card">
             <h4>Prefer to Book Online?</h4>
             <p>Browse our fleet and make a reservation in just 2 minutes.</p>
-            <a href="home.php#fleet-section" class="bttn-book">
+            <a href="car.php" class="bttn-book">
                 <i class="fa-solid fa-car"></i> View Fleet &amp; Book Now
             </a>
         </div>
@@ -177,6 +187,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include 'footer.php'; ?>
 
 <script>
+    function checkLogin() {
+        <?php if (!isset($_SESSION['user_id'])): ?>
+            alert('Please log in to send a message.');
+            window.location.href = 'login.php';
+            return false;
+        <?php endif; ?>
+        return true;
+    }
+
     document.addEventListener('DOMContentLoaded', () => document.body.classList.add('loaded'));
 
     const reveals = document.querySelectorAll('.reveal');

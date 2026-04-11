@@ -4,7 +4,7 @@
     padding: 28px 32px;
     max-width: 700px;
     margin: 40px auto;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
 }
 
 .details-header {
@@ -80,7 +80,7 @@
     height: 38px;
     font-size: 1.1rem;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     color: #333;
     display: flex;
     align-items: center;
@@ -100,13 +100,14 @@
 .gallery-btn.next {
     right: 12px;
 }
+
 .details-specs {
     background: #fff;
     border-radius: 16px;
     padding: 28px 32px;
     max-width: 700px;
     margin: 20px auto;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
 }
 
 .details-specs h2 {
@@ -156,13 +157,14 @@
     color: #111;
     display: block;
 }
+
 .details-equipment {
     background: #fff;
     border-radius: 16px;
     padding: 28px 32px;
     max-width: 700px;
     margin: 20px auto;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
 }
 
 .details-equipment h2 {
@@ -188,14 +190,15 @@
 
 .equipment-item i {
     color: var(--blue);
-    
+
     font-size: 1.2rem;
 }
+
 .booking-summary {
     background: #fff;
     border-radius: 16px;
     padding: 28px 24px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
 }
 
 .booking-summary h2 {
@@ -275,7 +278,7 @@
     color: #111;
 }
 
-.total-price {
+.totale-price {
     font-size: 1.4rem;
     color: var(--blue) !important;
     font-weight: 800;
@@ -300,6 +303,7 @@
 .btn-book-now:hover {
     background: #0b7a8f;
 }
+
 .details-container {
     display: flex;
     gap: 30px;
@@ -322,6 +326,7 @@
     align-self: flex-start;
     margin-bottom: 20px;
 }
+
 .important-info {
     background: var(--blue-soft);
     border-radius: 16px;

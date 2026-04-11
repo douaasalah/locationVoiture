@@ -61,50 +61,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<?php include 'navbar.php'; ?>
 
-<head>
-    <meta charset="UTF-8">
-    <title>GoRent – Forgot Password</title>
-    <link rel="stylesheet" href="styles\home.css">
-    <link rel="stylesheet" href="styles\navbar.css">
-    <link rel="stylesheet" href="styles\forgot_password.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+<div class="auth-page">
+    <div class="auth-card">
 
-<body>
+        <h2>Forgot Password</h2>
+        <p class="subtitle">Enter your email and we'll send you a link to reset your password.</p>
 
-    <?php include 'navbar.php'; ?>
+        <?php if ($erreur): ?>
+            <div class="alert alert-error"><i class="fa fa-circle-exclamation"></i> <?= $erreur ?></div>
+        <?php endif; ?>
 
-    <div class="auth-page">
-        <div class="auth-card">
+        <?php if ($succes): ?>
+            <div class="alert alert-success"><i class="fa fa-circle-check"></i> <?= $succes ?></div>
+        <?php else: ?>
+            <form method="POST">
+                <div class="form-group">
+                    <label><i class="fa fa-envelope"></i> Email</label>
+                    <input type="email" name="email" placeholder="example@email.com" required>
+                </div>
+                <button type="submit" class="btn-submit">Send Reset Link</button>
+            </form>
+        <?php endif; ?>
 
-            <h2>Forgot Password</h2>
-            <p class="subtitle">Enter your email and we'll send you a link to reset your password.</p>
-
-            <?php if ($erreur): ?>
-                <div class="alert alert-error"><i class="fa fa-circle-exclamation"></i> <?= $erreur ?></div>
-            <?php endif; ?>
-
-            <?php if ($succes): ?>
-                <div class="alert alert-success"><i class="fa fa-circle-check"></i> <?= $succes ?></div>
-            <?php else: ?>
-                <form method="POST">
-                    <div class="form-group">
-                        <label><i class="fa fa-envelope"></i> Email</label>
-                        <input type="email" name="email" placeholder="example@email.com" required>
-                    </div>
-                    <button type="submit" class="btn-submit">Send Reset Link</button>
-                </form>
-            <?php endif; ?>
-
-            <div class="auth-footer">
-                <a href="login.php"><i class="fa fa-arrow-left"></i> Back to login</a>
-            </div>
-
+        <div class="auth-footer">
+            <a href="login.php"><i class="fa fa-arrow-left"></i> Back to login</a>
         </div>
+
     </div>
+</div>
 
 </body>
 

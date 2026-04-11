@@ -98,7 +98,7 @@
        margin-bottom: 12px;
    }
 
-   .section-title {
+   .section-titlee {
        font-family: 'Playfair Display', serif;
        font-size: clamp(2rem, 3.5vw, 3rem);
        font-weight: 700;
@@ -432,7 +432,7 @@
        padding: 100px 40px;
    }
 
-   .cta-inner .section-title {
+   .cta-inner .section-titlee {
        margin-bottom: 16px;
    }
 

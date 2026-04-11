@@ -19,12 +19,12 @@ if (isset($_SESSION['user_id'])) {
 <div class="details-container">
     <div class="container-left">
         <div class="details-top">
-            
+
             <!-- Header : nom + type à gauche, prix à droite -->
             <div class="details-header">
-                
+
                 <div class="details-title">
-                    
+
                     <h1>
                         <?php
                         if ($car['marque'] == 'Land Rover') {
@@ -41,7 +41,7 @@ if (isset($_SESSION['user_id'])) {
                     <span class="per-day">per day</span>
                 </div>
             </div>
-            
+
 
             <!-- Galerie avec flèches -->
             <div class="details-gallery">
@@ -150,94 +150,94 @@ if (isset($_SESSION['user_id'])) {
             </ul>
         </div>
     </div>
-    
+
     <?php
-            $pickup_date = isset($_GET['pickup-date']) ? $_GET['pickup-date'] : '';
-            $dropoff_date = isset($_GET['dropoff-date']) ? $_GET['dropoff-date'] : '';
-            $pickup_location = isset($_GET['pickup-location']) ? $_GET['pickup-location'] : '';
-            $dropoff_location = isset($_GET['return-location']) ? $_GET['return-location'] : '';
-            $pickup_time = isset($_GET['pickup-time']) ? $_GET['pickup-time'] : '';
-            $dropoff_time = isset($_GET['dropoff-time']) ? $_GET['dropoff-time'] : '';
+    $pickup_date = isset($_GET['pickup-date']) ? $_GET['pickup-date'] : '';
+    $dropoff_date = isset($_GET['dropoff-date']) ? $_GET['dropoff-date'] : '';
+    $pickup_location = isset($_GET['pickup-location']) ? $_GET['pickup-location'] : '';
+    $dropoff_location = isset($_GET['return-location']) ? $_GET['return-location'] : '';
+    $pickup_time = isset($_GET['pickup-time']) ? $_GET['pickup-time'] : '';
+    $dropoff_time = isset($_GET['dropoff-time']) ? $_GET['dropoff-time'] : '';
 
-            // calcul nombre de jours
-            $days = 0;
-            if ($pickup_date && $dropoff_date) {
-                $d1 = new DateTime($pickup_date);
-                $d2 = new DateTime($dropoff_date);
-                $days = $d2->diff($d1)->days;
-            }
+    // calcul nombre de jours
+    $days = 0;
+    if ($pickup_date && $dropoff_date) {
+        $d1 = new DateTime($pickup_date);
+        $d2 = new DateTime($dropoff_date);
+        $days = $d2->diff($d1)->days;
+    }
 
-            $total = $days * $car['prix'];
-            ?>
+    $total = $days * $car['prix'];
+    ?>
 
     <?php if (!empty($pickup_date) && !empty($dropoff_date)): ?>
-    <div class="container-right">
-        <div class="booking-summary">
-            <h2>Booking Summary</h2>
+        <div class="container-right">
+            <div class="booking-summary">
+                <h2>Booking Summary</h2>
 
-            <div class="summary-item">
-                <span class="summary-label">Pickup</span>
-                <strong><?php echo $pickup_location ? $pickup_location : '—'; ?></strong>
-                <?php if ($pickup_date): ?>
-                    <span class="summary-sub"><?php echo date('d M Y', strtotime($pickup_date)); ?> at
-                        <?php echo $pickup_time; ?></span>
-                <?php endif; ?>
-            </div>
-            <hr>
-
-            <div class="summary-item">
-                <span class="summary-label">Return</span>
-                <strong><?php echo $dropoff_location ? $dropoff_location : '—'; ?></strong>
-                <?php if ($dropoff_date): ?>
-                    <span class="summary-sub"><?php echo date('d M Y', strtotime($dropoff_date)); ?> at
-                        <?php echo $dropoff_time; ?></span>
-                <?php endif; ?>
-            </div>
-            <hr>
-
-            <div class="summary-item">
-                <span class="summary-label">Rental Duration</span>
-                <strong><?php echo $days > 0 ? $days . ' Day' . ($days > 1 ? 's' : '') : '—'; ?></strong>
-            </div>
-            <hr>
-
-            <div class="summary-calc">
-                <div class="calc-row">
-                    <span>Daily Rate</span>
-                    <span><?php echo $car['prix']; ?> DT</span>
+                <div class="summary-item">
+                    <span class="summary-label">Pickup</span>
+                    <strong><?php echo $pickup_location ? $pickup_location : '—'; ?></strong>
+                    <?php if ($pickup_date): ?>
+                        <span class="summary-sub"><?php echo date('d M Y', strtotime($pickup_date)); ?> at
+                            <?php echo $pickup_time; ?></span>
+                    <?php endif; ?>
                 </div>
-                <div class="calc-row">
-                    <span>Number of Days</span>
-                    <span>×<?php echo $days > 0 ? $days : '—'; ?></span>
+                <hr>
+
+                <div class="summary-item">
+                    <span class="summary-label">Return</span>
+                    <strong><?php echo $dropoff_location ? $dropoff_location : '—'; ?></strong>
+                    <?php if ($dropoff_date): ?>
+                        <span class="summary-sub"><?php echo date('d M Y', strtotime($dropoff_date)); ?> at
+                            <?php echo $dropoff_time; ?></span>
+                    <?php endif; ?>
                 </div>
-            </div>
-            <hr>
+                <hr>
 
-            <div class="summary-total">
-            <strong>Total Price</strong>
-                <strong class="total-price"><?php echo $days > 0 ? $total . ' DT' : '—'; ?></strong>
-            </div>
+                <div class="summary-item">
+                    <span class="summary-label">Rental Duration</span>
+                    <strong><?php echo $days > 0 ? $days . ' Day' . ($days > 1 ? 's' : '') : '—'; ?></strong>
+                </div>
+                <hr>
 
-            <a href="<?php echo isset($_SESSION['user_id']) ? 'book.php?id=' . $car['id'] : 'login.php?redirect=book.php?id=' . $car['id']; ?>"
-                class="btn-book-now">
-                Continue to Booking
-            </a>
+                <div class="summary-calc">
+                    <div class="calc-row">
+                        <span>Daily Rate</span>
+                        <span><?php echo $car['prix']; ?> DT</span>
+                    </div>
+                    <div class="calc-row">
+                        <span>Number of Days</span>
+                        <span>×<?php echo $days > 0 ? $days : '—'; ?></span>
+                    </div>
+                </div>
+                <hr>
 
-            <!-- Bouton Favori avec toggle AJAX -->
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="#" onclick="toggleFav(this, <?= $car['id'] ?>); return false;"
-                    style="display:block; text-align:center; margin-top:12px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
-                    <i class="<?= $isFav ? 'fa-solid' : 'fa-regular' ?> fa-heart" id="heart-<?= $car['id'] ?>"></i>
+                <div class="summary-total">
+                    <strong>Total Price</strong>
+                    <strong class="totale-price"><?php echo $days > 0 ? $total . ' DT' : '—'; ?></strong>
+                </div>
+
+                <a href="<?php echo isset($_SESSION['user_id']) ? 'reservation.php?id=' . $car['id'] : 'login.php?redirect=reservation.php?id=' . $car['id']; ?>"
+                    class="btn-book-now">
+                    Continue to Booking
                 </a>
-            <?php else: ?>
-                <a href="login.php"
-                    style="display:block; text-align:center; margin-top:12px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
-                    <i class="fa-regular fa-heart"></i>
-                </a>
-            <?php endif; ?>
 
+                <!-- Bouton Favori avec toggle AJAX -->
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="#" onclick="toggleFav(this, <?= $car['id'] ?>); return false;"
+                        style="display:block; text-align:center; margin-top:12px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
+                        <i class="<?= $isFav ? 'fa-solid' : 'fa-regular' ?> fa-heart" id="heart-<?= $car['id'] ?>"></i>
+                    </a>
+                <?php else: ?>
+                    <a href="login.php"
+                        style="display:block; text-align:center; margin-top:12px; color:#e53e3e; text-decoration:none; font-size:1.5rem;">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                <?php endif; ?>
+
+            </div>
         </div>
-    </div>
     <?php endif; ?>
 </div>
 <?php include("footer.php"); ?>

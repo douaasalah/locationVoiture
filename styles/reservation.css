@@ -1,36 +1,9 @@
-
-:root {
-    --bg: #f0f3f8;
-    --navy: #0d1b3e;
-    --blue: #0e9ab5;
-    --blue-soft: #EBF4F6;
-    --btnsrv: #0b7d94;
-    --text: #0d1b3e;
-    --text-m: #5b6a8a;
-    --border: #e5e7eb;
-    --white: #ffffff;
-    --shadow: 0 4px 15px rgba(13, 27, 62, 0.08);
-    --shadow-hover: 0 8px 25px rgba(13, 27, 62, 0.12);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    padding-top: 80px;
-}
-
 /* Container principal */
 .reservation-container {
     max-width: 1400px;
     margin: 0 auto 3rem auto;
     padding: 0 2rem;
+    padding-top: 80px;
 }
 
 /* Wrapper - Disposition côte à côte */
@@ -44,6 +17,8 @@ body {
 .reservation-form {
     flex: 2;
     min-width: 300px;
+    margin-top: 27px;
+
 }
 
 /* Récapitulatif à droite */
@@ -51,7 +26,7 @@ body {
     flex: 1;
     min-width: 380px;
     position: sticky;
-    top: 100px;
+    top: 83;
     align-self: flex-start;
 }
 
@@ -64,6 +39,7 @@ body {
     box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .section-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-hover);
@@ -72,11 +48,11 @@ body {
 .section-title {
     background: var(--blue);
     color: white;
-    padding: 1rem 1.5rem;
+    padding: 1.3rem 1.5rem;
     font-size: 1.2rem;
-    font-weight: 800;
+    font-weight: 600;
     letter-spacing: 0.5px;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: var(--font-h)
 }
 
 /* Options supplémentaires */
@@ -205,7 +181,7 @@ body {
     font-weight: 600;
     color: var(--text);
     min-width: 80px;
-    color:#0e9ab5;
+    color: #0e9ab5;
 }
 
 .radio-group {
@@ -267,7 +243,7 @@ body {
     font-weight: 600;
     font-size: 0.85rem;
     color: var(--text);
-    color:#0e9ab5;
+    color: #0e9ab5;
 }
 
 .form-group input,
@@ -324,43 +300,45 @@ body {
     background: white;
     border-radius: 20px;
     overflow: hidden;
+    padding: 20px 24px;
+    margin-top: 20px;
     box-shadow: 0 4px 15px rgba(13, 27, 62, 0.08);
 }
 
 .recap-title {
-    background: var(--blue);
-    color: white;
-    padding: 1.2rem 1.5rem;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    letter-spacing: 1px;
-    margin: 0;
-    text-align: center;
+    color: #111;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--blue-soft);
 }
 
 /* Infos véhicule */
 .vehicle-info {
-    padding: 1.5rem 1.5rem 1rem;
-    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.2rem 1rem;
+    border-bottom: none;
 }
 
 .vehicle-info h4 {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 800;
-    margin-bottom: 0.25rem;
-    color: var(--text);
+    color: var(--navy);
+    margin-bottom: 0.15rem;
 }
 
 .vehicle-sub {
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     color: var(--text-m);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
 }
 
 /* Dates et lieux */
 .dates-info {
-    padding: 1rem 1.5rem;
+    padding: 1.1rem 1.5rem;
     border-bottom: 1px solid var(--border);
-    background: #fafafa;
 }
 
 .date-item {
@@ -427,38 +405,50 @@ body {
 .total-price {
     display: flex;
     justify-content: space-between;
-    padding: 1.2rem 1.5rem;
+    align-items: center;
+    padding: 16px 0;
     background: var(--blue-soft);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 4px;
+    font-size: 1.4rem;
+    color: var(--blue) !important;
     font-weight: 800;
-    font-size: 1.2rem;
-    border-top: 2px solid var(--blue);
 }
 
 .total-price span:first-child {
-    color: var(--text);
+    font-size: 1rem;
+    color: #111;
 }
 
 .total-price span:last-child {
-    color: var(--blue);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    color: var(--blue) !important;
+    font-weight: 800;
 }
 
 .vehicle-image {
     width: 100%;
-    height: 180px;
+    height: 200px;
     overflow: hidden;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-bottom: 1px solid var(--border);
 }
 
 .vehicle-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
+    padding: 10px;
     transition: transform 0.3s ease;
 }
 
 .vehicle-image img:hover {
-    transform: scale(1.03);
+    transform: scale(1.05);
 }
 
 .vehicle-specs {
@@ -547,7 +537,7 @@ body {
     body {
         padding-top: 70px;
     }
-    
+
     .reservation-container {
         padding: 0 0.5rem;
         margin: 0 auto 2rem auto;
@@ -560,7 +550,7 @@ body {
 
     .recap-sidebar {
         flex: 0 0 280px !important;
-        width: 280px !important;
+        width: 300px !important;
         min-width: 280px !important;
     }
 
@@ -568,18 +558,18 @@ body {
         grid-template-columns: 1fr;
         gap: 0.75rem;
     }
-    
+
     .form-civility {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.75rem;
     }
-    
+
     .section-title {
         font-size: 1rem;
         padding: 0.75rem 1rem;
     }
-    
+
     .form-container {
         padding: 1rem;
     }
@@ -615,16 +605,16 @@ body {
         align-items: flex-start;
         gap: 0.75rem;
     }
-    
+
     .insurance-item input[type="radio"] {
         margin-left: 0;
     }
-    
+
     .radio-group {
         flex-direction: column;
         gap: 0.5rem;
     }
-    
+
     .success-message {
         padding: 2rem 1rem;
         margin: 2rem 1rem;
@@ -644,6 +634,7 @@ body {
     flex: 1 1 0 !important;
     min-width: 0 !important;
     overflow: hidden !important;
+    margin-top: 27px;
 }
 
 .recap-sidebar {
@@ -651,7 +642,7 @@ body {
     width: 380px !important;
     min-width: 0 !important;
     position: sticky !important;
-    top: 100px !important;
+    top: 83px !important;
     align-self: flex-start !important;
 }
 
@@ -659,5 +650,7 @@ body {
     background: white !important;
     border-radius: 20px !important;
     overflow: hidden !important;
+    padding: 20px 24px !important;
+
     box-shadow: 0 4px 15px rgba(13, 27, 62, 0.08) !important;
 }

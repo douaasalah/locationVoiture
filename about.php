@@ -49,7 +49,7 @@
 
     <div class="story-text ">
         <div class="section-label">Our Story</div>
-        <h2 class="section-title">Born in Tunisia,<br>Built for Explorers</h2>
+        <h2 class="section-titlee">Born in Tunisia,<br>Built for Explorers</h2>
         <p class="section-sub">What started as a small family fleet in Monastir has grown into one of Tunisia's most
             trusted car rental services — covering airports, cities, and everywhere in between.</p>
         <div class="timeline">
@@ -85,7 +85,7 @@
     <div class="values-inner">
         <div>
             <div class="section-label" style="color:var(--primary-light)">What We Stand For</div>
-            <h2 class="section-title">Our Core Values</h2>
+            <h2 class="section-titlee">Our Core Values</h2>
         </div>
         <div class="values-grid">
             <div class="value-card ">
@@ -159,7 +159,7 @@
 <div class="cta-section">
     <div class="cta-inner ">
         <div class="section-label">Ready to Go?</div>
-        <h2 class="section-title">Start Your Journey Today</h2>
+        <h2 class="section-titlee">Start Your Journey Today</h2>
         <p>Browse our fleet, pick your dates, and hit the road. Tunisia is waiting for you.</p>
         <a href="home.php#fleet-section" class="btn-cta">
             <i class="fa-solid fa-car"></i> Browse Available Cars

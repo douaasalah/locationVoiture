@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="styles\profil.css">
     <link rel="stylesheet" href="styles\reset_password.css">
     <link rel="stylesheet" href="styles\register.css">
+    <link rel="stylesheet" href="styles\login.css">
+    <link rel="stylesheet" href="styles\forgot_password.css">
+
     <link rel="stylesheet" href="styles\car.css">
     <link rel="stylesheet" href="styles\details.css">
     <link rel="stylesheet" href="styles\terms.css">
