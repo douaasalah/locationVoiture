@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 10 avr. 2026 à 22:30
+-- Généré le : sam. 11 avr. 2026 à 03:50
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -176,19 +176,26 @@ CREATE TABLE `reservation` (
   `date_debut` date NOT NULL,
   `date_fin` date NOT NULL,
   `statut` varchar(20) DEFAULT 'En attente',
-  `total` decimal(10,2) DEFAULT NULL
+  `total` decimal(10,2) DEFAULT NULL,
+  `telephone` varchar(20) DEFAULT NULL,
+  `adresse` text DEFAULT NULL,
+  `datenaiss` date DEFAULT NULL,
+  `civility` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `reservation`
 --
 
-INSERT INTO `reservation` (`id_reservation`, `id_client`, `id_voiture`, `date_reservation`, `date_debut`, `date_fin`, `statut`, `total`) VALUES
-(1, 1, 1, '2026-04-09 20:41:45', '2026-04-09', '2026-04-10', 'En attente', NULL),
-(3, 2, 3, '2026-04-10 12:26:01', '2026-04-11', '2026-04-14', 'En attente', 360.00),
-(5, 2, 2, '2026-04-10 18:14:20', '2026-04-11', '2026-04-14', 'En attente', 270.00),
-(6, 2, 4, '2026-04-10 19:31:35', '2026-04-11', '2026-04-14', 'En attente', 480.00),
-(12, 9, 5, '2026-04-10 20:29:25', '2026-04-11', '2026-04-14', 'En attente', 480.00);
+INSERT INTO `reservation` (`id_reservation`, `id_client`, `id_voiture`, `date_reservation`, `date_debut`, `date_fin`, `statut`, `total`, `telephone`, `adresse`, `datenaiss`, `civility`) VALUES
+(1, 1, 1, '2026-04-09 20:41:45', '2026-04-09', '2026-04-10', 'En attente', NULL, NULL, NULL, NULL, NULL),
+(18, 14, 7, '2026-04-10 21:08:59', '2026-04-11', '2026-04-14', 'En attente', 270.00, NULL, NULL, NULL, NULL),
+(22, 17, 3, '2026-04-10 23:58:13', '2026-04-12', '2026-04-15', 'En attente', 450.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
+(23, 17, 14, '2026-04-10 23:59:28', '2026-04-12', '2026-04-15', 'En attente', 2550.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
+(24, 17, 1, '2026-04-11 00:10:05', '2026-04-12', '2026-04-15', 'En attente', 240.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
+(25, 18, 4, '2026-04-11 00:21:01', '2026-04-12', '2026-04-15', 'En attente', 570.00, '+21693062728', 'sayada', '2009-10-16', 'monsieur'),
+(26, 18, 2, '2026-04-11 00:57:54', '2026-04-12', '2026-04-15', 'En attente', 315.00, '+21693062728', 'sayada', '2009-10-16', 'madame'),
+(27, 18, 2, '2026-04-11 01:03:19', '2026-04-12', '2026-04-15', 'En attente', 315.00, '+21693062728', 'sayada', '2009-10-16', 'madame');
 
 -- --------------------------------------------------------
 
@@ -206,12 +213,22 @@ CREATE TABLE `reservation_options` (
 --
 
 INSERT INTO `reservation_options` (`idreservation`, `idoption`) VALUES
-(3, 12),
-(5, 12),
-(6, 4),
-(6, 12),
-(12, 5),
-(12, 12);
+(18, 12),
+(22, 5),
+(22, 11),
+(23, 4),
+(23, 12),
+(24, 12),
+(25, 4),
+(25, 11),
+(26, 2),
+(26, 4),
+(26, 5),
+(26, 10),
+(27, 2),
+(27, 4),
+(27, 5),
+(27, 10);
 
 -- --------------------------------------------------------
 
@@ -222,22 +239,20 @@ INSERT INTO `reservation_options` (`idreservation`, `idoption`) VALUES
 CREATE TABLE `users` (
   `idclient` int(11) NOT NULL,
   `email` varchar(70) NOT NULL,
-  `civility` varchar(20) NOT NULL,
   `nom` varchar(100) NOT NULL,
   `motdepasse` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `telephone` varchar(20) NOT NULL,
-  `datenaiss` date NOT NULL
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`idclient`, `email`, `civility`, `nom`, `motdepasse`, `created_at`, `telephone`, `datenaiss`) VALUES
-(1, 'saklyimen24@gmail.com', '', 'sakly imen', '$2y$10$qtdEOAmidx5rwW0h5und7eQKt5Iqohu7.ZIdqjM.Ay55pQ4zODic6', '2026-04-08 14:47:11', '', '1900-01-01'),
-
-
+INSERT INTO `users` (`idclient`, `email`, `nom`, `motdepasse`, `created_at`) VALUES
+(1, 'saklyimen24@gmail.com', 'sakly imen', '$2y$10$qtdEOAmidx5rwW0h5und7eQKt5Iqohu7.ZIdqjM.Ay55pQ4zODic6', '2026-04-08 14:47:11'),
+(14, 'douaasalah286@gmail.com', 'Salah', '$2y$10$if50wkPnYkYuggPh2ldDa.YIXMe/rfQaH0iI5KLH78iV65odtBdDu', '2026-04-10 21:08:59'),
+(17, 'douaasalah262@gmail.com', 'abdesatar', '$2y$10$a.OREfpiFMX7H4doIalxbuf9nSAgN0Fiy4NcU87/7u59ROFp7JzDW', '2026-04-10 23:55:28'),
+(18, 'douaasalah005@gmail.com', 'dhaker', '$2y$10$6/bz0aAO89tgSEk6Uz9feetmFp30qqepFySTW4YCSyDpEaXb0mnFa', '2026-04-11 00:19:32');
 
 -- --------------------------------------------------------
 
@@ -510,13 +525,13 @@ ALTER TABLE `password_resets`
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `voitures`
