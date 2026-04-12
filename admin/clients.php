@@ -38,6 +38,15 @@ $icon = $sort === 'asc' ? 'fa-arrow-up' : 'fa-arrow-down';
 
 // ── LISTE UTILISATEURS ─────────────────────────────────
 $result = $conn->query("SELECT idclient, nom, email FROM users ORDER BY nom $sort");
+// Notifications - réservations en attente
+$notif_result = $conn->query("SELECT id_reservation, u.nom, v.marque, v.modele, r.date_debut 
+    FROM reservation r
+    JOIN users u ON r.id_client = u.idclient
+    JOIN voitures v ON r.id_voiture = v.id
+    WHERE r.statut = 'Pending'
+    ORDER BY r.id_reservation DESC");
+$notif_count = $notif_result->num_rows;
+$notifications = $notif_result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -50,6 +59,19 @@ $result = $conn->query("SELECT idclient, nom, email FROM users ORDER BY nom $sor
     <link rel="stylesheet" href="styles/clients.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
+<script>
+    function toggleNotif() {
+        document.getElementById('notifDropdown').classList.toggle('open');
+    }
+
+    // Fermer si on clique ailleurs
+    document.addEventListener('click', function (e) {
+        const wrapper = document.getElementById('notifWrapper');
+        if (!wrapper.contains(e.target)) {
+            document.getElementById('notifDropdown').classList.remove('open');
+        }
+    });
+</script>
 
 <body>
 
@@ -57,24 +79,61 @@ $result = $conn->query("SELECT idclient, nom, email FROM users ORDER BY nom $sor
 
         <!-- SIDEBAR -->
         <aside class="sidebar">
-    <?php include 'sidebar.php'; ?>
-    </aside>
+            <?php include 'sidebar.php'; ?>
+        </aside>
 
         <!-- MAIN -->
         <main class="admin-main">
+            <div class="admin-header">
+                <h1>Clients</h1>
+                <div style="display:flex; align-items:center; gap:16px;">
 
-        <div class="admin-header">
-            <h1>Clients</h1>
-            <div class="admin-profile">
-    <a href="profile.php" class="profile-btn">
-        <div class="profile-avatar">
-            <?php echo strtoupper(substr($_SESSION['admin_nom'], 0, 1)); ?>
-        </div>
-        <i class="fa-solid fa-chevron-down" style="font-size:0.75rem; color:#888;"></i>
-    </a>
-</div>
-        </div>
+                    <!-- Cloche notification -->
+                    <div class="notif-wrapper" id="notifWrapper">
+                        <button class="notif-btn" onclick="toggleNotif()">
+                            <i class="fa-solid fa-bell"></i>
+                            <?php if ($notif_count > 0): ?>
+                                <span class="notif-badge"><?php echo $notif_count; ?></span>
+                            <?php endif; ?>
+                        </button>
 
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <span>Pending reservations</span>
+                                <span class="notif-count"><?php echo $notif_count; ?></span>
+                            </div>
+                            <?php if ($notif_count > 0): ?>
+                                <?php foreach ($notifications as $n): ?>
+                                    <a href="ad_reservation.php?view=<?php echo $n['id_reservation']; ?>" class="notif-item">
+                                        <div class="notif-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                                        <div class="notif-text">
+                                            <strong><?php echo htmlspecialchars($n['nom']); ?></strong>
+                                            <span><?php echo htmlspecialchars($n['marque'] . ' ' . $n['modele']); ?></span>
+                                            <small><?php echo date('d/m/Y', strtotime($n['date_debut'])); ?></small>
+                                        </div>
+                                    </a>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="notif-empty">
+                                    <i class="fa-solid fa-check-circle"></i>
+                                    <p>No pending reservations</p>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- Profil -->
+                    <div class="admin-profile">
+                        <a href="profile.php" class="profile-btn">
+                            <div class="profile-avatar">
+                                <?php echo strtoupper(substr($_SESSION['admin_nom'], 0, 1)); ?>
+                            </div>
+                            <i class="fa-solid fa-chevron-down" style="font-size:0.75rem; color:#888;"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
             <?php if ($erreur): ?>
                 <div class="alert alert-error">
                     <i class="fa fa-circle-exclamation"></i>
@@ -91,7 +150,7 @@ $result = $conn->query("SELECT idclient, nom, email FROM users ORDER BY nom $sor
             <!-- Table -->
             <div class="admin-card">
                 <div class="admin-card-header">
-                    <h2>Users list</h2>
+                    <h2><i class="fas fa-list-check"></i> Users list</h2>
                     <span class="badge-count"><?= $result->num_rows ?> users</span>
                 </div>
 
@@ -112,7 +171,7 @@ $result = $conn->query("SELECT idclient, nom, email FROM users ORDER BY nom $sor
                         <tbody>
                             <?php while ($row = $result->fetch_assoc()): ?>
                                 <tr>
-                                    <td style="color:#9CA3AF; font-size:13px;">
+                                    <td style=" font-size:13px;">
                                         <?= $row['idclient'] ?>
                                     </td>
                                     <td>
@@ -133,7 +192,7 @@ $result = $conn->query("SELECT idclient, nom, email FROM users ORDER BY nom $sor
                                             `<?= addslashes($row['nom']) ?>`,
                                             `<?= addslashes($row['email']) ?>`
                                         )">
-                                                <i class="fa fa-pen"></i> Edit
+                                                <i class="fas fa-edit"></i> Edit
                                             </button>
                                             <a href="clients.php?delete=<?= $row['idclient'] ?>&sort=<?= $sort ?>"
                                                 class="btn-delete"

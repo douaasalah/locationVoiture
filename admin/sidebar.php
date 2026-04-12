@@ -1,7 +1,9 @@
 <?php $current = basename($_SERVER['PHP_SELF']); ?>
 
 <div class="sidebar-logo">
-    <center><h2>Go<span>Rent</span></h2></center>
+    <center>
+        <h2>Go<span>Rent</span></h2>
+    </center>
 </div>
 <br>
 <nav class="sidebar-nav">
