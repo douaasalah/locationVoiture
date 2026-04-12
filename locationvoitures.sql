@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : sam. 11 avr. 2026 à 15:44
--- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Apr 12, 2026 at 01:53 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `locationvoitures`
+-- Database: `locationvoitures`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -34,17 +34,10 @@ CREATE TABLE `admin` (
   `motdepasse` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `admin`
---
-
-INSERT INTO `admin` (`idadmin`, `nom`, `email`, `motdepasse`) VALUES
-(1, 'admin', 'douaasalah262@gmail.com', 'admin');
-
 -- --------------------------------------------------------
 
 --
--- Structure de la table `avis`
+-- Table structure for table `avis`
 --
 
 CREATE TABLE `avis` (
@@ -57,7 +50,7 @@ CREATE TABLE `avis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `avis`
+-- Dumping data for table `avis`
 --
 
 INSERT INTO `avis` (`id`, `nom`, `ville`, `commentaire`, `note`, `date_creation`) VALUES
@@ -71,7 +64,7 @@ INSERT INTO `avis` (`id`, `nom`, `ville`, `commentaire`, `note`, `date_creation`
 -- --------------------------------------------------------
 
 --
--- Structure de la table `contact_messages`
+-- Table structure for table `contact_messages`
 --
 
 CREATE TABLE `contact_messages` (
@@ -85,7 +78,7 @@ CREATE TABLE `contact_messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `contact_messages`
+-- Dumping data for table `contact_messages`
 --
 
 INSERT INTO `contact_messages` (`id`, `name`, `email`, `phone`, `message`, `is_read`, `created_at`) VALUES
@@ -96,7 +89,7 @@ INSERT INTO `contact_messages` (`id`, `name`, `email`, `phone`, `message`, `is_r
 -- --------------------------------------------------------
 
 --
--- Structure de la table `favoris`
+-- Table structure for table `favoris`
 --
 
 CREATE TABLE `favoris` (
@@ -107,7 +100,7 @@ CREATE TABLE `favoris` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `favoris`
+-- Dumping data for table `favoris`
 --
 
 INSERT INTO `favoris` (`id`, `id_client`, `id_voiture`, `created_at`) VALUES
@@ -118,7 +111,7 @@ INSERT INTO `favoris` (`id`, `id_client`, `id_voiture`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `options`
+-- Table structure for table `options`
 --
 
 CREATE TABLE `options` (
@@ -130,7 +123,7 @@ CREATE TABLE `options` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `options`
+-- Dumping data for table `options`
 --
 
 INSERT INTO `options` (`id`, `nom`, `description`, `prix`, `est_inclus`) VALUES
@@ -152,7 +145,7 @@ INSERT INTO `options` (`id`, `nom`, `description`, `prix`, `est_inclus`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `password_resets`
+-- Table structure for table `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -163,7 +156,7 @@ CREATE TABLE `password_resets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `password_resets`
+-- Dumping data for table `password_resets`
 --
 
 INSERT INTO `password_resets` (`id`, `email`, `token`, `created_at`) VALUES
@@ -172,7 +165,7 @@ INSERT INTO `password_resets` (`id`, `email`, `token`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `reservation`
+-- Table structure for table `reservation`
 --
 
 CREATE TABLE `reservation` (
@@ -191,24 +184,24 @@ CREATE TABLE `reservation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `reservation`
+-- Dumping data for table `reservation`
 --
 
 INSERT INTO `reservation` (`id_reservation`, `id_client`, `id_voiture`, `date_reservation`, `date_debut`, `date_fin`, `statut`, `total`, `telephone`, `adresse`, `datenaiss`, `civility`) VALUES
-(1, 1, 1, '2026-04-09 20:41:45', '2026-04-09', '2026-04-10', 'En attente', NULL, NULL, NULL, NULL, NULL),
-(18, 14, 7, '2026-04-10 21:08:59', '2026-04-11', '2026-04-14', 'En attente', 270.00, NULL, NULL, NULL, NULL),
-(22, 17, 3, '2026-04-10 23:58:13', '2026-04-12', '2026-04-15', 'En attente', 450.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
-(23, 17, 14, '2026-04-10 23:59:28', '2026-04-12', '2026-04-15', 'En attente', 2550.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
-(24, 17, 1, '2026-04-11 00:10:05', '2026-04-12', '2026-04-15', 'En attente', 240.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
-(25, 18, 4, '2026-04-11 00:21:01', '2026-04-12', '2026-04-15', 'En attente', 570.00, '+21693062728', 'sayada', '2009-10-16', 'monsieur'),
-(26, 18, 2, '2026-04-11 00:57:54', '2026-04-12', '2026-04-15', 'En attente', 315.00, '+21693062728', 'sayada', '2009-10-16', 'madame'),
-(27, 18, 2, '2026-04-11 01:03:19', '2026-04-12', '2026-04-15', 'En attente', 315.00, '+21693062728', 'sayada', '2009-10-16', 'madame'),
-(28, 18, 5, '2026-04-11 09:02:55', '2026-04-12', '2026-04-15', 'En attente', 525.00, '+21693062728', 'sayada', '2000-10-16', 'monsieur');
+(1, 1, 1, '2026-04-09 20:41:45', '2026-04-09', '2026-04-10', 'Cancelled', 80.00, NULL, NULL, NULL, NULL),
+(18, 14, 7, '2026-04-10 21:08:59', '2026-04-11', '2026-04-14', 'Confirmed', 270.00, NULL, NULL, NULL, NULL),
+(22, 17, 3, '2026-04-10 23:58:13', '2026-04-12', '2026-04-15', 'Completed', 450.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
+(23, 17, 14, '2026-04-10 23:59:28', '2026-04-12', '2026-04-15', 'Pending', 2550.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
+(24, 17, 1, '2026-04-11 00:10:05', '2026-04-12', '2026-04-15', 'Confirmed', 240.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
+(25, 18, 4, '2026-04-11 00:21:01', '2026-04-12', '2026-04-15', 'Pending', 570.00, '+21693062728', 'sayada', '2009-10-16', 'monsieur'),
+(26, 18, 2, '2026-04-11 00:57:54', '2026-04-12', '2026-04-15', 'Pending', 315.00, '+21693062728', 'sayada', '2009-10-16', 'madame'),
+(27, 18, 2, '2026-04-11 01:03:19', '2026-04-12', '2026-04-15', 'Pending', 315.00, '+21693062728', 'sayada', '2009-10-16', 'madame'),
+(28, 19, 5, '2026-04-11 16:03:36', '2026-04-11', '2026-04-13', 'Pending', 320.00, '78963214', 'rue', '2026-04-24', 'monsieur');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `reservation_options`
+-- Table structure for table `reservation_options`
 --
 
 CREATE TABLE `reservation_options` (
@@ -217,7 +210,7 @@ CREATE TABLE `reservation_options` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `reservation_options`
+-- Dumping data for table `reservation_options`
 --
 
 INSERT INTO `reservation_options` (`idreservation`, `idoption`) VALUES
@@ -229,16 +222,21 @@ INSERT INTO `reservation_options` (`idreservation`, `idoption`) VALUES
 (24, 12),
 (25, 4),
 (25, 11),
-(28, 1),
+(26, 2),
+(26, 4),
+(26, 5),
+(26, 10),
+(27, 2),
+(27, 4),
+(27, 5),
+(27, 10),
 (28, 2),
-(28, 4),
-(28, 5),
-(28, 10);
+(28, 12);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -250,19 +248,20 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`idclient`, `email`, `nom`, `motdepasse`, `created_at`) VALUES
 (1, 'saklyimen24@gmail.com', 'sakly imen', '$2y$10$qtdEOAmidx5rwW0h5und7eQKt5Iqohu7.ZIdqjM.Ay55pQ4zODic6', '2026-04-08 14:47:11'),
 (14, 'douaasalah286@gmail.com', 'Salah', '$2y$10$if50wkPnYkYuggPh2ldDa.YIXMe/rfQaH0iI5KLH78iV65odtBdDu', '2026-04-10 21:08:59'),
 (17, 'douaasalah262@gmail.com', 'abdesatar', '$2y$10$a.OREfpiFMX7H4doIalxbuf9nSAgN0Fiy4NcU87/7u59ROFp7JzDW', '2026-04-10 23:55:28'),
-(18, 'douaasalah005@gmail.com', 'dhaker', '$2y$10$6/bz0aAO89tgSEk6Uz9feetmFp30qqepFySTW4YCSyDpEaXb0mnFa', '2026-04-11 00:19:32');
+(18, 'douaasalah005@gmail.com', 'dhaker', '$2y$10$6/bz0aAO89tgSEk6Uz9feetmFp30qqepFySTW4YCSyDpEaXb0mnFa', '2026-04-11 00:19:32'),
+(19, 'medferouk@gmail.com', 'ahmed', '$2y$10$VmmJm8SSitleZ6NS8G2Clu.K.pYMCKjjYTZ.7O84GoJM0eIzhBK1u', '2026-04-11 16:03:36');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `voitures`
+-- Table structure for table `voitures`
 --
 
 CREATE TABLE `voitures` (
@@ -282,7 +281,7 @@ CREATE TABLE `voitures` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `voitures`
+-- Dumping data for table `voitures`
 --
 
 INSERT INTO `voitures` (`id`, `marque`, `modele`, `annee`, `imgfront`, `imginter`, `imgcote`, `type`, `boite`, `carburant`, `places`, `bagages`, `prix`) VALUES
@@ -299,12 +298,13 @@ INSERT INTO `voitures` (`id`, `marque`, `modele`, `annee`, `imgfront`, `imginter
 (11, 'Dacia', 'Logan', 2023, 'imgVoitures\\Dacia_Logan_2023\\dacia_logan_front.webp', 'imgVoitures/Dacia_Logan_2023/dacia_logan_int.png', 'imgVoitures/Dacia_Logan_2023/dacia_logan_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 110),
 (12, 'Renault', 'Clio 3', 2015, 'imgVoitures\\clio_3\\clio3_front.png', 'imgVoitures/clio_3/clio3_int.png', 'imgVoitures/clio_3/clio3_cote.png', 'Citadine', 'Manual', 'Essence', 5, 3, 75),
 (13, 'Peugeot', 'Traveller', 2024, 'imgVoitures\\Peugeot_TRAVELLER_2024\\Peugeot_TRAVELLER_2024_front.jpg', 'imgVoitures/Peugeot_TRAVELLER_2024/Peugeot-Traveller-inter.png', 'imgVoitures/Peugeot_TRAVELLER_2024/Peugeot-Traveller-cote.jpg', 'Minivan', 'Manual', 'Diesel', 9, 6, 290),
-(14, 'Land Rover', 'Range Rover', 2025, 'imgVoitures\\Range_Rover_vogue_2025\\front.png', 'imgVoitures/Range_Rover_vogue_2025/inter.png', 'imgVoitures/Range_Rover_vogue_2025/cote.png', 'Luxury', 'Automatic', 'Diesel', 5, 4, 850);
+(14, 'Land Rover', 'Range Rover', 2025, 'imgVoitures\\Range_Rover_vogue_2025\\front.png', 'imgVoitures/Range_Rover_vogue_2025/inter.png', 'imgVoitures/Range_Rover_vogue_2025/cote.png', 'Luxury', 'Automatic', 'Diesel', 5, 4, 850),
+(15, 'Nissan', 'Qashqai', 2020, 'imgVoitures/Nissan_Qashqai_2020/front.png', 'imgVoitures/Nissan_Qashqai_2020/interieur.png', 'imgVoitures/Nissan_Qashqai_2020/cote.png', 'Citadine', 'Automatique', 'Essence', 5, 3, 150);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `voitures_options`
+-- Table structure for table `voitures_options`
 --
 
 CREATE TABLE `voitures_options` (
@@ -314,7 +314,7 @@ CREATE TABLE `voitures_options` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `voitures_options`
+-- Dumping data for table `voitures_options`
 --
 
 INSERT INTO `voitures_options` (`id`, `idv`, `ido`) VALUES
@@ -409,49 +409,49 @@ INSERT INTO `voitures_options` (`id`, `idv`, `ido`) VALUES
 (89, 14, 7);
 
 --
--- Index pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`idadmin`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Index pour la table `avis`
+-- Indexes for table `avis`
 --
 ALTER TABLE `avis`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `contact_messages`
+-- Indexes for table `contact_messages`
 --
 ALTER TABLE `contact_messages`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `favoris`
+-- Indexes for table `favoris`
 --
 ALTER TABLE `favoris`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_favori` (`id_client`,`id_voiture`);
 
 --
--- Index pour la table `options`
+-- Indexes for table `options`
 --
 ALTER TABLE `options`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `password_resets`
+-- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `reservation`
+-- Indexes for table `reservation`
 --
 ALTER TABLE `reservation`
   ADD PRIMARY KEY (`id_reservation`),
@@ -459,27 +459,27 @@ ALTER TABLE `reservation`
   ADD KEY `reservation_ibfk_2` (`id_voiture`);
 
 --
--- Index pour la table `reservation_options`
+-- Indexes for table `reservation_options`
 --
 ALTER TABLE `reservation_options`
   ADD PRIMARY KEY (`idreservation`,`idoption`),
   ADD KEY `idoption` (`idoption`);
 
 --
--- Index pour la table `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`idclient`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Index pour la table `voitures`
+-- Indexes for table `voitures`
 --
 ALTER TABLE `voitures`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `voitures_options`
+-- Indexes for table `voitures_options`
 --
 ALTER TABLE `voitures_options`
   ADD PRIMARY KEY (`id`),
@@ -487,89 +487,89 @@ ALTER TABLE `voitures_options`
   ADD KEY `ido` (`ido`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `admin`
+-- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `idadmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idadmin` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `avis`
+-- AUTO_INCREMENT for table `avis`
 --
 ALTER TABLE `avis`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT pour la table `contact_messages`
+-- AUTO_INCREMENT for table `contact_messages`
 --
 ALTER TABLE `contact_messages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT pour la table `favoris`
+-- AUTO_INCREMENT for table `favoris`
 --
 ALTER TABLE `favoris`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
--- AUTO_INCREMENT pour la table `options`
+-- AUTO_INCREMENT for table `options`
 --
 ALTER TABLE `options`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT pour la table `password_resets`
+-- AUTO_INCREMENT for table `password_resets`
 --
 ALTER TABLE `password_resets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT pour la table `reservation`
+-- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
   MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT pour la table `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT pour la table `voitures`
+-- AUTO_INCREMENT for table `voitures`
 --
 ALTER TABLE `voitures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT pour la table `voitures_options`
+-- AUTO_INCREMENT for table `voitures_options`
 --
 ALTER TABLE `voitures_options`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
--- Contraintes pour les tables déchargées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `reservation`
+-- Constraints for table `reservation`
 --
 ALTER TABLE `reservation`
   ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`id_client`) REFERENCES `users` (`idclient`) ON DELETE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`id_voiture`) REFERENCES `voitures` (`id`) ON DELETE CASCADE;
 
 --
--- Contraintes pour la table `reservation_options`
+-- Constraints for table `reservation_options`
 --
 ALTER TABLE `reservation_options`
   ADD CONSTRAINT `reservation_options_ibfk_1` FOREIGN KEY (`idreservation`) REFERENCES `reservation` (`id_reservation`) ON DELETE CASCADE,
   ADD CONSTRAINT `reservation_options_ibfk_2` FOREIGN KEY (`idoption`) REFERENCES `options` (`id`) ON DELETE CASCADE;
 
 --
--- Contraintes pour la table `voitures_options`
+-- Constraints for table `voitures_options`
 --
 ALTER TABLE `voitures_options`
   ADD CONSTRAINT `voitures_options_ibfk_1` FOREIGN KEY (`idv`) REFERENCES `voitures` (`id`) ON DELETE CASCADE,
