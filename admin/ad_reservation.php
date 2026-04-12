@@ -4,10 +4,7 @@ $conn = new mysqli("localhost", "root", "", "locationvoitures");
 if ($conn->connect_error) {
     die("Erreur connexion: " . $conn->connect_error);
 }
-if (!isset($_SESSION['admin_id'])) {
-    header("Location: login.php");
-    exit();
-}
+
 require_once '../mailer.php';
 
 // Traitement modification statut
@@ -144,7 +141,20 @@ if ($view_id > 0) {
     $detail_result = $conn->query($detail_sql);
     $reservation = $detail_result->fetch_assoc();
 }
+// Récupérer les options de la réservation
+$options_resa = [];
+if ($view_id > 0) {
+    $sql_opts = "SELECT o.nom, o.prix 
+                 FROM reservation_options ro
+                 JOIN options o ON ro.idoption = o.id
+                 WHERE ro.idreservation = $view_id";
+    $res_opts = $conn->query($sql_opts);
+    while ($opt = $res_opts->fetch_assoc()) {
+        $options_resa[] = $opt;
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -152,7 +162,7 @@ if ($view_id > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin GoRent - Gestion des réservations</title>
-    <link rel="stylesheet" href="styles/sidebar.css" />
+    <link rel="stylesheet" href="styles/sidebar.css">
     <link rel="stylesheet" href="styles/ad_reservation.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -162,7 +172,6 @@ if ($view_id > 0) {
 <aside class="sidebar">
     <?php include 'sidebar.php'; ?>
     </aside>
-
 <!-- MAIN CONTENT -->
 <div class="main-content">
 <div class="admin-header">
@@ -178,7 +187,7 @@ if ($view_id > 0) {
         </div>
     <?php if (isset($_GET['success'])): ?>
         <div class="message message-success">
-            <i class="fas fa-check-circle"></i> Operation successful !
+            <i class="fas fa-check-circle"></i> Opration successful !
         </div>
     <?php endif; ?>
 
@@ -198,15 +207,34 @@ if ($view_id > 0) {
 
         <div class="detail-container">
             <!-- Carte réservation -->
-            <div class="detail-card">
+            <div class="detail-card"  style="overflow:hidden;">
                 <h3><i class="fas fa-info-circle"></i> Reservation informations</h3>
-                <table class="detail-table">
+                <table class="detail-table" style="width:100%; word-break:break-word;">
                     <tr><td>ID reservation</td><td><strong>#<?php echo $reservation['id_reservation']; ?></strong></td></tr>
                     <tr><td>Start date</td><td><?php echo date('d/m/Y', strtotime($reservation['date_debut'])); ?></td></tr>
                     <tr><td>End date</td><td><?php echo date('d/m/Y', strtotime($reservation['date_fin'])); ?></td></tr>
                     <tr><td>Number of days</td><td><?php echo $days; ?> days</td></tr>
                     <tr><td>Price per day</td><td><?php echo number_format($reservation['prix_jour'], 0); ?> TD</td></tr>
                     <tr><td>Total</td><td class="total-amount"><?php echo number_format($reservation['total'], 0); ?> TD</td></tr>
+                    <tr>
+                    <td>Options</td>
+                    <td>
+<?php if (!empty($options_resa)): ?>
+    <div class="options-container">
+        <?php foreach ($options_resa as $opt): ?>
+            <span class="option-badge">
+                <?php echo htmlspecialchars($opt['nom']); ?>
+                <?php if ($opt['prix'] > 0): ?>
+                    (+<?php echo number_format($opt['prix'], 0); ?> TND)
+                <?php endif; ?>
+            </span>
+        <?php endforeach; ?>
+    </div>
+<?php else: ?>
+    <span style="color:#aaa;">No options</span>
+<?php endif; ?>
+</td>
+</tr>
                     <tr><td>Status</td><td>
                         <form method="POST" action="ad_reservation.php?view=<?php echo $view_id; ?>" style="display: inline;">
                             <input type="hidden" name="id" value="<?php echo $reservation['id_reservation']; ?>">
@@ -238,7 +266,7 @@ if ($view_id > 0) {
         <div class="detail-card" style="margin-top: 25px;">
             <h3><i class="fas fa-car"></i> Car informations</h3>
             <div class="vehicle-card">
-                <img src="../<?php echo $reservation['imgfront']; ?>" alt="Véhicule">
+                <img src="../<?php echo htmlspecialchars($reservation['imgfront']); ?>"> 
                 <div class="vehicle-info">
                     <h4><?php echo htmlspecialchars($reservation['marque'] . ' ' . $reservation['modele']); ?></h4>
                     <div class="vehicle-specs">
