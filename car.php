@@ -211,7 +211,12 @@ if (isset($_SESSION['user_id'])) {
                             <div class="car-buttons">
                                 <a href="details.php?id=<?php echo $row['id']; ?>&<?php echo http_build_query($_GET); ?>"
                                     class="btn-outline">View Details</a>
-                                <a href="<?php echo isset($_SESSION['user_id']) ? 'reservation.php?id=' . $row['id'] : 'login.php?redirect=reservation.php?id=' . $row['id']; ?>"
+                                <?php
+                                $searchParams = http_build_query(array_intersect_key($_GET, array_flip($searchKeys)));
+                                $reservationUrl = 'reservation.php?id=' . $row['id'] . '&' . $searchParams;
+                                $loginUrl = 'login.php?redirect=' . urlencode($reservationUrl);
+                                ?>
+                                <a href="<?php echo isset($_SESSION['user_id']) ? $reservationUrl : $loginUrl; ?>"
                                     class="btn-primary">Book Now</a>
                             </div>
                         </div>

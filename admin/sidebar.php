@@ -8,10 +8,10 @@
     <a href="dashboard.php" class="nav-item <?php echo $current == 'dashboard.php' ? 'active' : ''; ?>">
         <i class="fa-solid fa-chart-line"></i> Dashboard
     </a>
-    <a href="reservations.php" class="nav-item <?php echo $current == 'reservations.php' ? 'active' : ''; ?>">
+    <a href="ad_reservation.php" class="nav-item <?php echo $current == 'ad_reservation.php' ? 'active' : ''; ?>">
         <i class="fa-solid fa-calendar-check"></i> Reservations
     </a>
-    <a href="voitures.php" class="nav-item <?php echo $current == 'voitures.php' ? 'active' : ''; ?>">
+    <a href="admi_car.php" class="nav-item <?php echo $current == 'admi_car.php' ? 'active' : ''; ?>">
         <i class="fa-solid fa-car"></i> Vehicles
     </a>
     <a href="clients.php" class="nav-item <?php echo $current == 'clients.php' ? 'active' : ''; ?>">
