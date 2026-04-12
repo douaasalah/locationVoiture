@@ -1,12 +1,12 @@
 <?php
 session_start();
 $conn = new mysqli("localhost", "root", "", "locationvoitures");
-/*
+
 if (!isset($_SESSION['admin_id'])) {
     header("Location: login.php");
     exit();
 }
-*/
+
 // Supprimer un avis
 if (isset($_GET['delete'])) {
     $conn->query("DELETE FROM avis WHERE id = " . (int)$_GET['delete']);
@@ -22,6 +22,7 @@ $avis = $conn->query("SELECT * FROM avis ORDER BY date_creation DESC");
 <head>
     <meta charset="UTF-8">
     <title>Reviews — GoRent Admin</title>
+    <link rel="stylesheet" href="styles\sidebar.css">
     <link rel="stylesheet" href="styles\reviews.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -30,30 +31,7 @@ $avis = $conn->query("SELECT * FROM avis ORDER BY date_creation DESC");
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
-        <div class="sidebar-logo">
-            <h2>Go<span>Rent</span></h2>
-            <p>Admin Panel</p>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="dashboard.php" class="nav-item">
-                <i class="fa-solid fa-chart-line"></i> Dashboard
-            </a>
-            <a href="reservations.php" class="nav-item">
-                <i class="fa-solid fa-calendar-check"></i> Reservations
-            </a>
-            <a href="voitures.php" class="nav-item">
-                <i class="fa-solid fa-car"></i> Vehicles
-            </a>
-            <a href="clients.php" class="nav-item">
-                <i class="fa-solid fa-users"></i> Clients
-            </a>
-            <a href="reviews.php" class="nav-item active">
-                <i class="fa-solid fa-star"></i> Reviews
-            </a>
-        </nav>
-        <a href="logout.php" class="sidebar-logout">
-            <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </a>
+    <?php include 'sidebar.php'; ?>
     </aside>
 
     <!-- MAIN -->
@@ -62,14 +40,13 @@ $avis = $conn->query("SELECT * FROM avis ORDER BY date_creation DESC");
         <div class="admin-header">
             <h1>Reviews</h1>
             <div class="admin-profile">
-                <div class="profile-avatar">
-                    <?php echo strtoupper(substr($_SESSION['admin_nom'], 0, 1)); ?>
-                </div>
-                <div class="profile-info">
-                    <strong><?php echo $_SESSION['admin_nom']; ?></strong>
-                    <span>Administrator</span>
-                </div>
-            </div>
+    <a href="profile.php" class="profile-btn">
+        <div class="profile-avatar">
+            <?php echo strtoupper(substr($_SESSION['admin_nom'], 0, 1)); ?>
+        </div>
+        <i class="fa-solid fa-chevron-down" style="font-size:0.75rem; color:#888;"></i>
+    </a>
+</div>
         </div>
 
         <div class="admin-card">

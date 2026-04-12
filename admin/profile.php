@@ -77,7 +77,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8" />
     <title>Admin Profile — GoRent</title>
-    <link rel="stylesheet" href="styles/dashboard.css" />
+    <link rel="stylesheet" href="styles/sidebar.css" />
     <link rel="stylesheet" href="styles/profil.css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -90,50 +90,24 @@ $conn->close();
 
         <!-- SIDEBAR (identique au dashboard) -->
         <aside class="sidebar">
-            <div class="sidebar-logo">
-                <h2>Go<span>Rent</span></h2>
-                <p>Admin Panel</p>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="dashboard.php" class="nav-item">
-                    <i class="fa-solid fa-chart-line"></i> Dashboard
-                </a>
-                <a href="reservations.php" class="nav-item">
-                    <i class="fa-solid fa-calendar-check"></i> Reservations
-                </a>
-                <a href="voitures.php" class="nav-item">
-                    <i class="fa-solid fa-car"></i> Vehicles
-                </a>
-                <a href="clients.php" class="nav-item">
-                    <i class="fa-solid fa-users"></i> Clients
-                </a>
-                <a href="reviews.php" class="nav-item">
-                    <i class="fa-solid fa-money-bill-wave"></i> Reviews
-                </a>
-            </nav>
-            <a href="logout.php" class="sidebar-logout">
-                <i class="fa-solid fa-right-from-bracket"></i> Logout
-            </a>
-        </aside>
+    <?php include 'sidebar.php'; ?>
+    </aside>
 
         <!-- MAIN -->
         <main class="admin-main">
 
             <!-- Header -->
             <div class="admin-header">
-                <h1>My Profile</h1>
-                <div class="admin-profile">
-                    <div class="profile-avatar">
-                        <?php echo strtoupper(substr($_SESSION['admin_nom'], 0, 1)); ?>
-                    </div>
-                    <div class="profile-info">
-                        <strong>
-                            <?php echo htmlspecialchars($_SESSION['admin_nom']); ?>
-                        </strong>
-                        <span>Administrator</span>
-                    </div>
-                </div>
-            </div>
+    <h1>My Profile</h1>
+    <div class="admin-profile">
+    <a href="profile.php" class="profile-btn">
+        <div class="profile-avatar">
+            <?php echo strtoupper(substr($_SESSION['admin_nom'], 0, 1)); ?>
+        </div>
+        <i class="fa-solid fa-chevron-down" style="font-size:0.75rem; color:#888;"></i>
+    </a>
+</div>
+</div>
 
             <div class="profile-page">
 

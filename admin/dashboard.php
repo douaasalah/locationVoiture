@@ -3,10 +3,10 @@ session_start();
 $conn = new mysqli("localhost", "root", "", "locationvoitures");
 
 // Protection admin
-/*if (!isset($_SESSION['admin_id'])) {
+if (!isset($_SESSION['admin_id'])) {
     header("Location: login.php");
     exit();
-}*/
+}
 
 // Stats
 $totalReservations = $conn->query("SELECT COUNT(*) as total FROM reservation")->fetch_assoc()['total'];
@@ -30,6 +30,7 @@ for ($i = 5; $i >= 0; $i--) {
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard — GoRent</title>
+    <link rel="stylesheet" href="styles\sidebar.css">
     <link rel="stylesheet" href="styles\dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -37,30 +38,7 @@ for ($i = 5; $i >= 0; $i--) {
 
 <div class="admin-layout">
     <aside class="sidebar">
-        <div class="sidebar-logo">
-            <h2>Go<span>Rent</span></h2>
-            <p>Admin Panel</p>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="dashboard.php" class="nav-item active">
-                <i class="fa-solid fa-chart-line"></i> Dashboard
-            </a>
-            <a href="reservations.php" class="nav-item">
-                <i class="fa-solid fa-calendar-check"></i> Reservations
-            </a>
-            <a href="voitures.php" class="nav-item">
-                <i class="fa-solid fa-car"></i> Vehicles
-            </a>
-            <a href="clients.php" class="nav-item">
-                <i class="fa-solid fa-users"></i> Clients
-            </a>
-            <a href="reviews.php" class="nav-item">
-            <i class="fa-solid fa-money-bill-wave"></i> Reviews
-            </a>
-        </nav>
-        <a href="logout.php" class="sidebar-logout">
-            <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </a>
+    <?php include 'sidebar.php'; ?>
     </aside>
 
     <!-- MAIN -->
@@ -70,14 +48,13 @@ for ($i = 5; $i >= 0; $i--) {
         <div class="admin-header">
     <h1>Dashboard</h1>
     <div class="admin-profile">
+    <a href="profile.php" class="profile-btn">
         <div class="profile-avatar">
             <?php echo strtoupper(substr($_SESSION['admin_nom'], 0, 1)); ?>
         </div>
-        <div class="profile-info">
-            <strong><?php echo $_SESSION['admin_nom']; ?></strong>
-            <span>Administrator</span>
-        </div>
-    </div>
+        <i class="fa-solid fa-chevron-down" style="font-size:0.75rem; color:#888;"></i>
+    </a>
+</div>
 </div>
 
         <!-- Stats Cards -->

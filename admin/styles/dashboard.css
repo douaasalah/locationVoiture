@@ -19,78 +19,6 @@ body {
     display: flex;
     min-height: 100vh;
 }
-
-/* SIDEBAR */
-.sidebar {
-    width: var(--sidebar-width);
-    background: #1B3C53;
-    display: flex;
-    flex-direction: column;
-    padding: 28px 16px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-}
-
-.sidebar-logo h2 {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 4px;
-}
-
-.sidebar-logo h2 span {
-    color: var(--blue);
-}
-
-.sidebar-logo p {
-    color: #6b7280;
-    font-size: 0.8rem;
-    margin-bottom: 32px;
-}
-
-.sidebar-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex: 1;
-}
-
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    border-radius: 10px;
-    color: #9ca3af;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-}
-
-.nav-item:hover,
-.nav-item.active {
-    background: var(--blue);
-    color: #fff;
-}
-
-.sidebar-logout {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    border-radius: 10px;
-    color: #ef4444;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: background 0.2s;
-}
-
-.sidebar-logout:hover {
-    background: #fee2e2;
-}
-
 /* MAIN */
 .admin-main {
     margin-left: var(--sidebar-width);
@@ -226,33 +154,4 @@ body {
 .status-badge.annulée {
     background: #fee2e2;
     color: #ef4444;
-}
-.admin-profile {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.profile-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--admin-blue);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    font-weight: 700;
-}
-
-.profile-info strong {
-    display: block;
-    font-size: 0.9rem;
-    color: #111;
-}
-
-.profile-info span {
-    font-size: 0.78rem;
-    color: #888;
 }
