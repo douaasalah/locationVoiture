@@ -109,6 +109,7 @@ body {
 
 .admin-table th {
     text-align: left;
+    color: #111;
     padding: 12px 16px;
     font-size: 0.78rem;
     text-transform: uppercase;
@@ -192,7 +193,7 @@ body {
 
 /*************tri************/
 .sort-link {
-    color: #888;
+    color: #111;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
