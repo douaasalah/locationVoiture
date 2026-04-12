@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : dim. 12 avr. 2026 à 20:57
+-- Généré le : lun. 13 avr. 2026 à 00:24
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -65,7 +65,8 @@ INSERT INTO `avis` (`id`, `nom`, `ville`, `commentaire`, `note`, `date_creation`
 (6, 'miral trabelsi', 'Sousse', 'Service excellent, la voiture était prête à l\'heure, la communication et les informations fournies étaient excellentes, et la voiture était propre et bien entretenue.\r\n\r\nJe recommande vivement cette agence', 5, '2026-04-09 10:44:51'),
 (7, 'Mohamed hlel', 'Nabeul', 'Très bonne expérience avec eux. Nous avons obtenu un bon prix pour une voiture en excellent état, sans aucun problème. La voiture était propre et tout a été pris en charge sur place ; ils l\'ont même livrée à l\'hôtel.\r\n\r\nDe plus, ils ont été très réactifs par e-mail pendant notre voyage, ce qui nous a vraiment rassurés et nous a permis de voyager comme prévu. Cinq étoiles sans hésiter !', 5, '2026-04-09 10:47:39'),
 (8, 'Ahmed boussaid', 'Tunis', 'Service excellent, qui mérite toute notre reconnaissance et notre respect. Bonne continuation.\r\n', 4, '2026-04-09 12:42:27'),
-(10, 'Salah', 'monastir', 'çok guzel', 5, '2026-04-09 19:24:34');
+(10, 'Salah', 'monastir', 'çok guzel', 5, '2026-04-09 19:24:34'),
+(11, 'ahmed', 'sfax', 'service excellent', 4, '2026-04-12 22:11:56');
 
 -- --------------------------------------------------------
 
@@ -142,8 +143,8 @@ INSERT INTO `options` (`id`, `nom`, `description`, `prix`, `est_inclus`) VALUES
 (7, 'GPS', '', 0.00, 0),
 (8, 'Siège bébé', '', 3.00, 1),
 (9, 'Réservoir plein', '', 140.00, 1),
-(10, 'Protection insurance', 'Protection contre le vol\nBris de glace, phares et pneumatiques\nProtection personnelle accident (conducteur et passagers)', 15.00, 1),
-(11, 'Full insurance', 'Assurance corporelle (conducteur et passagers)\nAssurance responsabilité civile\nProtection contre l’incendie et catastrophes naturelles\nProtection contre les dommages résultant d’une collision (conducteur non fautif)\nLimitation responsabilité locataire en cas de dommages au véhicule : 1500 TND\nProtec', 30.00, 1),
+(10, 'Protection insurance', 'Protection contre le vol\nBris de glace, phares et pneumatiques\nProtection personnelle accident (conducteur et passagers)', 8.00, 1),
+(11, 'Full insurance', 'Assurance corporelle (conducteur et passagers)\nAssurance responsabilité civile\nProtection contre l’incendie et catastrophes naturelles\nProtection contre les dommages résultant d’une collision (conducteur non fautif)\nLimitation responsabilité locataire en cas de dommages au véhicule : 1500 TND\nProtec', 20.00, 1),
 (12, 'No insurance', 'Le client ne souhaite pas d’assurance et assume tous les risques', 0.00, 1),
 (13, 'Private Driver', '', 50.00, 1),
 (14, 'Unlimited Wi-Fi 4G', '', 10.00, 1);
@@ -196,7 +197,7 @@ CREATE TABLE `reservation` (
 INSERT INTO `reservation` (`id_reservation`, `id_client`, `id_voiture`, `date_reservation`, `date_debut`, `date_fin`, `statut`, `total`, `telephone`, `adresse`, `datenaiss`, `civility`) VALUES
 (1, 1, 1, '2026-04-09 20:41:45', '2026-04-09', '2026-04-10', 'Cancelled', 80.00, NULL, NULL, NULL, NULL),
 (18, 14, 7, '2026-04-10 21:08:59', '2026-04-11', '2026-04-14', 'Confirmed', 270.00, NULL, NULL, NULL, NULL),
-(22, 17, 3, '2026-04-10 23:58:13', '2026-04-12', '2026-04-15', 'Completed', 450.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
+(22, 17, 3, '2026-04-10 23:58:13', '2026-04-12', '2026-04-15', 'Pending', 450.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
 (23, 17, 14, '2026-04-10 23:59:28', '2026-04-12', '2026-04-15', 'Confirmed', 2550.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
 (24, 17, 1, '2026-04-11 00:10:05', '2026-04-12', '2026-04-15', 'Confirmed', 240.00, '93223079', 'lamtaa', '1999-12-05', 'monsieur'),
 (25, 18, 4, '2026-04-11 00:21:01', '2026-04-12', '2026-04-15', 'Cancelled', 570.00, '+21693062728', 'sayada', '2009-10-16', 'monsieur'),
@@ -506,7 +507,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT pour la table `avis`
 --
 ALTER TABLE `avis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `contact_messages`
