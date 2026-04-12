@@ -15,11 +15,12 @@ if (isset($_GET['delete'])) {
 }
 
 // ── TRI ────────────────────────────────────────────────
-$sort = isset($_GET['sort']) && $_GET['sort'] === 'desc' ? 'desc' : 'asc';
-$next = $sort === 'asc' ? 'desc' : 'asc';
+$sort = isset($_GET['sort']) && $_GET['sort'] === 'asc' ? 'asc' : 'desc';
+$next = $sort === 'desc' ? 'asc' : 'desc';
 $icon = $sort === 'asc' ? 'fa-arrow-up' : 'fa-arrow-down';
 
-$avis = $conn->query("SELECT * FROM avis ORDER BY nom $sort");
+$avis = $conn->query("SELECT * FROM avis ORDER BY date_creation $sort");
+
 // Notifications - réservations en attente
 $notif_result = $conn->query("SELECT id_reservation, u.nom, v.marque, v.modele, r.date_debut 
     FROM reservation r
@@ -46,7 +47,6 @@ $notifications = $notif_result->fetch_all(MYSQLI_ASSOC);
         document.getElementById('notifDropdown').classList.toggle('open');
     }
 
-    // Fermer si on clique ailleurs
     document.addEventListener('click', function (e) {
         const wrapper = document.getElementById('notifWrapper');
         if (!wrapper.contains(e.target)) {
@@ -75,33 +75,23 @@ $notifications = $notif_result->fetch_all(MYSQLI_ASSOC);
                         <button class="notif-btn" onclick="toggleNotif()">
                             <i class="fa-solid fa-bell"></i>
                             <?php if ($notif_count > 0): ?>
-                                <span class="notif-badge">
-                                    <?php echo $notif_count; ?>
-                                </span>
+                                <span class="notif-badge"><?php echo $notif_count; ?></span>
                             <?php endif; ?>
                         </button>
 
                         <div class="notif-dropdown" id="notifDropdown">
                             <div class="notif-header">
                                 <span>Pending reservations</span>
-                                <span class="notif-count">
-                                    <?php echo $notif_count; ?>
-                                </span>
+                                <span class="notif-count"><?php echo $notif_count; ?></span>
                             </div>
                             <?php if ($notif_count > 0): ?>
                                 <?php foreach ($notifications as $n): ?>
                                     <a href="ad_reservation.php?view=<?php echo $n['id_reservation']; ?>" class="notif-item">
                                         <div class="notif-icon"><i class="fa-solid fa-calendar-check"></i></div>
                                         <div class="notif-text">
-                                            <strong>
-                                                <?php echo htmlspecialchars($n['nom']); ?>
-                                            </strong>
-                                            <span>
-                                                <?php echo htmlspecialchars($n['marque'] . ' ' . $n['modele']); ?>
-                                            </span>
-                                            <small>
-                                                <?php echo date('d/m/Y', strtotime($n['date_debut'])); ?>
-                                            </small>
+                                            <strong><?php echo htmlspecialchars($n['nom']); ?></strong>
+                                            <span><?php echo htmlspecialchars($n['marque'] . ' ' . $n['modele']); ?></span>
+                                            <small><?php echo date('d/m/Y', strtotime($n['date_debut'])); ?></small>
                                         </div>
                                     </a>
                                 <?php endforeach; ?>
@@ -137,15 +127,15 @@ $notifications = $notif_result->fetch_all(MYSQLI_ASSOC);
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>
-                                <a href="reviews.php?sort=<?= $next ?>" class="sort-link">
-                                    Name <i class="fa <?= $icon ?>"></i>
-                                </a>
-                            </th>
+                            <th>Name</th>
                             <th>City</th>
                             <th>Rating</th>
                             <th>Comment</th>
-                            <th>Date</th>
+                            <th>
+                                <a href="reviews.php?sort=<?= $next ?>" class="sort-link">
+                                    Date <i class="fa <?= $icon ?>"></i>
+                                </a>
+                            </th>
                             <th>Action</th>
                         </tr>
                     </thead>

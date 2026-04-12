@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_statut'])) {
     $conn->query("UPDATE reservation SET statut = '$statut' WHERE id_reservation = $id");
 
     $info = $conn->query("
-        SELECT u.email, u.nom, v.marque, v.modele, r.date_debut, r.date_fin, r.total
+        SELECT u.email, u.nom, v.marque, v.modele, r.date_debut, r.date_fin,r.date_reservation, r.total
         FROM reservation r
         JOIN users u ON r.id_client = u.idclient
         JOIN voitures v ON r.id_voiture = v.id
@@ -102,8 +102,8 @@ if (isset($_GET['delete'])) {
 // Récupération des paramètres
 $view_id = isset($_GET['view']) ? (int) $_GET['view'] : 0;
 $statut_filter = isset($_GET['statut']) ? $_GET['statut'] : '';
-$sort = isset($_GET['sort']) ? $_GET['sort'] : 'asc';
-$next_sort = $sort === 'asc' ? 'desc' : 'asc';
+$sort = isset($_GET['sort']) && $_GET['sort'] === 'asc' ? 'asc' : 'desc';
+$next_sort = $sort === 'desc' ? 'asc' : 'desc';
 
 // Requête pour la liste des réservations
 $sql = "SELECT r.*, u.nom as client_nom, u.email as client_email, r.telephone,
@@ -118,8 +118,7 @@ if ($statut_filter != '') {
 }
 
 $sort_dir = ($sort === 'desc') ? 'DESC' : 'ASC';
-$sql .= " ORDER BY u.nom $sort_dir";
-
+$sql .= " ORDER BY r.date_reservation $sort_dir";
 $result = $conn->query($sql);
 
 // Récupération des détails d'une réservation
@@ -423,15 +422,19 @@ $notifications = $notif_result->fetch_all(MYSQLI_ASSOC);
                             <tr>
                                 <th>ID</th>
                                 <th>
+                                    Client
+                                </th>
+                                <th>Car</th>
+                                <th>
                                     <a href="?statut=<?php echo urlencode($statut_filter); ?>&sort=<?php echo $next_sort; ?>"
                                         class="sort-link">
-                                        Client <i
+                                        Reservation date <i
                                             class="fa <?php echo $sort === 'asc' ? 'fa-arrow-up' : 'fa-arrow-down'; ?>"></i>
                                     </a>
                                 </th>
-                                <th>Car</th>
                                 <th>Start date</th>
                                 <th>End date</th>
+
                                 <th>Total</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -441,7 +444,9 @@ $notifications = $notif_result->fetch_all(MYSQLI_ASSOC);
                             <?php if ($result && $result->num_rows > 0): ?>
                                 <?php while ($row = $result->fetch_assoc()): ?>
                                     <tr>
-                                        <td><?php echo $row['id_reservation']; ?></td>
+                                        <td style="color:#9CA3AF; font-size:13px;">
+                                            <?php echo $row['id_reservation']; ?>
+                                        </td>
                                         <td>
                                             <span class="user-avatar">
                                                 <?= strtoupper(substr($row['client_nom'], 0, 1)) ?>
@@ -449,14 +454,15 @@ $notifications = $notif_result->fetch_all(MYSQLI_ASSOC);
                                             <span class="user-name">
                                                 <?= htmlspecialchars($row['client_nom']) ?>
                                             </span>
-                                            <br> <small>
-                                                <?php echo htmlspecialchars($row['client_email']); ?>
-                                            </small>
-
+                                            <br><small><?php echo htmlspecialchars($row['client_email']); ?></small>
                                         </td>
                                         <td><?php echo htmlspecialchars($row['marque'] . ' ' . $row['modele']); ?></td>
+                                        <td>
+                                            <?php echo date('d/m/Y', strtotime($row['date_reservation'])); ?>
+                                        </td>
                                         <td><?php echo date('d/m/Y', strtotime($row['date_debut'])); ?></td>
                                         <td><?php echo date('d/m/Y', strtotime($row['date_fin'])); ?></td>
+
                                         <td><strong><?php echo number_format($row['total'], 0); ?> DT</strong></td>
                                         <td>
                                             <?php
@@ -472,22 +478,24 @@ $notifications = $notif_result->fetch_all(MYSQLI_ASSOC);
                                             ?>
                                             <span class="badge <?php echo $badge_class; ?>"><?php echo $row['statut']; ?></span>
                                         </td>
-                                        <td class="actions">
-                                            <a href="ad_reservation.php?view=<?php echo $row['id_reservation']; ?>"
-                                                class="btn-action btn-view">
-                                                <i class="fas fa-eye"></i> See
-                                            </a>
-                                            <a href="ad_reservation.php?delete=<?php echo $row['id_reservation']; ?>"
-                                                class="btn-action btn-delete"
-                                                onclick="return confirm('Delete this reservation permanently ?')">
-                                                <i class="fas fa-trash"></i> Delete
-                                            </a>
+                                        <td>
+                                            <div class="actions">
+                                                <a href="ad_reservation.php?view=<?php echo $row['id_reservation']; ?>"
+                                                    class="btn-action btn-view">
+                                                    <i class="fas fa-eye"></i> See
+                                                </a>
+                                                <a href="ad_reservation.php?delete=<?php echo $row['id_reservation']; ?>"
+                                                    class="btn-action btn-delete"
+                                                    onclick="return confirm('Delete this reservation permanently ?')">
+                                                    <i class="fas fa-trash"></i> Delete
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="8" class="empty-state">
+                                    <td colspan="9" class="empty-state">
                                         <i class="fas fa-calendar-times"></i>
                                         <p>No reservation found.</p>
                                     </td>
