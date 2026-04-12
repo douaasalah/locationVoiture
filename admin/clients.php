@@ -65,10 +65,10 @@ $result = $conn->query("SELECT idclient, nom, email FROM users ORDER BY nom $sor
                 <a href="dashboard.php" class="nav-item">
                     <i class="fa-solid fa-chart-line"></i> Dashboard
                 </a>
-                <a href="ad_reservation.php" class="nav-item">
+                <a href="reservations.php" class="nav-item">
                     <i class="fa-solid fa-calendar-check"></i> Reservations
                 </a>
-                <a href="admi_car.php" class="nav-item">
+                <a href="voitures.php" class="nav-item">
                     <i class="fa-solid fa-car"></i> Vehicles
                 </a>
                 <a href="clients.php" class="nav-item active">
