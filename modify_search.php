@@ -16,12 +16,8 @@
                             Airport</option>
                         <option value="Sfax Thyna Airport" <?php echo (isset($_GET['pickup-location']) && $_GET['pickup-location'] == 'Sfax Thyna Airport') ? 'selected' : ''; ?>>Sfax Thyna Airport
                         </option>
-                        <option value="Tabarka Aïn Draham Airport" <?php echo (isset($_GET['pickup-location']) && $_GET['pickup-location'] == 'Tabarka Aïn Draham Airport') ? 'selected' : ''; ?>>Tabarka Aïn
-                            Draham Airport</option>
-                        <option value="Tozeur Nefta Airport" <?php echo (isset($_GET['pickup-location']) && $_GET['pickup-location'] == 'Tozeur Nefta Airport') ? 'selected' : ''; ?>>Tozeur Nefta Airport
-                        </option>
-                        <option value="Gafsa Ksar Airport" <?php echo (isset($_GET['pickup-location']) && $_GET['pickup-location'] == 'Gafsa Ksar Airport') ? 'selected' : ''; ?>>Gafsa Ksar Airport
-                        </option>
+                        <option value="Enfidha Airport" <?php echo (isset($_GET['pickup-location']) && $_GET['pickup-location'] == 'Enfidha Airport') ? 'selected' : ''; ?>>Enfidha Airport</option>
+
                     </optgroup>
                     <optgroup label="Cities">
                         <?php
@@ -49,12 +45,9 @@
                             Airport</option>
                         <option value="Sfax Thyna Airport" <?php echo (isset($_GET['return-location']) && $_GET['return-location'] == 'Sfax Thyna Airport') ? 'selected' : ''; ?>>Sfax Thyna Airport
                         </option>
-                        <option value="Tabarka Aïn Draham Airport" <?php echo (isset($_GET['return-location']) && $_GET['return-location'] == 'Tabarka Aïn Draham Airport') ? 'selected' : ''; ?>>Tabarka Aïn
-                            Draham Airport</option>
-                        <option value="Tozeur Nefta Airport" <?php echo (isset($_GET['return-location']) && $_GET['return-location'] == 'Tozeur Nefta Airport') ? 'selected' : ''; ?>>Tozeur Nefta Airport
-                        </option>
-                        <option value="Gafsa Ksar Airport" <?php echo (isset($_GET['return-location']) && $_GET['return-location'] == 'Gafsa Ksar Airport') ? 'selected' : ''; ?>>Gafsa Ksar Airport
-                        </option>
+                        <option value="Tabarka Aïn Draham Airport" <?php echo (isset($_GET['return-location']) && $_GET['return-location'] == 'Tabarka Aïn Draham Airport') ? 'selected' : ''; ?>>Enfidha
+                            Airport</option>
+
                     </optgroup>
                     <optgroup label="Cities">
                         <?php

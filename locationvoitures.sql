@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 13 avr. 2026 à 00:24
+-- Généré le : lun. 13 avr. 2026 à 21:22
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -182,7 +182,7 @@ CREATE TABLE `reservation` (
   `date_reservation` timestamp NOT NULL DEFAULT current_timestamp(),
   `date_debut` date NOT NULL,
   `date_fin` date NOT NULL,
-  `statut` varchar(20) DEFAULT 'En attente',
+  `statut` varchar(20) DEFAULT 'Pending',
   `total` decimal(10,2) DEFAULT NULL,
   `telephone` varchar(20) DEFAULT NULL,
   `adresse` text DEFAULT NULL,
@@ -203,7 +203,8 @@ INSERT INTO `reservation` (`id_reservation`, `id_client`, `id_voiture`, `date_re
 (25, 18, 4, '2026-04-11 00:21:01', '2026-04-12', '2026-04-15', 'Cancelled', 570.00, '+21693062728', 'sayada', '2009-10-16', 'monsieur'),
 (26, 18, 2, '2026-04-11 00:57:54', '2026-04-12', '2026-04-15', 'Pending', 315.00, '+21693062728', 'sayada', '2009-10-16', 'madame'),
 (27, 18, 2, '2026-04-11 01:03:19', '2026-04-12', '2026-04-15', 'Pending', 315.00, '+21693062728', 'sayada', '2009-10-16', 'madame'),
-(28, 19, 5, '2026-04-11 16:03:36', '2026-04-11', '2026-04-13', 'Pending', 320.00, '78963214', 'rue', '2026-04-24', 'monsieur');
+(28, 19, 5, '2026-04-11 16:03:36', '2026-04-11', '2026-04-13', 'Pending', 320.00, '78963214', 'rue', '2026-04-24', 'monsieur'),
+(29, 18, 6, '2026-04-13 19:14:57', '2026-04-13', '2026-04-15', 'Pending', 160.00, '+21693062728', 'lamtaa', '2003-10-16', 'monsieur');
 
 -- --------------------------------------------------------
 
@@ -238,7 +239,8 @@ INSERT INTO `reservation_options` (`idreservation`, `idoption`) VALUES
 (27, 5),
 (27, 10),
 (28, 2),
-(28, 12);
+(28, 12),
+(29, 12);
 
 -- --------------------------------------------------------
 
@@ -537,7 +539,7 @@ ALTER TABLE `password_resets`
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT pour la table `users`

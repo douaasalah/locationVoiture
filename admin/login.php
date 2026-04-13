@@ -25,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['email']) && !empty($
         $_SESSION['admin_nom'] = $nom;
         $_SESSION['admin_email'] = $email;
         $success = "Admin logged in successfully!";
-        // ✅ PAS de header() ici — on laisse le message s'afficher d'abord
     } else {
         $erreur = "Invalid email or password.";
     }
@@ -72,7 +71,6 @@ $conn->close();
                     <span style="margin-left:auto; font-size:12px;">Redirection...</span>
                 </div>
                 <div class="progress-bar"><span></span></div>
-                <!-- ✅ Redirection JS après 2 secondes -->
                 <script>
                     setTimeout(function () {
                         window.location.href = "dashboard.php";

@@ -40,9 +40,8 @@ if ($conn->connect_error) {
                             <option value="Monastir Habib Bourguiba Airport">Monastir Habib Bourguiba Airport</option>
                             <option value="Djerba Zarzis Airport">Djerba Zarzis Airport</option>
                             <option value="Sfax Thyna Airport">Sfax Thyna Airport</option>
-                            <option value="Tabarka Aïn Draham Airport">Tabarka Aïn Draham Airport</option>
-                            <option value="Tozeur Nefta Airport">Tozeur Nefta Airport</option>
-                            <option value="Gafsa Ksar Airport">Gafsa Ksar Airport</option>
+                            <option value="Tabarka Aïn Draham Airport">Enfidha Airport</option>
+
                         </optgroup>
                         <optgroup label="Cities">
                             <option value="Ariana">Ariana</option>
@@ -78,9 +77,8 @@ if ($conn->connect_error) {
                             <option value="Monastir Habib Bourguiba Airport">Monastir Habib Bourguiba Airport</option>
                             <option value="Djerba Zarzis Airport">Djerba Zarzis Airport</option>
                             <option value="Sfax Thyna Airport">Sfax Thyna Airport</option>
-                            <option value="Tabarka Aïn Draham Airport">Tabarka Aïn Draham Airport</option>
-                            <option value="Tozeur Nefta Airport">Tozeur Nefta Airport</option>
-                            <option value="Gafsa Ksar Airport">Gafsa Ksar Airport</option>
+                            <option value="Tabarka Aïn Draham Airport">Enfidha Airport</option>
+
                         </optgroup>
                         <optgroup label="Cities">
                             <option value="Ariana">Ariana</option>

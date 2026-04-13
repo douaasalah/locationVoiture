@@ -20,6 +20,10 @@ body {
     min-height: 100vh;
 }
 
+.admin-header h2 {
+    color: #1B3C53;
+}
+
 /* SIDEBAR */
 .sidebar {
     width: var(--sidebar-width);
@@ -215,7 +219,7 @@ table {
 }
 
 thead tr {
-    background: #f1f5f9;
+    background: #c4d1de;
 }
 
 td {

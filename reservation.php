@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_reservation'])
         $insert_res = "INSERT INTO reservation 
             (id_client, id_voiture, date_debut, date_fin, total, statut,
              telephone, adresse, datenaiss, civility)
-            VALUES (?, ?, ?, ?, ?, 'En attente', ?, ?, ?, ?)";
+            VALUES (?, ?, ?, ?, ?, 'Pending', ?, ?, ?, ?)";
         $stmt_res = $conn->prepare($insert_res);
         $stmt_res->bind_param(
             "iissdssss",
